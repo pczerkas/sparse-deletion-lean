@@ -1,0 +1,57 @@
+# Lean/Lake build artifacts and downloaded toolchain parts
+.lake/
+lean-download-parts/
+*.olean
+*.ilean
+*.ilean.hash
+*.olean.hash
+*.trace
+*.ir
+*.c
+*.c.hash
+
+# Local archives and snapshots
+*.zip
+
+# Local/bootstrap scripts — not part of the published proof
+elan-init.sh
+download_lean.py
+install_lean_parts.py
+setup_and_check.sh
+
+# Exploratory probes and temporary checks
+Probe*.lean
+Checks*.lean
+TmpChecks*.lean
+Mod31.lean
+Modular31.lean
+Uniform31.lean
+
+# Historical/unfinished proof branches and frontier experiments
+ARITHMETIC_GAP.md
+FRONTIER_*.md
+VALUE_SET_FRONTIER_*.md
+SCOPE_AUDIT_*.md
+AsymptoticFive.lean
+AsymptoticSix.lean
+MainAffineHasseReduction.lean
+MainNonSingularReduction.lean
+SieveCRT4.lean
+SieveCRT5.lean
+SieveCRT6.lean
+SieveUpTo3.lean
+SieveUpTo6.lean
+SingularCubic.lean
+SingularFactorization.lean
+SingularReduction.lean
+VerifiedAnalyticFrontier.lean
+VerifiedMilestones.lean
+VerifiedSix.lean
+VerifiedValueSetFrontier.lean
+
+# Editor and operating-system files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
