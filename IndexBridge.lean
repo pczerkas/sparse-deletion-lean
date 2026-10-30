@@ -1,4 +1,8 @@
-import DensityToZero
+module -- shake: keep-all
+
+public import DensityToZero
+
+@[expose] public section
 
 namespace SparseDeletion
 

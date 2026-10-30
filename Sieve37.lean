@@ -1,4 +1,8 @@
-import Mathlib.Data.Nat.Nth
+module -- shake: keep-all
+
+public import Mathlib.Data.Nat.Nth
+
+@[expose] public section
 
 /-!
 Finite, kernel-checked quadratic-residue sieve modulo 37.

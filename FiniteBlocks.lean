@@ -1,4 +1,8 @@
-import BridgeRemaining
+module -- shake: keep-all
+
+public import BridgeRemaining
+
+@[expose] public section
 
 namespace SparseDeletion
 

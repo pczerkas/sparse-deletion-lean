@@ -1,6 +1,10 @@
-import MainUnconditionalValueSet
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
+module -- shake: keep-all
+
+public import MainUnconditionalValueSet
+public import Mathlib.NumberTheory.Chebyshev
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+@[expose] public section
 
 namespace SparseDeletion
 
@@ -85,7 +89,22 @@ theorem nonComposites_count_le (N : ℕ) :
       (fun n : ℕ => n = 1 ∨ Nat.Prime n)).card ≤ B.card + 1 := by
     rw [heq]
     omega
-  simpa only [countUpTo, nonComposites, B, Set.mem_setOf_eq] using hc
+  have hnon : countUpTo nonComposites N =
+      ((Finset.range N).filter
+        (fun n : ℕ => n = 1 ∨ Nat.Prime n)).card := by
+    rw [countUpTo]
+    congr 1
+    ext n
+    simp only [Finset.mem_filter, Finset.mem_range]
+    rfl
+  have hprime : countUpTo {n : ℕ | Nat.Prime n} N = B.card := by
+    rw [countUpTo]
+    dsimp [B]
+    congr 1
+    ext n
+    simp only [Finset.mem_filter, Finset.mem_range]
+  rw [hnon, hprime]
+  exact hc
 
 theorem nonComposites_hasDensityZero :
     HasDensityZero nonComposites := by
@@ -98,7 +117,7 @@ theorem nonComposites_hasDensityZero :
   have hupper : Tendsto
       (fun N : ℕ => (countUpTo {n : ℕ | Nat.Prime n} N : ℝ) / (N : ℝ) +
         (1 : ℝ) / (N : ℝ)) atTop (nhds (0 : ℝ)) := by
-    convert hP.add h1 using 1 <;> simp
+    convert hP.add h1 using 1; simp
   apply tendsto_order.2
   constructor
   · intro a ha

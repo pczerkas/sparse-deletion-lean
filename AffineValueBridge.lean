@@ -1,4 +1,8 @@
-import ImageBoundBridge
+module -- shake: keep-all
+
+public import ImageBoundBridge
+
+@[expose] public section
 
 namespace SparseDeletion
 
@@ -9,6 +13,7 @@ attribute [local instance] Classical.propDecidable
 section AffineValue
 variable {F : Type*} [Field F] [Fintype F] [DecidableEq F]
 
+omit [Fintype F] [DecidableEq F] in
 theorem cubic_eval_affine_value (b x : F)
     (h2 : (2 : F) ≠ 0) (h3 : (3 : F) ≠ 0) :
     (cubicShape (16 * (6 : F)⁻¹) (24 * (6 : F)⁻¹)
@@ -54,7 +59,6 @@ theorem cubicShape_image_card_eq_xcube_sub_x
     · rintro ⟨_, ⟨t, rfl⟩, rfl⟩
       obtain ⟨x, hx⟩ := hsurj t
       refine ⟨x, ?_⟩
-      change f x = A (g t)
       rw [← hx]
       exact cubic_eval_affine_value b x h2 h3
   change ((univ : Finset F).image f).card =

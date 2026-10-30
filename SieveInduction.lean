@@ -1,5 +1,9 @@
-import CRTGeneral
-import SparseDeletion
+module -- shake: keep-all
+
+public import CRTGeneral
+public import SparseDeletion
+
+@[expose] public section
 
 namespace SparseDeletion
 

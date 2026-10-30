@@ -1,6 +1,10 @@
-import SieveCRT31x37
-import CubicBridge41
-import Mathlib.Data.Nat.ModEq
+module -- shake: keep-all
+
+public import SieveCRT31x37
+public import CubicBridge41
+public import Mathlib.Data.Nat.ModEq
+
+@[expose] public section
 
 namespace SparseDeletion
 

@@ -1,5 +1,9 @@
-import IndexBridge
-import Mathlib.Analysis.SpecificLimits.Basic
+module -- shake: keep-all
+
+public import IndexBridge
+public import Mathlib.Analysis.SpecificLimits.Basic
+
+@[expose] public section
 
 open Filter
 
@@ -47,10 +51,10 @@ theorem kept_count_partition (E : Set ℕ) (N : ℕ) :
         simp [keptPred, excludedOne, keptOne, countUpTo, keptCount]
       · by_cases he : n ∈ E
         · have hp : ¬keptPred E n := by simp [keptPred, he]
-          simp only [excludedOne, keptOne, if_pos he, if_neg hp, add_zero]
+          simp only [excludedOne, keptOne, ite_eq_left he, ite_eq_right hp, add_zero]
           omega
         · have hp : keptPred E n := by simp [keptPred, he, Nat.pos_of_ne_zero hz]
-          simp only [excludedOne, keptOne, if_neg he, if_pos hp, add_zero]
+          simp only [excludedOne, keptOne, ite_eq_right he, ite_eq_left hp, add_zero]
           omega
 
 /-- A zero-density deletion removes less than a quarter of the first N

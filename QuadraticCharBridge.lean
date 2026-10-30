@@ -1,5 +1,9 @@
-import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
-import Mathlib.Tactic
+module -- shake: keep-all
+
+public import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
+public import Mathlib.Tactic
+
+@[expose] public section
 
 namespace SparseDeletion
 
@@ -17,13 +21,13 @@ noncomputable def zeroIndicator (a : F) : ℤ := by
   classical
   exact if a = 0 then 1 else 0
 
-theorem square_indicator_character (hF : ringChar F ≠ 2) (a : F) :
+theorem square_indicator_character (_hF : ringChar F ≠ 2) (a : F) :
     2 * squareIndicator a =
       quadraticChar F a + 1 + zeroIndicator a := by
   classical
   by_cases ha : a = 0
   · subst a
-    simp [squareIndicator, zeroIndicator, quadraticChar_zero]
+    simp [squareIndicator, zeroIndicator]
   · by_cases hs : IsSquare a
     · have hchi : quadraticChar F a = 1 :=
         (quadraticChar_one_iff_isSquare ha).mpr hs
@@ -68,13 +72,13 @@ theorem squareInputCount_eq_card (f : F → F) :
     squareInputCount f =
       (((Finset.univ : Finset F).filter (fun x => IsSquare (f x))).card : ℤ) := by
   classical
-  simp [squareInputCount, squareIndicator, Finset.sum_ite]
+  simp [squareInputCount, squareIndicator]
 
 theorem zeroInputCount_eq_card (f : F → F) :
     zeroInputCount f =
       (((Finset.univ : Finset F).filter (fun x => f x = 0)).card : ℤ) := by
   classical
-  simp [zeroInputCount, zeroIndicator, Finset.sum_ite]
+  simp [zeroInputCount, zeroIndicator]
 
 /-- An entirely elementary final algebraic reduction: a cubic with <= 3 roots
 and a suitable character-sum bound passes at most 3/4 of all inputs. -/

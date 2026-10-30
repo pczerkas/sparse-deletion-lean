@@ -1,4 +1,8 @@
-import CubicCollisionBridge
+module -- shake: keep-all
+
+public import CubicCollisionBridge
+
+@[expose] public section
 
 namespace SparseDeletion
 
@@ -12,11 +16,13 @@ variable {F : Type*} [Field F] [Fintype F] [DecidableEq F]
 def cubicConicPoints : Finset (F × F) :=
   Finset.univ.filter (fun z => z.1 ^ 2 + z.1 * z.2 + z.2 ^ 2 = 1)
 
+omit [Fintype F] [DecidableEq F] in
 theorem conic_slope_coordinates (x y : F) (hx : x ≠ 1) :
     (y / (x - 1)) * (x - 1) = y := by
   have h : x - 1 ≠ 0 := sub_ne_zero.mpr hx
   field_simp
 
+omit [Fintype F] [DecidableEq F] in
 theorem conic_slope_ne_tangent (h3 : (3 : F) ≠ 0) 
     (x y : F) (hx : x ≠ 1)
     (hxy : x ^ 2 + x * y + y ^ 2 = 1) :
@@ -26,7 +32,7 @@ theorem conic_slope_ne_tangent (h3 : (3 : F) ≠ 0)
   have hu : u ≠ 0 := sub_ne_zero.mpr hx
   have hy : t * u = y := conic_slope_coordinates x y hx
   have hqx : (1 + u) ^ 2 + (1 + u) * (t * u) + (t * u) ^ 2 = 1 := by
-    convert hxy using 1 <;> simp [u, hy] <;> ring
+    convert hxy using 1; simp [u, hy]
   have hfac := (conic_line_factor t u).mp hqx
   have hlin := (mul_eq_zero.mp hfac).resolve_left hu
   intro ht
@@ -37,6 +43,7 @@ theorem conic_slope_ne_tangent (h3 : (3 : F) ≠ 0)
       _ = 0 := hlin
   exact h3 ((mul_eq_zero.mp hmul).resolve_right hu)
 
+omit [Fintype F] [DecidableEq F] in
 theorem conic_slope_unique (h3 : (3 : F) ≠ 0)
     (x y x' y' : F)
     (hx : x ≠ 1) (hx' : x' ≠ 1)
@@ -54,9 +61,9 @@ theorem conic_slope_unique (h3 : (3 : F) ≠ 0)
     rw [show t = y' / (x' - 1) from hslope]
     exact conic_slope_coordinates x' y' hx'
   have hqu : (1 + u) ^ 2 + (1 + u) * (t * u) + (t * u) ^ 2 = 1 := by
-    convert hxy using 1 <;> simp [u, hy] <;> ring
+    convert hxy using 1; simp [u, hy]
   have hqv : (1 + v) ^ 2 + (1 + v) * (t * v) + (t * v) ^ 2 = 1 := by
-    convert hx'y' using 1 <;> simp [v, hy'] <;> ring
+    convert hx'y' using 1; simp [v, hy']
   have huv : u = v := conic_line_unique h3 t u v hu hv hqu hqv
   constructor
   · dsimp [u, v] at huv

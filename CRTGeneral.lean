@@ -1,10 +1,14 @@
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Data.Nat.Nth
+module -- shake: keep-all
+
+public import Mathlib.Data.Nat.ModEq
+public import Mathlib.Data.Nat.Nth
+
+@[expose] public section
 
 namespace SparseDeletion
 
 theorem crt_mod_inj_general (m n u : ℕ)
-    (hc : Nat.Coprime m n) (hm : 0 < m) (hn : 0 < n) :
+    (hc : Nat.Coprime m n) (_hm : 0 < m) (_hn : 0 < n) :
     Set.InjOn (fun x : ℕ => (x % m, x % n))
       ((Finset.Ico u (u + m * n)) : Set ℕ) := by
   intro x hx y hy hxy

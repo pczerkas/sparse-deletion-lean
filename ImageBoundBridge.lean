@@ -1,4 +1,8 @@
-import CubicSumBridge
+module -- shake: keep-all
+
+public import CubicSumBridge
+
+@[expose] public section
 
 namespace SparseDeletion
 
@@ -15,6 +19,7 @@ section FiniteImage
 variable {α β : Type*}
 variable [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
 
+omit [DecidableEq α] in
 theorem good_card_add_image_le
     (f : α → β) (P : β → Prop) [DecidablePred P] :
     ((univ : Finset α).filter (fun x => P (f x))).card +

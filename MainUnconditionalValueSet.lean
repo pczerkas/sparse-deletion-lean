@@ -1,4 +1,8 @@
-import CubicConicInjection
+module -- shake: keep-all
+
+public import CubicConicInjection
+
+@[expose] public section
 
 namespace SparseDeletion
 
@@ -8,7 +12,7 @@ attribute [local instance] Classical.propDecidable
     family. It uses only finite fields and elementary conic geometry. -/
 theorem cubicValueLowerBound_proved : CubicValueLowerBound := by
   intro r
-  letI : Fact (largePrime r).Prime := ⟨largePrime_prime r⟩
+  let _ := Fact.mk (largePrime_prime r)
   have h3 : (3 : ZMod (largePrime r)) ≠ 0 := by
     intro hz
     have h6 := prime_h6 (largePrime r) (largePrime_ge r)

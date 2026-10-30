@@ -1,6 +1,10 @@
-import CubicBridge31
-import CubicBridge37
-import Mathlib.Data.Nat.ModEq
+module -- shake: keep-all
+
+public import CubicBridge31
+public import CubicBridge37
+public import Mathlib.Data.Nat.ModEq
+
+@[expose] public section
 
 namespace SparseDeletion
 

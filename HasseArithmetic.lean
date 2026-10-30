@@ -1,5 +1,9 @@
-import QuadraticCharBridge
-import Mathlib.Data.Real.Sqrt
+module -- shake: keep-all
+
+public import QuadraticCharBridge
+public import Mathlib.Analysis.Real.Sqrt
+
+@[expose] public section
 
 namespace SparseDeletion
 

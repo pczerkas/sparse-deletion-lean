@@ -1,6 +1,10 @@
-import Mathlib.Data.Nat.Nth
-import Mathlib.Topology.Instances.Real.Lemmas
-import Mathlib.Tactic.Linarith
+module -- shake: keep-all
+
+public import Mathlib.Data.Nat.Nth
+public import Mathlib.Topology.Instances.Real.Lemmas
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
 
 /-!
 A fully finite, kernel-checkable experiment at q=31.

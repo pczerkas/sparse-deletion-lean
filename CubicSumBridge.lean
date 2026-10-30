@@ -1,5 +1,9 @@
-import CubicShape
-import SparseDeletion
+module -- shake: keep-all
+
+public import CubicShape
+public import SparseDeletion
+
+@[expose] public section
 
 namespace SparseDeletion
 
@@ -8,6 +12,7 @@ open Polynomial
 section FormulaBridge
 variable {F : Type*} [Field F] [Fintype F] [DecidableEq F]
 
+omit [Fintype F] [DecidableEq F] in
 theorem naturalSquareSum_field_cast (x : ℕ) (h6 : (6 : F) ≠ 0) :
     (((naturalSquareSum x : ℤ) : F)) =
       (6 : F)⁻¹ * (x : F) * ((x : F) + 1) * (2 * (x : F) + 1) := by
@@ -22,6 +27,7 @@ theorem naturalSquareSum_field_cast (x : ℕ) (h6 : (6 : F) ≠ 0) :
         rw [h]
         ring
 
+omit [Fintype F] [DecidableEq F] in
 theorem cubicShape_eval_nat (x : ℕ) (b : F) (h6 : (6 : F) ≠ 0) :
     (cubicShape (16 * (6 : F)⁻¹) (24 * (6 : F)⁻¹)
       (8 * (6 : F)⁻¹) (8 * b + 1)).eval (x : F) =
@@ -31,6 +37,7 @@ theorem cubicShape_eval_nat (x : ℕ) (b : F) (h6 : (6 : F) ≠ 0) :
     Polynomial.eval_C, Polynomial.eval_X, Polynomial.eval_pow]
   ring
 
+omit [Fintype F] [DecidableEq F] in
 theorem cubicShape_sum_nonzero (b : F)
     (h6 : (6 : F) ≠ 0) (h16 : (16 : F) ≠ 0) :
     cubicShape (16 * (6 : F)⁻¹) (24 * (6 : F)⁻¹)

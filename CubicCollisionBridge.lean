@@ -1,4 +1,8 @@
-import MainExactValueReduction
+module -- shake: keep-all
+
+public import MainExactValueReduction
+
+@[expose] public section
 
 namespace SparseDeletion
 
@@ -17,7 +21,7 @@ theorem cubic_value_collision_iff
       (x ^ 3 - x = y ^ 3 - y) ↔
         (x - y) * (x ^ 2 + x * y + y ^ 2 - 1) = 0 := by
     rw [← sub_eq_zero, hfactor]
-  simpa only [hiff, mul_eq_zero, sub_eq_zero]
+  simp only [hiff, mul_eq_zero, sub_eq_zero]
 
 /-- Parameterize lines through the conic point (1,0), using
     (x,y)=(1+u,t*u). The conic equation becomes linear in u

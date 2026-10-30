@@ -1,5 +1,9 @@
-import PolynomialRootsBridge
-import Mathlib.Tactic.ComputeDegree
+module -- shake: keep-all
+
+public import PolynomialRootsBridge
+public import Mathlib.Tactic.ComputeDegree
+
+@[expose] public section
 
 namespace SparseDeletion
 
@@ -11,11 +15,13 @@ variable {F : Type*} [Field F] [Fintype F] [DecidableEq F]
 noncomputable def cubicShape (a b c d : F) : Polynomial F :=
   C a * X ^ 3 + C b * X ^ 2 + C c * X + C d
 
+omit [Fintype F] [DecidableEq F] in
 theorem cubicShape_natDegree (a b c d : F) (ha : a ≠ 0) :
     (cubicShape a b c d).natDegree = 3 := by
   unfold cubicShape
   compute_degree!
 
+omit [Fintype F] [DecidableEq F] in
 theorem cubicShape_ne_zero (a b c d : F) (ha : a ≠ 0) :
     cubicShape a b c d ≠ 0 := by
   intro heq

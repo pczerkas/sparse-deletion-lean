@@ -1,4 +1,8 @@
-import ConicPointBound
+module -- shake: keep-all
+
+public import ConicPointBound
+
+@[expose] public section
 
 namespace SparseDeletion
 
@@ -20,7 +24,7 @@ theorem cubicRep_is_root (x : F) :
     cubicVal (cubicRep (cubicVal x)) = cubicVal x := by
   unfold cubicRep
   have h : ∃ y : F, cubicVal y = cubicVal x := ⟨x, rfl⟩
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Classical.choose_spec h
 
 theorem cubicRep_stable (x : F) :

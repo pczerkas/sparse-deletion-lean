@@ -1,6 +1,10 @@
-import SparseDeletion
-import Sieve31Poly
-import Mathlib.Data.ZMod.Basic
+module -- shake: keep-all
+
+public import SparseDeletion
+public import Sieve31Poly
+public import Mathlib.Data.ZMod.Basic
+
+@[expose] public section
 
 namespace SparseDeletion
 

@@ -1,5 +1,9 @@
-import SparseDeletion
-import SieveCRT31x37x41
+module -- shake: keep-all
+
+public import SparseDeletion
+public import SieveCRT31x37x41
+
+@[expose] public section
 
 namespace SparseDeletion
 

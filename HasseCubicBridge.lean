@@ -1,6 +1,10 @@
-import HasseArithmetic
-import ResidueCountBridge
-import CubicSumBridge
+module -- shake: keep-all
+
+public import HasseArithmetic
+public import ResidueCountBridge
+public import CubicSumBridge
+
+@[expose] public section
 
 namespace SparseDeletion
 

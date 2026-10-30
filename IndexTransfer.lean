@@ -1,6 +1,10 @@
-import IndexGrowth
-import AsymptoticThree
-import Mathlib.Analysis.SpecificLimits.Basic
+module -- shake: keep-all
+
+public import IndexGrowth
+public import AsymptoticThree
+public import Mathlib.Analysis.SpecificLimits.Basic
+
+@[expose] public section
 
 open Filter
 
@@ -73,7 +77,7 @@ theorem indexToValue_hits (E : Set ℕ)
   cases n with
   | zero =>
       simp only [indexToValue_zero, hitSet]
-      simp [keptSquaresUpTo, keptIndexPrefix, prefixSquares, Triangular]
+      simp [keptSquaresUpTo, Triangular]
   | succ k =>
       simp only [indexToValue_succ, hitSet]
       rw [keptIndexPrefix_succ_eq_keptSquaresUpTo E hInf] at hn

@@ -1,4 +1,9 @@
-import SparseBlocks
+module -- shake: keep-all
+
+public import SparseBlocks
+import Mathlib.Algebra.BigOperators.Ring.Finset
+
+@[expose] public section
 
 namespace SparseDeletion
 

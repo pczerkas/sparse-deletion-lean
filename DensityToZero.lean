@@ -1,5 +1,9 @@
-import DensityBridge
-import Mathlib.Analysis.SpecificLimits.Basic
+module -- shake: keep-all
+
+public import DensityBridge
+public import Mathlib.Analysis.SpecificLimits.Basic
+
+@[expose] public section
 
 open Filter
 
