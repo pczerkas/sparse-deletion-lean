@@ -1,4 +1,8 @@
-import SieveInduction
+module -- shake: keep-all
+
+public import SieveInduction
+
+@[expose] public section
 
 namespace SparseDeletion
 

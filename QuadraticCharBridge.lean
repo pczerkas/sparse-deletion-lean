@@ -1,5 +1,9 @@
-import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
-import Mathlib.Tactic
+module -- shake: keep-all
+
+public import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
+public import Mathlib.Tactic
+
+@[expose] public section
 
 namespace SparseDeletion
 

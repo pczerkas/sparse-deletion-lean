@@ -1,6 +1,10 @@
-import HasseCubicBridge
-import PrimeFamily
-import MainReduction
+module -- shake: keep-all
+
+public import HasseCubicBridge
+public import PrimeFamily
+public import MainReduction
+
+@[expose] public section
 
 namespace SparseDeletion
 

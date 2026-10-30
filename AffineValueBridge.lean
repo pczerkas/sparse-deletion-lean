@@ -1,4 +1,8 @@
-import ImageBoundBridge
+module -- shake: keep-all
+
+public import ImageBoundBridge
+
+@[expose] public section
 
 namespace SparseDeletion
 

@@ -1,4 +1,8 @@
-import CubicCollisionBridge
+module -- shake: keep-all
+
+public import CubicCollisionBridge
+
+@[expose] public section
 
 namespace SparseDeletion
 

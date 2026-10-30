@@ -1,6 +1,10 @@
-import MainValueSetReduction
-import SquareValueCount
-import MainHasseReduction
+module -- shake: keep-all
+
+public import MainValueSetReduction
+public import SquareValueCount
+public import MainHasseReduction
+
+@[expose] public section
 
 namespace SparseDeletion
 

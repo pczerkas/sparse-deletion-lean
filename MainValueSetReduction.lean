@@ -1,6 +1,10 @@
-import MainReduction
-import SieveInduction67
-import AffineValueBridge
+module -- shake: keep-all
+
+public import MainReduction
+public import SieveInduction67
+public import AffineValueBridge
+
+@[expose] public section
 
 namespace SparseDeletion
 

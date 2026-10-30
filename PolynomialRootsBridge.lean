@@ -1,5 +1,9 @@
-import QuadraticCharBridge
-import Mathlib.Algebra.Polynomial.Roots
+module -- shake: keep-all
+
+public import QuadraticCharBridge
+public import Mathlib.Algebra.Polynomial.Roots
+
+@[expose] public section
 
 namespace SparseDeletion
 

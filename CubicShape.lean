@@ -1,5 +1,9 @@
-import PolynomialRootsBridge
-import Mathlib.Tactic.ComputeDegree
+module -- shake: keep-all
+
+public import PolynomialRootsBridge
+public import Mathlib.Tactic.ComputeDegree
+
+@[expose] public section
 
 namespace SparseDeletion
 

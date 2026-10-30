@@ -1,5 +1,9 @@
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Data.Nat.Nth
+module -- shake: keep-all
+
+public import Mathlib.Data.Nat.ModEq
+public import Mathlib.Data.Nat.Nth
+
+@[expose] public section
 
 namespace SparseDeletion
 

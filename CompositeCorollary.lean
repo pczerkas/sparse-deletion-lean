@@ -1,6 +1,10 @@
-import MainUnconditionalValueSet
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
+module -- shake: keep-all
+
+public import MainUnconditionalValueSet
+public import Mathlib.NumberTheory.Chebyshev
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+@[expose] public section
 
 namespace SparseDeletion
 

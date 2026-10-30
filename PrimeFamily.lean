@@ -1,6 +1,10 @@
-import SieveInduction
-import Mathlib.NumberTheory.PrimeCounting
-import Mathlib.Data.Nat.GCD.BigOperators
+module -- shake: keep-all
+
+public import SieveInduction
+public import Mathlib.NumberTheory.PrimeCounting
+public import Mathlib.Data.Nat.GCD.BigOperators
+
+@[expose] public section
 
 namespace SparseDeletion
 

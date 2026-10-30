@@ -1,6 +1,10 @@
-import GeneralBlocks
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Topology.Order.OrderClosed
+module -- shake: keep-all
+
+public import GeneralBlocks
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Topology.Order.OrderClosed
+
+@[expose] public section
 
 open Filter
 

@@ -1,5 +1,9 @@
-import CubicSumBridge
-import Mathlib.Data.ZMod.Basic
+module -- shake: keep-all
+
+public import CubicSumBridge
+public import Mathlib.Data.ZMod.Basic
+
+@[expose] public section
 
 namespace SparseDeletion
 

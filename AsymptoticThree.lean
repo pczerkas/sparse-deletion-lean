@@ -1,4 +1,8 @@
-import FiniteBlocks
+module -- shake: keep-all
+
+public import FiniteBlocks
+
+@[expose] public section
 
 namespace SparseDeletion
 

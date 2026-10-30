@@ -1,4 +1,8 @@
-import CubicSumBridge
+module -- shake: keep-all
+
+public import CubicSumBridge
+
+@[expose] public section
 
 namespace SparseDeletion
 

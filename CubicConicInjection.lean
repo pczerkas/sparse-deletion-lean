@@ -1,4 +1,8 @@
-import CubicRepresentative
+module -- shake: keep-all
+
+public import CubicRepresentative
+
+@[expose] public section
 
 namespace SparseDeletion
 

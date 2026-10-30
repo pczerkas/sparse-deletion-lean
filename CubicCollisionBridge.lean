@@ -1,4 +1,8 @@
-import MainExactValueReduction
+module -- shake: keep-all
+
+public import MainExactValueReduction
+
+@[expose] public section
 
 namespace SparseDeletion
 

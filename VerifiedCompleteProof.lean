@@ -1,4 +1,8 @@
-import MainUnconditionalValueSet
+module -- shake: keep-all
+
+public import MainUnconditionalValueSet
+
+@[expose] public section
 
 /-!
 End-to-end formal certificate. The original 3 historical sorry

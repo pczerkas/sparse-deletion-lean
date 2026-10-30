@@ -1,5 +1,9 @@
-import CubicShape
-import SparseDeletion
+module -- shake: keep-all
+
+public import CubicShape
+public import SparseDeletion
+
+@[expose] public section
 
 namespace SparseDeletion
 

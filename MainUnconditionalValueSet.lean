@@ -1,4 +1,8 @@
-import CubicConicInjection
+module -- shake: keep-all
+
+public import CubicConicInjection
+
+@[expose] public section
 
 namespace SparseDeletion
 

@@ -1,4 +1,8 @@
-import ConicPointBound
+module -- shake: keep-all
+
+public import ConicPointBound
+
+@[expose] public section
 
 namespace SparseDeletion
 

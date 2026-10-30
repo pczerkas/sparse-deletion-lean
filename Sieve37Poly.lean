@@ -1,4 +1,8 @@
-import Sieve37
+module -- shake: keep-all
+
+public import Sieve37
+
+@[expose] public section
 
 namespace SparseDeletion
 

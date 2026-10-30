@@ -1,5 +1,9 @@
-import IndexTransfer
-import SieveInduction
+module -- shake: keep-all
+
+public import IndexTransfer
+public import SieveInduction
+
+@[expose] public section
 
 open Filter
 

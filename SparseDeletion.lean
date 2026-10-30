@@ -1,4 +1,8 @@
-import SparseDeletionBase
+module -- shake: keep-all
+
+public import SparseDeletionBase
+
+@[expose] public section
 
 /-!
 # Sparse deletion: sieve interface
