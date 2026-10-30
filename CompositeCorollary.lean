@@ -89,7 +89,22 @@ theorem nonComposites_count_le (N : ℕ) :
       (fun n : ℕ => n = 1 ∨ Nat.Prime n)).card ≤ B.card + 1 := by
     rw [heq]
     omega
-  simpa only [countUpTo, nonComposites, B, Set.mem_setOf_eq] using hc
+  have hnon : countUpTo nonComposites N =
+      ((Finset.range N).filter
+        (fun n : ℕ => n = 1 ∨ Nat.Prime n)).card := by
+    rw [countUpTo]
+    congr 1
+    ext n
+    simp only [Finset.mem_filter, Finset.mem_range]
+    rfl
+  have hprime : countUpTo {n : ℕ | Nat.Prime n} N = B.card := by
+    rw [countUpTo]
+    dsimp [B]
+    congr 1
+    ext n
+    simp only [Finset.mem_filter, Finset.mem_range]
+  rw [hnon, hprime]
+  exact hc
 
 theorem nonComposites_hasDensityZero :
     HasDensityZero nonComposites := by

@@ -21,7 +21,7 @@ noncomputable def zeroIndicator (a : F) : ℤ := by
   classical
   exact if a = 0 then 1 else 0
 
-theorem square_indicator_character (hF : ringChar F ≠ 2) (a : F) :
+theorem square_indicator_character (_hF : ringChar F ≠ 2) (a : F) :
     2 * squareIndicator a =
       quadraticChar F a + 1 + zeroIndicator a := by
   classical

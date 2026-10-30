@@ -16,7 +16,7 @@ attribute [local instance] Classical.propDecidable
     t ↦ t³−t takes at least (2p−1)/3 distinct values. -/
 def CubicValueLowerBound : Prop :=
   ∀ (r : ℕ),
-    letI : Fact (largePrime r).Prime := ⟨largePrime_prime r⟩
+    let _ := Fact.mk (largePrime_prime r)
     2 * largePrime r ≤
       3 * ((Finset.univ : Finset (ZMod (largePrime r))).image
         (fun t : ZMod (largePrime r) => t ^ 3 - t)).card + 1
@@ -33,7 +33,7 @@ theorem main_of_cubic_value_bound
   · intro r b x
     exact primeSquarePass_periodic r b x
   · intro r b
-    letI : Fact (largePrime r).Prime := ⟨largePrime_prime r⟩
+    let _ := Fact.mk (largePrime_prime r)
     let p := largePrime r
     have hp : 37 ≤ p := largePrime_ge r
     have h2 : (2 : ZMod p) ≠ 0 := by

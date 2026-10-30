@@ -17,6 +17,7 @@ def cubicTriple (a x : F) (i : Fin 3) : F × F :=
   else if i = 1 then (x, -a - x)
   else (-a - x, a)
 
+omit [Fintype F] [DecidableEq F] in
 theorem cubicTriple_conic
     (a x : F) (ha : a ≠ x) (hax : cubicVal a = cubicVal x)
     (i : Fin 3) :
@@ -32,6 +33,7 @@ theorem cubicTriple_conic
   · change (-a - x) ^ 2 + (-a - x) * a + a ^ 2 = 1
     linear_combination hconic
 
+omit [Fintype F] [DecidableEq F] in
 theorem cubicTriple_fst_value
     (a x : F) (ha : a ≠ x) (hax : cubicVal a = cubicVal x)
     (i : Fin 3) :
@@ -47,6 +49,7 @@ theorem cubicTriple_fst_value
       _ = 1 := hconic
   fin_cases i <;> simp [cubicTriple, hax, hz]
 
+omit [Fintype F] [DecidableEq F] in
 theorem cubicTriple_inj_fixed_base
     (a x y : F) (hx : x ≠ a) (hy : y ≠ a)
     (i j : Fin 3)

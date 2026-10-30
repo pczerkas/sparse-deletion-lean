@@ -95,7 +95,7 @@ theorem hit_count_mul_general (E : Set ℕ) (M C k : ℕ)
             selectedCount E (M * k) (M * k + M)) := by ring
 
 theorem hit_count_bound_general (E : Set ℕ) (M C N : ℕ)
-    (hM : 0 < M)
+    (_hM : 0 < M)
     (hsieve : ∀ v : ℕ, ∀ b : ℤ, (cubicCandidates v M b).card ≤ C) :
     countUpTo (hitSet E) N ≤
       C * (N / M) + M * countUpTo E N + N % M := by

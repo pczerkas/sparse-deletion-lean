@@ -18,6 +18,7 @@ theorem primeSquarePass_periodic (r : ℕ) (b : ℤ) (x : ℕ) :
   unfold primeSquarePass
   simp only [ZMod.natCast_mod]
 
+set_option linter.style.haveILetI false in
 theorem primeSquarePass_of_triangular (r : ℕ) (b : ℤ) (x : ℕ)
     (ht : TriangularInt (naturalSquareSum x + b)) :
     primeSquarePass r b x := by
@@ -42,7 +43,7 @@ the uniform cubic-character Hasse bound for this concrete prime family. -/
 theorem main_of_concrete_hasse_bound
     (E : Set ℕ) (hE : HasDensityZero E)
     (hhasse : ∀ (r : ℕ) (b : ℤ),
-      letI : Fact (largePrime r).Prime := ⟨largePrime_prime r⟩
+      let _ := Fact.mk (largePrime_prime r)
       (quadraticCharSum
           (fun z : ZMod (largePrime r) =>
             (primeCubicPoly (largePrime r) (b : ZMod (largePrime r))).eval z) : ℝ) ≤
@@ -54,7 +55,7 @@ theorem main_of_concrete_hasse_bound
   · intro r b x
     exact primeSquarePass_periodic r b x
   · intro r b
-    letI : Fact (largePrime r).Prime := ⟨largePrime_prime r⟩
+    let _ := Fact.mk (largePrime_prime r)
     have hprime := primeCubic_sieve_of_hasse (largePrime r) (largePrime_ge r)
       (b : ZMod (largePrime r)) (hhasse r b)
     have hpred (x : ℕ) : primeSquarePass r b x ↔
