@@ -176,6 +176,20 @@ theorem zeroDensityByIndex_of_value_density
 
 #print axioms zeroDensityByIndex_of_value_density
 
+/-- Any fixed CRT contraction numer/denom < 1 forces zero density of
+    triangular hits after arbitrary density-zero deletion. -/
+theorem zeroDensityByIndex_of_uniform_ratio_sieves
+    (numer denom : ℕ) (hnum : 0 < numer) (hfrac : numer < denom)
+    (E : Set ℕ) (hE : HasDensityZero E)
+    (hsieves : ∀ r : ℕ, ∃ M : ℕ, 0 < M ∧
+      ∀ (u : ℕ) (b : ℤ),
+        denom ^ r * (cubicCandidates u M b).card ≤ numer ^ r * M) :
+    HasDensityZero { n : ℕ | Triangular (keptIndexPrefix E n) } := by
+  change HasDensityZero (indexHitSet E)
+  exact zeroDensityByIndex_of_value_density E hE
+    (zeroDensityByValue_of_uniform_ratio_sieves numer denom
+      hnum hfrac E hE hsieves)
+
 /-- Main theorem conditional only on the arithmetical uniform cubic sieve.
 All sparse-deletion block counting, limits, and index transfer are proved. -/
 theorem zeroDensityByIndex_of_all_sieves

@@ -97,6 +97,32 @@ CubicRepresentative.lean
 CubicConicInjection.lean
 ```
 
+### Generic CRT contraction (refactored)
+
+The CRT sieve is proved once for arbitrary natural-number coefficients
+`numer` and `denom`:
+
+```lean
+crt_sieve_product_count_param
+uniformCubicSieve_of_modular_family_param
+```
+
+If the surviving fraction for every pairwise-coprime modulus is at most
+`numer / denom`, with `0 < numer < denom`, the iterated sieve has
+survival fraction at most `(numer / denom)^r`. The density-zero transfer
+is also parametric:
+
+```lean
+zeroDensityByValue_of_uniform_ratio_sieves
+zeroDensityByIndex_of_uniform_ratio_sieves
+zeroDensityByIndex_of_modular_family_param
+```
+
+The actual proof uses `numer = 6` and `denom = 7` directly, without
+grouping pairs of modular tests to obtain a weaker `3/4` estimate.
+Previous `3/4` and `6/7` theorem interfaces are retained as
+compatibility specializations. No additional libraries are needed.
+
 ### 2. Transfer to sparse deletion
 
 The finite-field estimate is transferred to the original problem through:
