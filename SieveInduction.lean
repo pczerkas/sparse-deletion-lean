@@ -177,32 +177,7 @@ theorem uniformCubicSieve_of_modular_family_param
       Nat.mul_le_mul_left _ hperiod
     _ ≤ numer ^ r * M := hbound
 
-/-- Compatibility specialization: each modular test retains at most 3/4. -/
-theorem crt_sieve_product_count (q : ℕ → ℕ) (P : ℕ → ℤ → ℕ → Prop)
-    (hq : ∀ r, 0 < q r)
-    (hcop : ∀ r, Nat.Coprime (modulusProd q r) (q r))
-    (hper : ∀ r b x, P r b (x % q r) ↔ P r b x)
-    (hgood : ∀ r b, 4 * ((Finset.range (q r)).filter (P r b)).card ≤ 3 * q r)
-    (r : ℕ) (b : ℤ) :
-    4 ^ r * ((Finset.range (modulusProd q r)).filter
-      (passesProd P b r)).card ≤ 3 ^ r * modulusProd q r :=
-  crt_sieve_product_count_param 3 4 q P hq hcop hper hgood r b
-
-/-- Compatibility specialization for the original 3/4 sieve. -/
-theorem uniformCubicSieve_of_modular_family
-    (q : ℕ → ℕ) (P : ℕ → ℤ → ℕ → Prop)
-    (hq : ∀ r, 0 < q r)
-    (hcop : ∀ r, Nat.Coprime (modulusProd q r) (q r))
-    (hper : ∀ r b x, P r b (x % q r) ↔ P r b x)
-    (hgood : ∀ r b, 4 * ((Finset.range (q r)).filter (P r b)).card ≤ 3 * q r)
-    (htri : ∀ r b x, TriangularInt (naturalSquareSum x + b) → P r b x)
-    (r : ℕ) :
-    ∃ M : ℕ, 0 < M ∧
-      ∀ (u : ℕ) (b : ℤ),
-        4 ^ r * (cubicCandidates u M b).card ≤ 3 ^ r * M :=
-  uniformCubicSieve_of_modular_family_param 3 4 q P hq hcop hper hgood htri r
-
-#print axioms SparseDeletion.crt_sieve_product_count
-#print axioms SparseDeletion.uniformCubicSieve_of_modular_family
+#print axioms SparseDeletion.crt_sieve_product_count_param
+#print axioms SparseDeletion.uniformCubicSieve_of_modular_family_param
 
 end SparseDeletion

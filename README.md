@@ -120,15 +120,16 @@ zeroDensityByIndex_of_modular_family_param
 
 The actual proof uses `numer = 6` and `denom = 7` directly, without
 grouping pairs of modular tests to obtain a weaker `3/4` estimate.
-Previous `3/4` and `6/7` theorem interfaces are retained as
-compatibility specializations. No additional libraries are needed.
+The Hasse-based `3/4` path and the unconditional value-set `6/7` path
+both call the same parametric interface directly. The obsolete fixed-ratio
+compatibility wrappers have been removed. No additional libraries are needed.
 
 ### 2. Transfer to sparse deletion
 
 The finite-field estimate is transferred to the original problem through:
 
 ```text
-MainValueSetReduction.lean
+MainReduction.lean
 MainExactValueReduction.lean
 MainUnconditionalValueSet.lean
 ```
