@@ -103,15 +103,13 @@ theorem cubicCode_inj (x y : F) (i j : Fin 3)
   have hyb : y ≠ b := Ne.symm (Finset.mem_filter.mp hy).2
   have hax : cubicVal a = cubicVal x := cubicRep_is_root x
   have hby : cubicVal b = cubicVal y := cubicRep_is_root y
-  have hrootx : cubicVal (cubicCode (x, i)).1 = cubicVal x :=
-    cubicTriple_fst_value a x hxa.symm hax i
-  have hrooty : cubicVal (cubicCode (y, j)).1 = cubicVal y :=
-    cubicTriple_fst_value b y hyb.symm hby j
   have hxy : cubicVal x = cubicVal y := by
-    calc
-      _ = cubicVal (cubicCode (x, i)).1 := hrootx.symm
-      _ = cubicVal (cubicCode (y, j)).1 := by rw [heq]
-      _ = cubicVal y := hrooty
+    have h := congrArg (fun z : F × F => cubicVal z.1) heq
+    change cubicVal (cubicTriple a x i).1 =
+      cubicVal (cubicTriple b y j).1 at h
+    rw [cubicTriple_fst_value a x hxa.symm hax i,
+      cubicTriple_fst_value b y hyb.symm hby j] at h
+    exact h
   have hab : a = b := congrArg cubicRep hxy
   have hya : y ≠ a := by rw [hab]; exact hyb
   have hc : cubicTriple a x i = cubicTriple a y j := by
@@ -123,11 +121,10 @@ theorem cubicExtra_three_le_conic_card :
     3 * (cubicExtra (F := F)).card ≤ (cubicConicPoints (F := F)).card := by
   let D : Finset F := cubicExtra
   let S : Finset (F × Fin 3) := D.product Finset.univ
-  have hsub : S.image cubicCode ⊆ cubicConicPoints (F := F) := by
+  have hmaps : Set.MapsTo cubicCode (↑S : Set (F × Fin 3))
+      (↑(cubicConicPoints (F := F)) : Set (F × F)) := by
     intro z hz
-    obtain ⟨z, hzS, rfl⟩ := Finset.mem_image.mp hz
-    have hx := (Finset.mem_product.mp hzS).1
-    exact cubicCode_mem_conic z.1 hx z.2
+    exact cubicCode_mem_conic z.1 (Finset.mem_product.mp hz).1 z.2
   have hinj : Set.InjOn cubicCode (↑S : Set (F × Fin 3)) := by
     intro z hz w hw heq
     have hx := (Finset.mem_product.mp hz).1
@@ -135,11 +132,8 @@ theorem cubicExtra_three_le_conic_card :
     have ⟨hxy, hij⟩ :=
       cubicCode_inj z.1 w.1 z.2 w.2 hx hy heq
     exact Prod.ext hxy hij
-  have hc : S.card ≤ (cubicConicPoints (F := F)).card := by
-    calc
-      S.card = (S.image cubicCode).card :=
-        (Finset.card_image_of_injOn hinj).symm
-      _ ≤ _ := Finset.card_le_card hsub
+  have hc : S.card ≤ (cubicConicPoints (F := F)).card :=
+    Finset.card_le_card_of_injOn cubicCode hmaps hinj
   change (D.product (Finset.univ : Finset (Fin 3))).card ≤
     (cubicConicPoints (F := F)).card at hc
   rw [Finset.product_eq_sprod, Finset.card_product,

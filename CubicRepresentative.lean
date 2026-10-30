@@ -42,26 +42,25 @@ noncomputable def cubicExtra : Finset F :=
 theorem cubicFixed_card_eq_image :
     (cubicFixed (F := F)).card =
     ((Finset.univ : Finset F).image cubicVal).card := by
-  have heq : (cubicFixed (F := F)).image cubicVal =
+  have hsurj : (cubicFixed (F := F)).image cubicVal =
       (Finset.univ : Finset F).image cubicVal := by
-    ext z
+    ext v
     simp only [Finset.mem_image, Finset.mem_univ, true_and]
     constructor
     · rintro ⟨x, _, rfl⟩
       exact ⟨x, rfl⟩
     · rintro ⟨x, rfl⟩
       refine ⟨cubicRep (cubicVal x), ?_, cubicRep_is_root x⟩
-      simp only [cubicFixed, Finset.mem_filter, Finset.mem_univ, true_and]
-      exact cubicRep_stable x
+      simpa [cubicFixed] using cubicRep_stable x
   have hinj : Set.InjOn cubicVal (↑(cubicFixed (F := F)) : Set F) := by
     intro x hx y hy hxy
-    have hrx := (Finset.mem_filter.mp hx).2
-    have hry := (Finset.mem_filter.mp hy).2
+    have hx' : cubicRep (cubicVal x) = x := (Finset.mem_filter.mp hx).2
+    have hy' : cubicRep (cubicVal y) = y := (Finset.mem_filter.mp hy).2
     calc
-      x = cubicRep (cubicVal x) := hrx.symm
-      _ = cubicRep (cubicVal y) := by rw [hxy]
-      _ = y := hry
-  rw [← heq]
+      x = cubicRep (cubicVal x) := hx'.symm
+      _ = cubicRep (cubicVal y) := congrArg cubicRep hxy
+      _ = y := hy'
+  rw [← hsurj]
   exact (Finset.card_image_of_injOn hinj).symm
 
 /-- The number of nonrepresentatives is exactly p minus the value-set size. -/
