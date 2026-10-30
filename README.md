@@ -97,6 +97,43 @@ CubicRepresentative.lean
 CubicConicInjection.lean
 ```
 
+### Exact cubic value-set/conic identity
+
+The optional `CubicConicExact.lean` module strengthens the conic injection
+to a bijection. For **every finite field** `F` (including characteristics
+2 and 3), it verifies the exact identity
+
+```text
+3 * |F| = 3 * |{x³ - x : x ∈ F}| + |{(x,y) ∈ F² : x² + xy + y² = 1}|.
+```
+
+The key additional lemma is `cubicCode_surj_conic`; the final theorem is
+`cubic_value_set_conic_exact`. These proofs use no `sorryAx`.
+The follow-up module `ConicExactCount.lean` completes the elementary count
+without character sums or the Weil bound. For every finite field `F` with
+`(3 : F) ≠ 0`, it proves
+
+```text
+|{(x,y) ∈ F² : x² + xy + y² = 1}| + |{t ∈ F : t² + t + 1 = 0}| = |F| + 1.
+```
+
+It then proves the quadratic has either zero or two roots, derives the
+conic point count for `|F| % 3 = 1` and `|F| % 3 = 2`, and finally proves
+**the exact classical cubic value-set formula**:
+
+```text
+|{x³ - x : x ∈ F}| = (2*|F|+1)/3  if |F| % 3 = 1;
+|{x³ - x : x ∈ F}| = (2*|F|-1)/3  if |F| % 3 = 2.
+```
+
+`cubic_value_set_card_prime` specializes this to all prime fields `ZMod p`
+with `p ≥ 5`, including a proof that the two congruence cases are exhaustive.
+The exact counting modules are optional and are not needed for the existing
+main density theorem. The result is classical, not a novelty claim.
+
+Verify with `lake build VerifiedExactValueSet VerifiedCompleteProof CompositeCorollary`.
+All printed axioms are the standard Lean axioms, with no `sorryAx`.
+
 ### Generic CRT contraction (refactored)
 
 The CRT sieve is proved once for arbitrary natural-number coefficients
