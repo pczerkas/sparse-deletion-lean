@@ -255,3 +255,6 @@ name = "VerifiedCompleteProof"
 
 [[lean_lib]]
 name = "CompositeCorollary"
+
+[[lean_lib]]
+name = "CubicConicExact"

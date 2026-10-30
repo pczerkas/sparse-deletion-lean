@@ -97,6 +97,24 @@ CubicRepresentative.lean
 CubicConicInjection.lean
 ```
 
+### Exact cubic value-set/conic identity
+
+The optional `CubicConicExact.lean` module strengthens the conic injection
+to a bijection. For **every finite field** `F` (including characteristics
+2 and 3), it verifies the exact identity
+
+```text
+3 * |F| = 3 * |{x³ - x : x ∈ F}| + |{(x,y) ∈ F² : x² + xy + y² = 1}|.
+```
+
+The key additional lemma is `cubicCode_surj_conic`; the final theorem is
+`cubic_value_set_conic_exact`. These proofs use no `sorryAx`.
+This identity does **not** by itself evaluate the conic's point count
+in terms of `|F|` or congruence classes, and the module is not required
+for the existing main density theorem.
+
+Verify it with `lake build CubicConicExact`.
+
 ### Generic CRT contraction (refactored)
 
 The CRT sieve is proved once for arbitrary natural-number coefficients
