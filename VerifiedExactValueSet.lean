@@ -1,0 +1,15 @@
+module -- shake: keep-all
+
+public import ConicExactCount
+
+@[expose] public section
+
+#print axioms SparseDeletion.cubicCode_surj_conic
+#print axioms SparseDeletion.cubic_value_set_conic_exact
+#print axioms SparseDeletion.cubicConicPoints_card_add_quadratic_roots
+#print axioms SparseDeletion.conic_quadratic_roots_card_eq_zero_or_two
+#print axioms SparseDeletion.cubicConicPoints_card_of_mod_three_one
+#print axioms SparseDeletion.cubicConicPoints_card_of_mod_three_two
+#print axioms SparseDeletion.cubic_value_set_card_of_mod_three_one
+#print axioms SparseDeletion.cubic_value_set_card_of_mod_three_two
+#print axioms SparseDeletion.cubic_value_set_card_prime

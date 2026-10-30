@@ -258,3 +258,9 @@ name = "CompositeCorollary"
 
 [[lean_lib]]
 name = "CubicConicExact"
+
+[[lean_lib]]
+name = "ConicExactCount"
+
+[[lean_lib]]
+name = "VerifiedExactValueSet"
