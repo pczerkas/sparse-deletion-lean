@@ -1,7 +1,7 @@
 module -- shake: keep-all
 
 public import MainReduction
-public import SieveInduction67
+public import SieveInduction
 public import AffineValueBridge
 
 @[expose] public section

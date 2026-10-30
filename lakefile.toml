@@ -227,9 +227,6 @@ name = "ImageBoundBridge"
 name = "AffineValueBridge"
 
 [[lean_lib]]
-name = "SieveInduction67"
-
-[[lean_lib]]
 name = "MainValueSetReduction"
 
 [[lean_lib]]
