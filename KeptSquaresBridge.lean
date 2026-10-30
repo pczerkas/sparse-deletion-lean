@@ -1,7 +1,7 @@
 module -- shake: keep-all
 
-public import SparseBlocks
-import Mathlib.Algebra.BigOperators.Ring.Finset
+public import RemovedSquares
+public import Mathlib.Algebra.BigOperators.Ring.Finset
 
 @[expose] public section
 
@@ -53,27 +53,6 @@ theorem triangular_iff_triangularInt_cast (s : ℕ) :
   · rintro ⟨m, hm⟩
     exact ⟨m, by exact_mod_cast hm⟩
 
-noncomputable def keptWindowCandidates (E : Set ℕ) (u : ℕ) : Finset ℕ := by
-  classical
-  exact (Finset.Ico u (u + 47027)).filter
-    (fun x => Triangular (keptSquaresUpTo E x))
-
-theorem clean_block_kept_triangular_le_13608
-    (E : Set ℕ) (u : ℕ)
-    (hclean : ∀ k : ℕ, u < k → k < u + 47027 → k ∉ E) :
-    (keptWindowCandidates E u).card ≤ 13608 := by
-  classical
-  have hs :
-    keptWindowCandidates E u = cleanWindowCandidates E u := by
-      ext x
-      simp only [keptWindowCandidates, cleanWindowCandidates, Finset.mem_filter, Finset.mem_Ico]
-      exact and_congr_right (fun _ =>
-        (triangular_iff_triangularInt_cast _).trans
-          (by rw [keptSquaresUpTo_cast_eq_shiftedRemaining]))
-  rw [hs]
-  exact clean_block_triangular_le_13608 E u hclean
-
 end SparseDeletion
 
 #print axioms SparseDeletion.keptSquaresUpTo_cast_eq_shiftedRemaining
-#print axioms SparseDeletion.clean_block_kept_triangular_le_13608

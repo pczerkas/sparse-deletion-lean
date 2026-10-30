@@ -21,16 +21,6 @@ namespace SparseDeletion
 def Triangular (s : ℕ) : Prop :=
   ∃ m : ℕ, 2 * s = m * (m + 1)
 
-theorem triangular_iff_odd_square (s : ℕ) :
-    Triangular s ↔ ∃ m : ℕ, (2 * m + 1) ^ 2 = 8 * s + 1 := by
-  constructor
-  · rintro ⟨m, hm⟩
-    refine ⟨m, ?_⟩
-    nlinarith
-  · rintro ⟨m, hm⟩
-    refine ⟨m, ?_⟩
-    nlinarith
-
 def prefixSquares (a : ℕ → ℕ) (n : ℕ) : ℕ :=
   (Finset.range n).sum (fun i => (a i) ^ 2)
 
@@ -50,20 +40,6 @@ noncomputable def keptIndexPrefix (E : Set ℕ) (n : ℕ) : ℕ :=
 
 def naturalSquareSum (X : ℕ) : ℤ :=
   (Finset.range (X + 1)).sum (fun k => (k : ℤ) ^ 2)
-
-theorem naturalSquareSum_formula (X : ℕ) :
-    6 * naturalSquareSum X =
-      (X : ℤ) * ((X : ℤ) + 1) * (2 * (X : ℤ) + 1) := by
-  induction X with
-  | zero =>
-      norm_num [naturalSquareSum]
-  | succ n ih =>
-      have hs : naturalSquareSum (n + 1) =
-          naturalSquareSum n + ((n + 1 : ℕ) : ℤ) ^ 2 := by
-        simp [naturalSquareSum, Finset.sum_range_succ]
-      rw [hs]
-      push_cast
-      nlinarith [ih]
 
 theorem naturalSquareSum_succ (x : ℕ) :
     naturalSquareSum (x + 1) = naturalSquareSum x + ((x + 1 : ℕ) : ℤ) ^ 2 := by

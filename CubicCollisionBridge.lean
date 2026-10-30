@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import MainExactValueReduction
+public import Mathlib.Tactic
 
 @[expose] public section
 

@@ -3,7 +3,9 @@ module -- shake: keep-all
 public import MainReduction
 public import AffineValueBridge
 public import SquareValueCount
-public import MainHasseReduction
+public import PrimeSquarePass
+public import ImageBoundBridge
+public import ResidueCountBridge
 
 @[expose] public section
 

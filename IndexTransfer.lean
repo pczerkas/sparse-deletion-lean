@@ -1,7 +1,7 @@
 module -- shake: keep-all
 
 public import IndexGrowth
-public import AsymptoticThree
+public import DensityToZero
 public import Mathlib.Analysis.SpecificLimits.Basic
 
 @[expose] public section
@@ -191,78 +191,5 @@ theorem zeroDensityByIndex_of_uniform_ratio_sieves
       hnum hfrac E hE hsieves)
 
 #print axioms zeroDensityByIndex_of_uniform_ratio_sieves
-
-/-- Unconditional quantitative bound on triangular hits by enumeration index,
-using the three explicitly checked primes 31, 37 and 41. -/
-theorem eventually_index_count_bound_three (E : Set ℕ)
-    (hE : HasDensityZero E) :
-    ∀ᶠ n : ℕ in atTop,
-      countUpTo (indexHitSet E) (n + 1) ≤
-        13608 * ((2 * n + 2) / 47027) +
-        47027 * countUpTo E (2 * n + 2) +
-        (2 * n + 2) % 47027 := by
-  have hInf := keptPred_infinite E hE
-  filter_upwards [eventually_keptNth_lt_twice E hE] with n hn
-  calc
-    countUpTo (indexHitSet E) (n + 1) ≤
-        countUpTo (hitSet E) (2 * n + 2) :=
-      indexHit_count_le_value_count E hInf n hn
-    _ ≤ 13608 * ((2 * n + 2) / 47027) +
-        47027 * countUpTo E (2 * n + 2) +
-        (2 * n + 2) % 47027 :=
-      hit_count_bound E (2 * n + 2)
-
-#print axioms eventually_index_count_bound_three
-
-
-/-- A fully verified nontrivial asymptotic upper-density bound for index
-hits.  The factor 2 comes from a coarse bound on the n-th surviving value. -/
-theorem eventually_index_density_le_three
-    (E : Set ℕ) (hE : HasDensityZero E)
-    (ε : ℝ) (hε : 0 < ε) :
-    ∀ᶠ N : ℕ in atTop,
-      (countUpTo (indexHitSet E) N : ℝ) / (N : ℝ) ≤
-      2 * ((13608 : ℝ) / 47027) + ε := by
-  have hInf := keptPred_infinite E hE
-  have hmap : Tendsto (fun n : ℕ => 2 * (n + 1)) atTop atTop := by
-    apply tendsto_atTop.mpr
-    intro B
-    filter_upwards [eventually_ge_atTop B] with n hn
-    omega
-  have hval : ∀ᶠ n : ℕ in atTop,
-      (countUpTo (hitSet E) (2 * (n + 1)) : ℝ) /
-        (2 * (n + 1) : ℕ) ≤
-        (13608 : ℝ) / 47027 + ε / 2 :=
-    hmap.eventually (eventually_hit_density_le_three E hE (ε / 2)
-      (by linarith))
-  have hshift : ∀ᶠ n : ℕ in atTop,
-      (countUpTo (indexHitSet E) (n + 1) : ℝ) / (n + 1 : ℕ) ≤
-        2 * ((13608 : ℝ) / 47027) + ε := by
-    filter_upwards [eventually_keptNth_lt_twice E hE, hval] with n hb hv
-    have hcount : countUpTo (indexHitSet E) (n + 1) ≤
-        countUpTo (hitSet E) (2 * (n + 1)) := by
-      simpa only [show 2 * n + 2 = 2 * (n + 1) by omega] using
-        indexHit_count_le_value_count E hInf n hb
-    have hc : (countUpTo (indexHitSet E) (n + 1) : ℝ) ≤
-        (countUpTo (hitSet E) (2 * (n + 1)) : ℝ) := by
-      exact_mod_cast hcount
-    have hpos : (0 : ℝ) < (n + 1 : ℕ) := by positivity
-    have hratio :
-        (countUpTo (indexHitSet E) (n + 1) : ℝ) / (n + 1 : ℕ) ≤
-          (2 : ℝ) *
-            ((countUpTo (hitSet E) (2 * (n + 1)) : ℝ) /
-               (2 * (n + 1) : ℕ)) := by
-      calc
-        _ ≤ (countUpTo (hitSet E) (2 * (n + 1)) : ℝ) / (n + 1 : ℕ) :=
-          div_le_div_of_nonneg_right hc hpos.le
-        _ = _ := by push_cast; field_simp
-    linarith
-  have hfull : ∀ᶠ N : ℕ in Filter.map (fun n : ℕ => n + 1) atTop,
-      (countUpTo (indexHitSet E) N : ℝ) / (N : ℝ) ≤
-        2 * ((13608 : ℝ) / 47027) + ε := hshift
-  simpa only [Filter.map_add_atTop_eq_nat] using hfull
-
-#print axioms eventually_index_density_le_three
-
 
 end SparseDeletion

@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import CubicSumBridge
+public import Mathlib.Tactic
 
 @[expose] public section
 

@@ -32,11 +32,34 @@ jobs:
           lint: false
           use-github-cache: true
 
-      - name: Build verification targets
+      - name: Check build targets and documentation references
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import tomllib
+
+          sources = {path.stem for path in Path(".").glob("*.lean")}
+          config = tomllib.loads(Path("lakefile.toml").read_text())
+          targets = {entry["name"] for entry in config["lean_lib"]}
+          if sources != targets:
+              raise SystemExit(f"Lake targets mismatch: only in source={sources-targets}, "
+                               f"only in lakefile={targets-sources}")
+          for doc in ("README.md", "PROOF_ARCHITECTURE.md"):
+              names = set(re.findall(r"\b([A-Za-z][A-Za-z0-9_]+)\.lean\b",
+                                     Path(doc).read_text()))
+              missing = names - sources
+              if missing:
+                  raise SystemExit(f"{doc} references missing Lean modules: {sorted(missing)}")
+          print(f"OK: {len(sources)} existing Lean modules and both documents.")
+          PY
+
+      - name: Build all maintained proof certificates
         shell: bash
         run: |
           set -o pipefail
-          lake build VerifiedCompleteProof CompositeCorollary 2>&1 | tee lean-build.log
+          lake build 2>&1 | tee lean-build.log
           status=${PIPESTATUS[0]}
           printf '\nBUILD_EXIT=%s\n' "$status" | tee -a lean-build.log
           exit "$status"

@@ -1,7 +1,7 @@
 module -- shake: keep-all
 
 public import CubicShape
-public import SparseDeletion
+public import SparseDeletionBase
 
 @[expose] public section
 
@@ -36,26 +36,6 @@ theorem cubicShape_eval_nat (x : ℕ) (b : F) (h6 : (6 : F) ≠ 0) :
   simp only [cubicShape, Polynomial.eval_add, Polynomial.eval_mul,
     Polynomial.eval_C, Polynomial.eval_X, Polynomial.eval_pow]
   ring
-
-omit [Fintype F] [DecidableEq F] in
-theorem cubicShape_sum_nonzero (b : F)
-    (h6 : (6 : F) ≠ 0) (h16 : (16 : F) ≠ 0) :
-    cubicShape (16 * (6 : F)⁻¹) (24 * (6 : F)⁻¹)
-       (8 * (6 : F)⁻¹) (8 * b + 1) ≠ 0 := by
-  apply cubicShape_ne_zero
-  exact mul_ne_zero h16 (inv_ne_zero h6)
-
-theorem cubicShape_sum_roots_le_three (b : F)
-    (h6 : (6 : F) ≠ 0) (h16 : (16 : F) ≠ 0) :
-    ((Finset.univ : Finset F).filter
-      (fun x => (cubicShape (16 * (6 : F)⁻¹) (24 * (6 : F)⁻¹)
-        (8 * (6 : F)⁻¹) (8 * b + 1)).eval x = 0)).card ≤ 3 := by
-  apply cubicShape_roots_le_three
-  exact mul_ne_zero h16 (inv_ne_zero h6)
-
-#print axioms naturalSquareSum_field_cast
-#print axioms cubicShape_eval_nat
-#print axioms cubicShape_sum_roots_le_three
 
 end FormulaBridge
 end SparseDeletion

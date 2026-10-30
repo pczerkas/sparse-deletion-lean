@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import DensityToZero
+public import KeptSquaresBridge
 
 @[expose] public section
 
