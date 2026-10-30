@@ -102,7 +102,7 @@ theorem nonComposites_hasDensityZero :
   have hupper : Tendsto
       (fun N : ℕ => (countUpTo {n : ℕ | Nat.Prime n} N : ℝ) / (N : ℝ) +
         (1 : ℝ) / (N : ℝ)) atTop (nhds (0 : ℝ)) := by
-    convert hP.add h1 using 1 <;> simp
+    convert hP.add h1 using 1; simp
   apply tendsto_order.2
   constructor
   · intro a ha

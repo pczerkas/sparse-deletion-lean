@@ -82,7 +82,7 @@ theorem eventually_hit_ratio_le (E : Set ℕ) (hE : HasDensityZero E)
   have hsum : Tendsto (fun N : ℕ =>
       (M : ℝ) * ((countUpTo E N : ℝ) / (N : ℝ)) +
       (M : ℝ) / (N : ℝ)) atTop (nhds (0 : ℝ)) := by
-    convert hmul.add htail using 1 <;> simp
+    convert hmul.add htail using 1; simp
   have hlt : ∀ᶠ N : ℕ in atTop,
       (M : ℝ) * ((countUpTo E N : ℝ) / (N : ℝ)) +
       (M : ℝ) / (N : ℝ) < ε :=

@@ -30,7 +30,7 @@ theorem conic_slope_ne_tangent (h3 : (3 : F) ≠ 0)
   have hu : u ≠ 0 := sub_ne_zero.mpr hx
   have hy : t * u = y := conic_slope_coordinates x y hx
   have hqx : (1 + u) ^ 2 + (1 + u) * (t * u) + (t * u) ^ 2 = 1 := by
-    convert hxy using 1 <;> simp [u, hy] <;> ring
+    convert hxy using 1; simp [u, hy]
   have hfac := (conic_line_factor t u).mp hqx
   have hlin := (mul_eq_zero.mp hfac).resolve_left hu
   intro ht
@@ -58,9 +58,9 @@ theorem conic_slope_unique (h3 : (3 : F) ≠ 0)
     rw [show t = y' / (x' - 1) from hslope]
     exact conic_slope_coordinates x' y' hx'
   have hqu : (1 + u) ^ 2 + (1 + u) * (t * u) + (t * u) ^ 2 = 1 := by
-    convert hxy using 1 <;> simp [u, hy] <;> ring
+    convert hxy using 1; simp [u, hy]
   have hqv : (1 + v) ^ 2 + (1 + v) * (t * v) + (t * v) ^ 2 = 1 := by
-    convert hx'y' using 1 <;> simp [v, hy'] <;> ring
+    convert hx'y' using 1; simp [v, hy']
   have huv : u = v := conic_line_unique h3 t u v hu hv hqu hqv
   constructor
   · dsimp [u, v] at huv

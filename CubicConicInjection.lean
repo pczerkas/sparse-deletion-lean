@@ -54,12 +54,7 @@ theorem cubicTriple_inj_fixed_base
     x = y ∧ i = j := by
   fin_cases i <;> fin_cases j
   all_goals
-    simp only [cubicTriple, show (0 : Fin 3) = 0 from rfl,
-      show (1 : Fin 3) ≠ 0 by decide,
-      show (1 : Fin 3) = 1 from rfl,
-      show (2 : Fin 3) ≠ 0 by decide,
-      show (2 : Fin 3) ≠ 1 by decide,
-      ↓reduceIte] at h
+    simp only [cubicTriple] at h
   · exact ⟨(Prod.mk.inj h).2, rfl⟩
   · have hz := (Prod.mk.inj h).1
     exact (hy hz.symm).elim
