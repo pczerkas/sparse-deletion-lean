@@ -264,3 +264,12 @@ name = "ConicExactCount"
 
 [[lean_lib]]
 name = "VerifiedExactValueSet"
+
+[[lean_lib]]
+name = "SparsePerturbation"
+
+[[lean_lib]]
+name = "CountingDensity"
+
+[[lean_lib]]
+name = "VerifiedPerturbation"
