@@ -50,7 +50,8 @@ theorem main_of_concrete_hasse_bound
         2 * Real.sqrt (largePrime r : ℝ)) :
     HasDensityZero { n : ℕ | Triangular (keptIndexPrefix E n) } := by
   classical
-  apply zeroDensityByIndex_of_modular_family
+  apply zeroDensityByIndex_of_modular_family_param 3 4
+    (by decide) (by decide)
     largePrime primeSquarePass largePrime_positive largePrime_coprime_previous
   · intro r b x
     exact primeSquarePass_periodic r b x

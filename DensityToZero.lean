@@ -9,9 +9,9 @@ open Filter
 
 namespace SparseDeletion
 
-/-- If a uniformly strong cubic sieve exists for every r, the value-indexed
-triangular hits of a zero-density deletion have density zero. The sieve
-assumption is NOT yet established in general. -/
+/-- A uniformly contracting family of finite sieves forces zero density of
+triangular hits indexed by retained values, for any density-zero deletion.
+The arithmetic construction of the modular family is handled separately. -/
 theorem zeroDensityByValue_of_uniform_ratio_sieves
     (numer denom : ℕ) (hnum : 0 < numer) (hfrac : numer < denom)
     (E : Set ℕ)
@@ -68,17 +68,6 @@ theorem zeroDensityByValue_of_uniform_ratio_sieves
     filter_upwards [happrox] with N hbound
     linarith
 
-/-- Original 3/4-density interface, retained for compatibility. -/
-theorem zeroDensityByValue_of_all_sieves (E : Set ℕ)
-    (hE : HasDensityZero E)
-    (hsieves : ∀ r : ℕ, ∃ M : ℕ, 0 < M ∧
-       ∀ (u : ℕ) (b : ℤ),
-          4 ^ r * (cubicCandidates u M b).card ≤ 3 ^ r * M) :
-    HasDensityZero (hitSet E) :=
-  zeroDensityByValue_of_uniform_ratio_sieves 3 4
-    (by decide) (by decide) E hE hsieves
-
-
 end SparseDeletion
 
-#print axioms SparseDeletion.zeroDensityByValue_of_all_sieves
+#print axioms SparseDeletion.zeroDensityByValue_of_uniform_ratio_sieves

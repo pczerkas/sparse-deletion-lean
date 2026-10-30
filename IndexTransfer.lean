@@ -190,20 +190,7 @@ theorem zeroDensityByIndex_of_uniform_ratio_sieves
     (zeroDensityByValue_of_uniform_ratio_sieves numer denom
       hnum hfrac E hE hsieves)
 
-/-- Main theorem conditional only on the arithmetical uniform cubic sieve.
-All sparse-deletion block counting, limits, and index transfer are proved. -/
-theorem zeroDensityByIndex_of_all_sieves
-    (E : Set ℕ) (hE : HasDensityZero E)
-    (hsieves : ∀ r : ℕ, ∃ M : ℕ, 0 < M ∧
-      ∀ (u : ℕ) (b : ℤ),
-        4 ^ r * (cubicCandidates u M b).card ≤ 3 ^ r * M) :
-    HasDensityZero { n : ℕ | Triangular (keptIndexPrefix E n) } := by
-  change HasDensityZero (indexHitSet E)
-  exact zeroDensityByIndex_of_value_density E hE
-    (zeroDensityByValue_of_all_sieves E hE hsieves)
-
-#print axioms zeroDensityByIndex_of_all_sieves
-
+#print axioms zeroDensityByIndex_of_uniform_ratio_sieves
 
 /-- Unconditional quantitative bound on triangular hits by enumeration index,
 using the three explicitly checked primes 31, 37 and 41. -/

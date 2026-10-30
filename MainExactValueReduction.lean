@@ -1,6 +1,7 @@
 module -- shake: keep-all
 
-public import MainValueSetReduction
+public import MainReduction
+public import AffineValueBridge
 public import SquareValueCount
 public import MainHasseReduction
 
@@ -28,7 +29,8 @@ theorem main_of_cubic_value_bound
     (E : Set ℕ) (hE : HasDensityZero E) :
     HasDensityZero {n : ℕ | Triangular (keptIndexPrefix E n)} := by
   classical
-  apply zeroDensityByIndex_of_modular_family67
+  apply zeroDensityByIndex_of_modular_family_param 6 7
+    (by decide) (by decide)
     largePrime primeSquarePass largePrime_positive largePrime_coprime_previous
   · intro r b x
     exact primeSquarePass_periodic r b x

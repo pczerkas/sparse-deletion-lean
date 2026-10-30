@@ -5,40 +5,38 @@ public import SieveInduction
 
 @[expose] public section
 
-open Filter
-
 namespace SparseDeletion
 
 attribute [local instance] Classical.propDecidable
 
 /-!
-The precise remaining analytic number theory task:
-construct a sequence of pairwise CRT-compatible moduli q(r) and their
-quadratic-residue predicates P(r,b,x), such that every residue shift b
-loses at least a quarter of all x-residues at each step.
-
-Given these five properties, the general sparse-deletion theorem follows
-with no other assumptions and with no sorryAx.
+The abstract end-to-end CRT reduction. Any infinite family of pairwise
+CRT-compatible modular obstructions with a fixed contraction
+`0 < numer < denom` implies zero density of triangular prefix hits
+after deleting an arbitrary density-zero subset of positive integers.
+The arithmetic work consists in constructing such a modular family.
 -/
 
-/-- Complete zero-density result *conditional on an infinite, uniform,
-independent sequence of modular obstruction certificates*. -/
-theorem zeroDensityByIndex_of_modular_family
+/-- The generic end-to-end CRT criterion. Any fixed contraction
+    numer/denom < 1 suffices, without changing the sieve exponent. -/
+theorem zeroDensityByIndex_of_modular_family_param
+    (numer denom : ℕ) (hnum : 0 < numer) (hfrac : numer < denom)
     (q : ℕ → ℕ) (P : ℕ → ℤ → ℕ → Prop)
     (hq : ∀ r, 0 < q r)
     (hcop : ∀ r, Nat.Coprime (modulusProd q r) (q r))
     (hper : ∀ r b x, P r b (x % q r) ↔ P r b x)
     (hgood : ∀ r b,
-      4 * ((Finset.range (q r)).filter (P r b)).card ≤ 3 * q r)
+      denom * ((Finset.range (q r)).filter (P r b)).card ≤ numer * q r)
     (htri : ∀ r b x,
       TriangularInt (naturalSquareSum x + b) → P r b x)
     (E : Set ℕ) (hE : HasDensityZero E) :
     HasDensityZero { n : ℕ | Triangular (keptIndexPrefix E n) } := by
-  apply zeroDensityByIndex_of_all_sieves E hE
+  apply zeroDensityByIndex_of_uniform_ratio_sieves
+    numer denom hnum hfrac E hE
   intro r
-  exact uniformCubicSieve_of_modular_family
-    q P hq hcop hper hgood htri r
+  exact uniformCubicSieve_of_modular_family_param
+    numer denom q P hq hcop hper hgood htri r
 
-#print axioms zeroDensityByIndex_of_modular_family
+#print axioms zeroDensityByIndex_of_modular_family_param
 
 end SparseDeletion
