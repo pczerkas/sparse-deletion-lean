@@ -70,16 +70,20 @@ theorem passesProd_of_triangular
   | zero => trivial
   | succ r ih => exact ⟨ih, htri r b x hx⟩
 
-/-- Arbitrarily long products of uniformly 3/4-good periodic tests are
-at most (3/4)^r dense over a complete product period, by CRT alone. -/
-theorem crt_sieve_product_count (q : ℕ → ℕ) (P : ℕ → ℤ → ℕ → Prop)
+/-! ## A single parametric CRT counting theorem
+
+The coefficients numer and denom are arbitrary natural numbers here. Strict
+contraction (numer < denom) is only needed to deduce density zero.
+-/
+
+theorem crt_sieve_product_count_param (numer denom : ℕ) (q : ℕ → ℕ) (P : ℕ → ℤ → ℕ → Prop)
     (hq : ∀ r, 0 < q r)
     (hcop : ∀ r, Nat.Coprime (modulusProd q r) (q r))
     (hper : ∀ r b x, P r b (x % q r) ↔ P r b x)
-    (hgood : ∀ r b, 4 * ((Finset.range (q r)).filter (P r b)).card ≤ 3 * q r)
+    (hgood : ∀ r b, denom * ((Finset.range (q r)).filter (P r b)).card ≤ numer * q r)
     (r : ℕ) (b : ℤ) :
-    4 ^ r * ((Finset.range (modulusProd q r)).filter
-      (passesProd P b r)).card ≤ 3 ^ r * modulusProd q r := by
+    denom ^ r * ((Finset.range (modulusProd q r)).filter
+      (passesProd P b r)).card ≤ numer ^ r * modulusProd q r := by
   classical
   induction r with
   | zero =>
@@ -100,8 +104,8 @@ theorem crt_sieve_product_count (q : ℕ → ℕ) (P : ℕ → ℤ → ℕ → P
         (by intro x hx; exact (passesProd_periodic q P hper r b x).mpr hx)
         (by intro x hx; exact (hper r b x).mpr hx)
       simpa only [Nat.zero_add, Nat.Ico_zero_eq_range, A, B] using h
-    have ih' : 4 ^ r * A.card ≤ 3 ^ r * m := ih
-    have hn : 4 * B.card ≤ 3 * n := hgood r b
+    have ih' : denom ^ r * A.card ≤ numer ^ r * m := ih
+    have hn : denom * B.card ≤ numer * n := hgood r b
     have hf :
         ((Finset.range (modulusProd q (r + 1))).filter
           (passesProd P b (r + 1))) =
@@ -114,37 +118,37 @@ theorem crt_sieve_product_count (q : ℕ → ℕ) (P : ℕ → ℤ → ℕ → P
       ext x
       simp only [Finset.mem_filter]
     rw [hf]
-    change 4 ^ (r + 1) *
+    change denom ^ (r + 1) *
       ((Finset.range (m * n)).filter
         (fun x => passesProd P b r x ∧ P r b x)).card ≤
-        3 ^ (r + 1) * (m * n)
+        numer ^ (r + 1) * (m * n)
     calc
-      _ ≤ 4 ^ (r + 1) * (A.card * B.card) :=
+      _ ≤ denom ^ (r + 1) * (A.card * B.card) :=
         Nat.mul_le_mul_left _ hc
-      _ = (4 ^ r * A.card) * (4 * B.card) := by
+      _ = (denom ^ r * A.card) * (denom * B.card) := by
         rw [pow_succ]; ring
-      _ ≤ (3 ^ r * m) * (3 * n) := Nat.mul_le_mul ih' hn
-      _ = 3 ^ (r + 1) * (m * n) := by
+      _ ≤ (numer ^ r * m) * (numer * n) := Nat.mul_le_mul ih' hn
+      _ = numer ^ (r + 1) * (m * n) := by
         rw [pow_succ]; ring
 
-/-- The abstract CRT iteration supplies the complete uniform cubic sieve
-from a sequence of independently certified periodic modular obstructions. -/
-theorem uniformCubicSieve_of_modular_family
+/-- Parametric finite sieve with uniform ratio numer/denom. -/
+theorem uniformCubicSieve_of_modular_family_param
+    (numer denom : ℕ)
     (q : ℕ → ℕ) (P : ℕ → ℤ → ℕ → Prop)
     (hq : ∀ r, 0 < q r)
     (hcop : ∀ r, Nat.Coprime (modulusProd q r) (q r))
     (hper : ∀ r b x, P r b (x % q r) ↔ P r b x)
-    (hgood : ∀ r b, 4 * ((Finset.range (q r)).filter (P r b)).card ≤ 3 * q r)
+    (hgood : ∀ r b, denom * ((Finset.range (q r)).filter (P r b)).card ≤ numer * q r)
     (htri : ∀ r b x, TriangularInt (naturalSquareSum x + b) → P r b x)
     (r : ℕ) :
     ∃ M : ℕ, 0 < M ∧
       ∀ (u : ℕ) (b : ℤ),
-        4 ^ r * (cubicCandidates u M b).card ≤ 3 ^ r * M := by
+        denom ^ r * (cubicCandidates u M b).card ≤ numer ^ r * M := by
   classical
   refine ⟨modulusProd q r, modulusProd_pos q hq r, ?_⟩
   intro u b
   let M := modulusProd q r
-  have hbound := crt_sieve_product_count q P hq hcop hper hgood r b
+  have hbound := crt_sieve_product_count_param numer denom q P hq hcop hper hgood r b
   have hpass :
       (cubicCandidates u M b).card ≤
        ((Finset.Ico u (u + M)).filter (passesProd P b r)).card := by
@@ -166,12 +170,37 @@ theorem uniformCubicSieve_of_modular_family
     simpa only [Nat.mul_one, and_true, Finset.filter_true,
       Finset.card_range, mul_one] using h
   calc
-    4 ^ r * (cubicCandidates u M b).card ≤
-        4 ^ r * ((Finset.Ico u (u + M)).filter (passesProd P b r)).card :=
+    denom ^ r * (cubicCandidates u M b).card ≤
+        denom ^ r * ((Finset.Ico u (u + M)).filter (passesProd P b r)).card :=
       Nat.mul_le_mul_left _ hpass
-    _ ≤ 4 ^ r * ((Finset.range M).filter (passesProd P b r)).card :=
+    _ ≤ denom ^ r * ((Finset.range M).filter (passesProd P b r)).card :=
       Nat.mul_le_mul_left _ hperiod
-    _ ≤ 3 ^ r * M := hbound
+    _ ≤ numer ^ r * M := hbound
+
+/-- Compatibility specialization: each modular test retains at most 3/4. -/
+theorem crt_sieve_product_count (q : ℕ → ℕ) (P : ℕ → ℤ → ℕ → Prop)
+    (hq : ∀ r, 0 < q r)
+    (hcop : ∀ r, Nat.Coprime (modulusProd q r) (q r))
+    (hper : ∀ r b x, P r b (x % q r) ↔ P r b x)
+    (hgood : ∀ r b, 4 * ((Finset.range (q r)).filter (P r b)).card ≤ 3 * q r)
+    (r : ℕ) (b : ℤ) :
+    4 ^ r * ((Finset.range (modulusProd q r)).filter
+      (passesProd P b r)).card ≤ 3 ^ r * modulusProd q r :=
+  crt_sieve_product_count_param 3 4 q P hq hcop hper hgood r b
+
+/-- Compatibility specialization for the original 3/4 sieve. -/
+theorem uniformCubicSieve_of_modular_family
+    (q : ℕ → ℕ) (P : ℕ → ℤ → ℕ → Prop)
+    (hq : ∀ r, 0 < q r)
+    (hcop : ∀ r, Nat.Coprime (modulusProd q r) (q r))
+    (hper : ∀ r b x, P r b (x % q r) ↔ P r b x)
+    (hgood : ∀ r b, 4 * ((Finset.range (q r)).filter (P r b)).card ≤ 3 * q r)
+    (htri : ∀ r b x, TriangularInt (naturalSquareSum x + b) → P r b x)
+    (r : ℕ) :
+    ∃ M : ℕ, 0 < M ∧
+      ∀ (u : ℕ) (b : ℤ),
+        4 ^ r * (cubicCandidates u M b).card ≤ 3 ^ r * M :=
+  uniformCubicSieve_of_modular_family_param 3 4 q P hq hcop hper hgood htri r
 
 #print axioms SparseDeletion.crt_sieve_product_count
 #print axioms SparseDeletion.uniformCubicSieve_of_modular_family
