@@ -46,7 +46,7 @@ jobs:
           if sources != targets:
               raise SystemExit(f"Lake targets mismatch: only in source={sources-targets}, "
                                f"only in lakefile={targets-sources}")
-          for doc in ("README.md", "PROOF_ARCHITECTURE.md"):
+          for doc in ("README.md", "PROOF_ARCHITECTURE.md", "ASSUMPTION_AUDIT.md"):
               names = set(re.findall(r"\b([A-Za-z][A-Za-z0-9_]+)\.lean\b",
                                      Path(doc).read_text()))
               missing = names - sources

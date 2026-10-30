@@ -113,6 +113,9 @@ and `MainReduction.lean` / `MainExactValueReduction.lean` /
 
 The full physical dependency and logical explanation are in
 [PROOF_ARCHITECTURE.md](PROOF_ARCHITECTURE.md).
+The separate mathematical and assumption-level review is in
+[ASSUMPTION_AUDIT.md](ASSUMPTION_AUDIT.md), including the limitations
+of the last clean-build verification attempt.
 
 ## Independent exact cubic value-set result
 
