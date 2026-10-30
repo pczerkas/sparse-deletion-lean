@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import ImageBoundBridge
+public import CubicShape
 
 @[expose] public section
 

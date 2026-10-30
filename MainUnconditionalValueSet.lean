@@ -1,6 +1,7 @@
 module -- shake: keep-all
 
 public import CubicConicInjection
+public import MainExactValueReduction
 
 @[expose] public section
 

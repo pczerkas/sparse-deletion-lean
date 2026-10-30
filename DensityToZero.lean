@@ -1,6 +1,7 @@
 module -- shake: keep-all
 
-public import BridgeRemaining
+public import KeptSquaresBridge
+public import SparseDeletion
 public import SparsePerturbation
 
 @[expose] public section

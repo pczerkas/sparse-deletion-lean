@@ -1,87 +1,53 @@
 name = "SparseDeletion"
 version = "0.1.0"
-defaultTargets = ["SparseDeletion", "Sieve31", "Sieve31Poly", "CubicBridge31", "Sieve31Triangular"]
+defaultTargets = ["VerifiedCompleteProof", "CompositeCorollary", "VerifiedExactValueSet", "VerifiedPerturbation"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0"
 
 [[lean_lib]]
-name = "SparseDeletionBase"
+name = "AffineValueBridge"
 
 [[lean_lib]]
-name = "SparseDeletion"
+name = "CRTGeneral"
 
 [[lean_lib]]
-name = "Sieve31"
+name = "CompositeCorollary"
 
 [[lean_lib]]
-name = "Sieve31Poly"
+name = "ConicExactCount"
 
 [[lean_lib]]
-name = "CubicBridge31"
+name = "ConicPointBound"
 
 [[lean_lib]]
-name = "Sieve31Triangular"
+name = "CountingDensity"
 
 [[lean_lib]]
-name = "Sieve37"
+name = "CubicCollisionBridge"
 
 [[lean_lib]]
-name = "Modular31"
+name = "CubicConicExact"
 
 [[lean_lib]]
-name = "Uniform31"
+name = "CubicConicInjection"
 
 [[lean_lib]]
-name = "Sieve37Poly"
+name = "CubicRepresentative"
 
 [[lean_lib]]
-name = "CubicBridge37"
+name = "CubicShape"
 
 [[lean_lib]]
-name = "Sieve37Triangular"
-
-[[lean_lib]]
-name = "SieveCRT31x37"
-
-[[lean_lib]]
-name = "Sieve41"
-
-[[lean_lib]]
-name = "Sieve41Poly"
-
-[[lean_lib]]
-name = "CubicBridge41"
-
-[[lean_lib]]
-name = "Sieve41Triangular"
-
-[[lean_lib]]
-name = "SieveCRT3"
-
-[[lean_lib]]
-name = "SieveCRT3Count"
-
-[[lean_lib]]
-name = "SieveCRT31x37x41"
-
-[[lean_lib]]
-name = "SparseBlocks"
-
-[[lean_lib]]
-name = "BridgeRemaining"
-
-[[lean_lib]]
-name = "FiniteBlocks"
-
-[[lean_lib]]
-name = "GeneralBlocks"
-
-[[lean_lib]]
-name = "DensityBridge"
-
-[[lean_lib]]
-name = "GenericBlocks"
+name = "CubicSumBridge"
 
 [[lean_lib]]
 name = "DensityToZero"
+
+[[lean_lib]]
+name = "ImageBoundBridge"
 
 [[lean_lib]]
 name = "IndexBridge"
@@ -93,183 +59,52 @@ name = "IndexGrowth"
 name = "IndexTransfer"
 
 [[lean_lib]]
-name = "AsymptoticThree"
-
-[[lean_lib]]
-name = "SieveUpTo3"
-
-[[lean_lib]]
-name = "CRTGeneral"
-
-[[lean_lib]]
-name = "VerifiedMilestones"
-
-[[require]]
-name = "mathlib"
-scope = "leanprover-community"
-rev = "v4.35.0"
-
-[[lean_lib]]
-name = "Sieve43"
-
-[[lean_lib]]
-name = "Sieve43Poly"
-
-[[lean_lib]]
-name = "CubicBridge43"
-
-[[lean_lib]]
-name = "Sieve43Triangular"
-
-[[lean_lib]]
-name = "SieveCRT4"
-
-[[lean_lib]]
-name = "Sieve47"
-
-[[lean_lib]]
-name = "Sieve47Poly"
-
-[[lean_lib]]
-name = "CubicBridge47"
-
-[[lean_lib]]
-name = "Sieve47Triangular"
-
-[[lean_lib]]
-name = "SieveCRT5"
-
-[[lean_lib]]
-name = "AsymptoticFive"
-
-[[lean_lib]]
-name = "Sieve53"
-
-[[lean_lib]]
-name = "Sieve53Poly"
-
-[[lean_lib]]
-name = "CubicBridge53"
-
-[[lean_lib]]
-name = "Sieve53Triangular"
-
-[[lean_lib]]
-name = "SieveCRT6"
-
-[[lean_lib]]
-name = "AsymptoticSix"
-
-[[lean_lib]]
-name = "SieveUpTo6"
-
-[[lean_lib]]
-name = "VerifiedSix"
-
-[[lean_lib]]
-name = "SieveInduction"
-
-[[lean_lib]]
-name = "MainReduction"
-
-[[lean_lib]]
-name = "QuadraticCharBridge"
-
-[[lean_lib]]
-name = "PolynomialRootsBridge"
-
-[[lean_lib]]
-name = "CubicShape"
-
-[[lean_lib]]
-name = "CubicSumBridge"
-
-[[lean_lib]]
-name = "PrimeFamily"
-
-[[lean_lib]]
-name = "ResidueCountBridge"
-
-[[lean_lib]]
-name = "HasseArithmetic"
-
-[[lean_lib]]
-name = "HasseCubicBridge"
-
-[[lean_lib]]
-name = "MainHasseReduction"
-
-[[lean_lib]]
-name = "SingularCubic"
-
-[[lean_lib]]
-name = "SingularFactorization"
-
-[[lean_lib]]
-name = "SingularReduction"
-
-[[lean_lib]]
-name = "MainNonSingularReduction"
-
-[[lean_lib]]
-name = "AffinePointCount"
-
-[[lean_lib]]
-name = "MainAffineHasseReduction"
-
-[[lean_lib]]
-name = "VerifiedAnalyticFrontier"
-
-[[lean_lib]]
-name = "ImageBoundBridge"
-
-[[lean_lib]]
-name = "AffineValueBridge"
-
-[[lean_lib]]
-name = "SquareValueCount"
+name = "KeptSquaresBridge"
 
 [[lean_lib]]
 name = "MainExactValueReduction"
 
 [[lean_lib]]
-name = "CubicCollisionBridge"
-
-[[lean_lib]]
-name = "VerifiedValueSetFrontier"
-
-[[lean_lib]]
-name = "ConicPointBound"
-
-[[lean_lib]]
-name = "CubicRepresentative"
-
-[[lean_lib]]
-name = "CubicConicInjection"
+name = "MainReduction"
 
 [[lean_lib]]
 name = "MainUnconditionalValueSet"
 
 [[lean_lib]]
-name = "VerifiedCompleteProof"
+name = "PrimeCubicPoly"
 
 [[lean_lib]]
-name = "CompositeCorollary"
+name = "PrimeFamily"
 
 [[lean_lib]]
-name = "CubicConicExact"
+name = "PrimeSquarePass"
 
 [[lean_lib]]
-name = "ConicExactCount"
+name = "RemovedSquares"
 
 [[lean_lib]]
-name = "VerifiedExactValueSet"
+name = "ResidueCountBridge"
+
+[[lean_lib]]
+name = "SieveInduction"
+
+[[lean_lib]]
+name = "SparseDeletion"
+
+[[lean_lib]]
+name = "SparseDeletionBase"
 
 [[lean_lib]]
 name = "SparsePerturbation"
 
 [[lean_lib]]
-name = "CountingDensity"
+name = "SquareValueCount"
+
+[[lean_lib]]
+name = "VerifiedCompleteProof"
+
+[[lean_lib]]
+name = "VerifiedExactValueSet"
 
 [[lean_lib]]
 name = "VerifiedPerturbation"
