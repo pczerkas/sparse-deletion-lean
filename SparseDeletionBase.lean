@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import Mathlib.Data.Nat.Nth
+public import CountingDensity
 public import Mathlib.Topology.Instances.Real.Lemmas
 public import Mathlib.Tactic.Linarith
 
@@ -37,14 +37,6 @@ def prefixSquares (a : ℕ → ℕ) (n : ℕ) : ℕ :=
 theorem prefixSquares_succ (a : ℕ → ℕ) (n : ℕ) :
     prefixSquares a (n + 1) = prefixSquares a n + (a n) ^ 2 := by
   simp [prefixSquares, Finset.sum_range_succ]
-
-noncomputable def countUpTo (P : Set ℕ) (X : ℕ) : ℕ := by
-  classical
-  exact ((Finset.range X).filter (fun x => x ∈ P)).card
-
-def HasDensityZero (P : Set ℕ) : Prop :=
-  Tendsto (fun X : ℕ => (countUpTo P X : ℝ) / (X : ℝ))
-    atTop (nhds (0 : ℝ))
 
 noncomputable def keptSquaresUpTo (E : Set ℕ) (X : ℕ) : ℕ := by
   classical
@@ -88,5 +80,10 @@ theorem naturalSquareSum_cubic (x : ℕ) :
 
 def TriangularInt (s : ℤ) : Prop :=
   ∃ m : ℕ, 2 * s = (m : ℤ) * (m + 1)
+
+/-! General-purpose interval counting, independent of all finite sieves. -/
+
+def hitSet (E : Set ℕ) : Set ℕ :=
+  {x : ℕ | Triangular (keptSquaresUpTo E x)}
 
 end SparseDeletion

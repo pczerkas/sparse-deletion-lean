@@ -134,6 +134,37 @@ main density theorem. The result is classical, not a novelty claim.
 Verify with `lake build VerifiedExactValueSet VerifiedCompleteProof CompositeCorollary`.
 All printed axioms are the standard Lean axioms, with no `sorryAx`.
 
+### Abstract sparse-perturbation theorem (independently verified)
+
+The main density argument is now a **specialization** of the reusable theorem
+`sparsePerturbation_zeroDensity_of_uniform_small_blocks` in
+`SparsePerturbation.lean`. It assumes only that:
+
+- the integer-valued perturbation `d` is constant across each step whose
+  destination is outside a density-zero set `E`;
+- for every `ε > 0`, some fixed block length `M > 0` has a uniformly
+  small ratio `C/M < ε` of indices with `f(n) + b ∈ A`, for **all**
+  starting points and all integer shifts `b`.
+
+It concludes that `{n | f(n) + d(n) ∈ A}` has natural density zero.
+No assumption bounds the perturbation's size or jump magnitudes.
+
+`sparsePerturbation_zeroDensity_of_uniform_ratio_sieves` is the
+convenient geometric-contraction corollary used by `DensityToZero.lean`.
+The abstract theorem imports only `CountingDensity.lean` and Mathlib,
+not the historic finite-prime sieve. The older bounds remain available.
+
+See [PROOF_ARCHITECTURE.md](PROOF_ARCHITECTURE.md) for the minimal
+logical proof path, its limitations, and how it relates to the exact conic
+point count.
+
+Verify the new theorem separately with:
+
+```sh
+lake build VerifiedPerturbation
+lake env lean VerifiedPerturbation.lean
+```
+
 ### Generic CRT contraction (refactored)
 
 The CRT sieve is proved once for arbitrary natural-number coefficients
