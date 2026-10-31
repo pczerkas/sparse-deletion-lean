@@ -89,7 +89,9 @@ theorem quantitative_log_choice_budget
   have hdp : (0 : ℝ) < d := by exact_mod_cast hd
   have hnp : (0 : ℝ) < N := by exact_mod_cast hN
   have hQpos : 0 < Q := div_pos hnp hdp
-  have hL : 2048 ≤ L := hQ
+  have hL : 2048 ≤ L := by
+    dsimp [L, Q, d]
+    simpa only [Nat.cast_add, Nat.cast_one] using hQ
   have hlogpos : 0 < 8 * Real.log L := by
     have hh := half_le_log_of_large L hL
     linarith
@@ -102,8 +104,7 @@ theorem quantitative_log_choice_budget
   rw [hQexp] at he
   have hreal : (((448 * (r + 50) ^ 2) ^ r * d : ℕ) : ℝ) ≤ (N : ℝ) := by
     have hmul := (le_div_iff₀ hdp).mp he
-    push_cast
-    simpa only [Nat.cast_mul, Nat.cast_pow] using hmul
+    simpa only [Nat.cast_mul, Nat.cast_pow, Nat.cast_add, Nat.cast_ofNat] using hmul
   exact_mod_cast hreal
 
 end SparseDeletion
