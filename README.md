@@ -168,8 +168,10 @@ Under the stated sparsity budget
 retained sequence is also provided, assuming the N-th retained value is
 less than `2*N+2`. These statements remove the hidden modulus,
 but the bounds are loose and not a finiteness result. The new module is
-included in the optional Lean verification target. Its CI status must be
-checked separately for the new commit. Verified with pinned Lean 4.35.0,
+included in the optional Lean verification target. The elementary real-logarithm
+optimization and its limitations are explained in
+[QUANTITATIVE_RATE.md](QUANTITATIVE_RATE.md); that logarithmic corollary
+is not yet a Lean theorem. Verified with pinned Lean 4.35.0,
 Mathlib v4.35.0 and only standard axioms in [GitHub Actions run 41234713571](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41234713571).
 This computational verification is distinct from an independent mathematical
 review or a literature novelty assessment. They do not invoke any theorem about

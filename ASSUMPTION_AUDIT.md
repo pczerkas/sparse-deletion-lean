@@ -163,9 +163,12 @@ finite-N bound is kernel-certified. The optional module `QuantitativeEffective.l
 prove an explicit modulus upper bound and a finite-N inequality.
 The source version at commit `a05632a` passed GitHub Actions run
 `41235478894` with `BUILD_EXIT=0` and only the standard three axioms.
-A subsequently added optional *retained-index* corollary requires its
-own CI verification. A sharper prime-counting-based asymptotic rate
-is not yet formalized.
+The optional *retained-index* corollary passed GitHub Actions run
+`41235710674` at commit `5eb2d35`: `BUILD_EXIT=0`, no `sorryAx`, and
+only `propext`, `Classical.choice`, `Quot.sound`. The separate
+real-logarithm optimization is documented in `QUANTITATIVE_RATE.md`
+but is not yet formalized in Lean; a stronger prime-counting-based
+rate is also not formalized.
 
 ## 6. Conclusions and risks
 
