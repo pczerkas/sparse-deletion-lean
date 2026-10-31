@@ -1,0 +1,33 @@
+# Geometry of formalized proof dependencies (plain-English sketch)
+
+This is a companion source note to the manuscript.
+
+```
+finite-field collision conic
+        │
+        ▼
+lower bound for image of t ↦ t³ − t
+        │
+        ├── quadratic-residue count
+        ▼
+local modular survival fraction ≤ 6/7
+        │
+        ▼
+Chinese remainder theorem
+        │
+        ▼
+uniform block-density bound (6/7)^r
+        │
+        ├── sparse perturbation lemma
+        │       (the deletion correction changes only at E)
+        ▼
+zero density at original value indices
+        │
+        ├── retained-index growth and injection
+        ▼
+zero density at retained-sequence indices
+```
+
+The manuscript itself is self-contained at the level of statements and proof architecture. The full machine-checkable proof, precise Lean definitions, and build instructions live in the public repository:
+
+https://github.com/pczerkas/sparse-deletion-lean
