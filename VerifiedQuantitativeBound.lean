@@ -24,3 +24,5 @@ The original main theorem is not modified by this optional extension.
 #print axioms SparseDeletion.quantitative_cubic_sieve_explicit
 #print axioms SparseDeletion.quantitative_value_bound_explicit
 #print axioms SparseDeletion.quantitative_value_bound_under_budget
+
+#print axioms SparseDeletion.quantitative_index_bound_explicit

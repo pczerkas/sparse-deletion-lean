@@ -159,4 +159,36 @@ theorem quantitative_value_bound_under_budget
     _ ≤ 6 ^ r * N + 6 ^ r * N := Nat.add_le_add_left hbudget _
     _ = 2 * 6 ^ r * N := by ring
 
+/-- The explicit finite-N bound on triangular hits among the first N+1
+retained-sequence indices. The hypothesis on the N-th retained value
+is known to hold eventually when the deleted set has density zero. -/
+theorem quantitative_index_bound_explicit
+    (E : Set ℕ) (hInf : (Set.ofPred (keptPred E)).Infinite)
+    (r N : ℕ) (hNth : keptNth E N < 2 * N + 2) :
+    7 ^ r * countUpTo (indexHitSet E) (N + 1) ≤
+      6 ^ r * (2 * N + 2) +
+        7 ^ r * (37 ^ r * 2 ^ (r * r)) *
+          (countUpTo E (2 * N + 2) + 1) := by
+  have hM : 0 < modulusProd largePrime r :=
+    modulusProd_pos largePrime largePrime_positive r
+  have hs : ∀ u b,
+      7 ^ r * (cubicCandidates u (modulusProd largePrime r) b).card ≤
+        6 ^ r * modulusProd largePrime r := by
+    intro u b
+    exact quantitative_cubic_sieve_explicit r u b
+  have hb := quantitative_index_hit_bound_of_scaled_sieve
+    E hInf (6 ^ r) (7 ^ r) (modulusProd largePrime r) N
+    hNth hM (pow_pos (by decide : 0 < 7) r) hs
+  calc
+    7 ^ r * countUpTo (indexHitSet E) (N + 1) ≤
+        6 ^ r * (2 * N + 2) +
+          7 ^ r * modulusProd largePrime r *
+            (countUpTo E (2 * N + 2) + 1) := hb
+    _ ≤ 6 ^ r * (2 * N + 2) +
+          7 ^ r * (37 ^ r * 2 ^ (r * r)) *
+            (countUpTo E (2 * N + 2) + 1) := by
+      gcongr
+      exact largePrime_modulus_le_exponential r
+
+
 end SparseDeletion

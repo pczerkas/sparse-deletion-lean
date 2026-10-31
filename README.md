@@ -164,7 +164,9 @@ albeit loose bound on the sieve modulus from Bertrand's postulate:
 
 Under the stated sparsity budget
 `7^r * (37^r * 2^(r*r)) * (e(N)+1) ≤ 6^r*N`, a separate theorem gives
-`7^r*H_E(N) ≤ 2*6^r*N`. These statements remove the hidden modulus,
+`7^r*H_E(N) ≤ 2*6^r*N`. An explicit variant for hits indexed by the
+retained sequence is also provided, assuming the N-th retained value is
+less than `2*N+2`. These statements remove the hidden modulus,
 but the bounds are loose and not a finiteness result. The new module is
 included in the optional Lean verification target. Its CI status must be
 checked separately for the new commit. Verified with pinned Lean 4.35.0,

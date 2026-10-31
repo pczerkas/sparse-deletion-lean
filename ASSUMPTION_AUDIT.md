@@ -159,10 +159,13 @@ for its three quantitative results. The later module `QuantitativeSieve.lean` de
 estimate at arbitrary sieve depth `r`. Commit `4629474` passed GitHub
 Actions run `41234713571`; all seven named quantitative axioms reports
 showed only `propext`, `Classical.choice`, `Quot.sound`. The new formal
-finite-N bound is kernel-certified. The new optional module `QuantitativeEffective.lean` instead
-uses Bertrand to derive an explicit modulus upper bound and finite-N
-inequality. It has NOT yet been checked by CI at this writing. A
-sharper prime-counting-based asymptotic rate is not formalized.
+finite-N bound is kernel-certified. The optional module `QuantitativeEffective.lean` uses Bertrand to
+prove an explicit modulus upper bound and a finite-N inequality.
+The source version at commit `a05632a` passed GitHub Actions run
+`41235478894` with `BUILD_EXIT=0` and only the standard three axioms.
+A subsequently added optional *retained-index* corollary requires its
+own CI verification. A sharper prime-counting-based asymptotic rate
+is not yet formalized.
 
 ## 6. Conclusions and risks
 

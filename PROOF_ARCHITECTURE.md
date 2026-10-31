@@ -167,8 +167,9 @@ the deleted set has zero density. The multiplier modulus `M_r` depends
 on `r`. These optional files do **not** feed back into the main theorem.
 The optional module `QuantitativeEffective.lean` imports Mathlib's
 Bertrand postulate and proves the loose elementary modulus bound
-`M_r ≤ 37^r * 2^(r*r)`, yielding an explicit finite-N bound in terms
-of the deletion count. These optional results do not use five-square
+`M_r ≤ 37^r * 2^(r*r)`, yielding explicit finite-N bounds in terms
+of the deletion count, both for value indices and for retained-sequence
+indices under the stated survivor-growth hypothesis. These optional results do not use five-square
 representations or assume a decay rate for the deleted-set density.
 
 ### Additional corollary
