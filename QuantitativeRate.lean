@@ -36,8 +36,9 @@ theorem quantitative_value_bound_under_polynomial_budget
         (448 * (r + 50) ^ 2) ^ r *
           (countUpTo E N + 1) := by
           rw [← mul_pow]
-          congr 1
-          ring
+          have hbase : 7 * (64 * (r + 50) ^ 2) =
+              448 * (r + 50) ^ 2 := by ring
+          rw [hbase]
       _ ≤ N := hbudget
   have hdominates : N ≤ 6 ^ r * N := by
     calc
@@ -73,8 +74,9 @@ theorem quantitative_index_bound_under_polynomial_budget
         (448 * (r + 50) ^ 2) ^ r *
           (countUpTo E (2 * N + 2) + 1) := by
           rw [← mul_pow]
-          congr 1
-          ring
+          have hbase : 7 * (64 * (r + 50) ^ 2) =
+              448 * (r + 50) ^ 2 := by ring
+          rw [hbase]
       _ ≤ 2 * N + 2 := hbudget
   have hdominates : 2 * N + 2 ≤ 6 ^ r * (2 * N + 2) := by
     calc
