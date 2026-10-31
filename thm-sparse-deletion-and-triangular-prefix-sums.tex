@@ -1,0 +1,289 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=30mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\card}[1]{\lvert #1\rvert}
+\newcommand{\Tri}{\operatorname{Tri}}
+\newcommand{\dens}{\operatorname{d}}
+
+\title{Sparse Deletion and Triangular Prefix Sums}
+\author{Przemys\l aw Czerkas}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Let $E\subseteq\N$ have natural density zero, and let
+$a_0<a_1<a_2<\cdots$ enumerate the positive integers outside $E$.
+We prove that the set of indices $n$ for which
+\[
+  \sum_{i=0}^{n-1} a_i^2
+\]
+is a triangular number has natural density zero.  The result permits an
+arbitrary density-zero deletion set; no regularity hypothesis is imposed on
+its elements or their locations.  The proof combines a finite-field sieve,
+the Chinese remainder theorem, a sparse-perturbation principle, and a transfer
+from value indices to indices in the retained enumeration.  A Lean~4/Mathlib
+formalization of the theorem, including an axiom audit with no use of
+\texttt{sorryAx}, is available at
+\url{https://github.com/pczerkas/sparse-deletion-lean}.
+\end{abstract}
+
+\noindent\textbf{Keywords.} natural density; triangular numbers; sums of
+squares; finite fields; Chinese remainder theorem; formal verification; Lean.
+
+\noindent\textbf{MSC 2020.} 11B75; 11T06; 11N35; 03B35.
+
+\section{Introduction}
+
+A nonnegative integer $s$ is \emph{triangular} if
+\[
+  2s=m(m+1)
+\]
+for some $m\in\N$.  Write $\Tri(s)$ for this condition.  For a set
+$A\subseteq\N$, let
+\[
+  A(x)=\card{A\cap\{0,1,\ldots,x-1\}}.
+\]
+We say that $A$ has natural density zero if $A(x)/x\to0$ as $x\to\infty$.
+
+The purpose of this note is to establish a stability result for triangular
+prefix sums of squares under arbitrary sparse deletion.  The point is that a
+density-zero deletion can have very large gaps and can delete very large
+integers; the argument does not require a quantitative bound on either
+phenomenon.
+
+\begin{theorem}[Sparse deletion theorem]\label{thm:main}
+Let $E\subseteq\N$ have natural density zero, and enumerate the positive
+integers outside $E$ increasingly as
+\[
+  a_0<a_1<a_2<\cdots.
+\]
+Then
+\[
+  \dens\biggl\{n\in\N:
+    \Tri\!\left(\sum_{i=0}^{n-1}a_i^2\right)\biggr\}=0.
+\]
+\end{theorem}
+
+For $n=0$, the sum is interpreted as $0$, which is triangular.  This isolated
+index clearly does not affect the conclusion.
+
+\begin{remark}
+\Cref{thm:main} is a density statement, not a finiteness statement: it neither
+asserts that only finitely many triangular prefix sums occur nor that they
+eventually disappear.  It also does not apply directly to prefix sums over
+primes, since the complement of the primes is not a density-zero deletion
+set.
+\end{remark}
+
+\section{Proof architecture}
+
+We record the ingredients of the proof, both to explain the theorem and to
+make clear the division between its arithmetic and density-theoretic parts.
+The complete formal proof is in the accompanying Lean repository.
+
+\subsection{A cubic modular obstruction}
+
+Put
+\[
+  S(x)=\sum_{k=0}^{x}k^2
+      =\frac{x(x+1)(2x+1)}{6}.
+\]
+After an affine change of variables over a finite field of characteristic
+neither $2$ nor $3$, the condition that $S(x)+b$ be triangular is controlled
+by whether a value of a cubic polynomial is a square.  The relevant cubic is
+affinely equivalent to
+\[
+  t\longmapsto t^3-t.
+\]
+
+The required value-set estimate is elementary.
+
+\begin{lemma}[Cubic value-set bound]\label{lem:cubic}
+Let $\FF_q$ be a finite field of characteristic different from $3$.  Then
+\[
+  \card{\{t^3-t:t\in\FF_q\}}\geq \frac{2q-1}{3}.
+\]
+\end{lemma}
+
+In the formal development, \Cref{lem:cubic} follows by studying collisions
+of $t^3-t$.  Distinct elements in a common fibre give points on the conic
+\[
+  x^2+xy+y^2=1,
+\]
+and an elementary injection bounds the number of such collisions.  No Weil
+bound, Hasse bound, elliptic-curve estimate, or character-sum estimate is
+used.
+
+Together with the elementary count of quadratic residues in $\FF_p$, this
+implies the following uniform local sieve bound.  There is an infinite sequence
+of pairwise distinct primes $p\geq37$ such that, for every integer shift $b$,
+at most a proportion $6/7$ of residue classes modulo $p$ can satisfy the
+necessary modular condition for $S(x)+b$ to be triangular.  The same estimate
+holds after translating $x$ by any integer.
+
+\subsection{CRT amplification}
+
+Choose $r$ distinct primes from the preceding family.  Since their moduli are
+pairwise coprime, the Chinese remainder theorem multiplies the local bounds.
+Thus, for every integer shift $b$, there is a positive block length $M$ such
+that every interval $[u,u+M)$ contains at most
+\[
+  \left(\frac67\right)^rM
+\]
+integers $x$ for which $S(x)+b$ can be triangular.  Crucially, $M$ works
+uniformly for the starting point $u$ and for the shift $b$.
+
+\subsection{Sparse perturbations}
+
+For the deletion set $E$, define
+\[
+  D(x)=-\sum_{\substack{0\leq k\leq x\\ k\in E}}k^2.
+\]
+Then the sum of squares of retained positive integers up to $x$ is represented
+by $S(x)+D(x)$, up to the harmless indexing convention at $0$.  The function
+$D$ is locally constant away from $E$: its increment can occur only at a
+deleted integer.  The following abstract statement supplies the density step.
+
+\begin{lemma}[Sparse-perturbation principle]\label{lem:perturbation}
+Let $E\subseteq\N$ have natural density zero.  Let $f,d:\N\to\Z$ and
+$A\subseteq\Z$, and suppose that $d(n+1)=d(n)$ whenever $n+1\notin E$.
+Assume that, for every $\varepsilon>0$, there are $M>0$ and $C\in\N$ with
+$C/M<\varepsilon$ such that, for all $u\in\N$ and $b\in\Z$,
+\[
+  \card{\{n\in [u,u+M):f(n)+b\in A\}}\leq C.
+\]
+Then
+\[
+  \dens\{n\in\N:f(n)+d(n)\in A\}=0.
+\]
+\end{lemma}
+
+Apply \Cref{lem:perturbation} with $f=S$, with the perturbation $D$, and
+with $A$ the set of triangular integers.  The CRT estimate makes $C/M$
+arbitrarily small by increasing $r$, hence triangular hits have density zero
+when indexed by their original values.
+
+Finally, a density-zero deletion leaves sufficiently many integers: the
+$n$-th retained positive integer is eventually less than $2n+2$.  An injection
+from triangular hits in the retained enumeration to the corresponding hits at
+value indices transfers density zero to the index set in \Cref{thm:main}.
+This completes the proof.
+
+\section{A concrete corollary}
+
+Let $c_0<c_1<c_2<\cdots$ enumerate the composite positive integers.  Since
+the set consisting of $1$ and all primes has natural density zero,
+\Cref{thm:main} yields the following consequence.
+
+\begin{corollary}
+The set
+\[
+  \left\{n\in\N:
+    \Tri\!\left(\sum_{i=0}^{n-1}c_i^2\right)\right\}
+\]
+has natural density zero.
+\end{corollary}
+
+\section{Formal verification and reproducibility}
+
+The formalization is written in Lean~4 \cite{lean4} and uses Mathlib
+\cite{mathlib}.  The repository pins
+Lean and Mathlib to version \texttt{v4.35.0}; the exact dependency revisions are
+recorded in \texttt{lake-manifest.json}.  The main formal theorem is
+\begin{verbatim}
+SparseDeletion.main_sparse_deletion_unconditional
+    (E : Set Nat) (hE : HasDensityZero E) :
+    HasDensityZero {n : Nat | Triangular (keptIndexPrefix E n)}
+\end{verbatim}
+
+The repository provides separate verification targets for the end-to-end
+theorem and the generic sparse-perturbation lemma.  It also contains targets
+for the exact finite-field value-set formula and the composite-number
+corollary.  With Lean/Lake installed, run:
+\begin{verbatim}
+git clone https://github.com/pczerkas/sparse-deletion-lean.git
+cd sparse-deletion-lean
+lake exe cache get
+lake build
+\end{verbatim}
+The source includes axiom-printing certificate files.  The principal proof
+terms use only the standard Lean axioms \texttt{propext},
+\texttt{Classical.choice}, and \texttt{Quot.sound}; they do not depend on
+\texttt{sorryAx}.  As usual, formal verification establishes correctness
+relative to the Lean kernel, the pinned dependency code, and the accuracy of
+the formalized statement.
+
+The repository also formalizes an optional, stronger classical finite-field
+identity: for $q\equiv1\pmod3$ (respectively $q\equiv2\pmod3$), the image of
+$t\mapsto t^3-t$ in $\FF_q$ has cardinality $(2q+1)/3$ (respectively
+$(2q-1)/3$).  This exact formula is not needed for \Cref{thm:main}.
+
+The source bundle includes \texttt{figure-proof-architecture.txt}, a
+plain-text dependency sketch suitable for conversion into an editorial figure
+if desired.
+
+\section*{References}
+\begin{thebibliography}{9}
+
+\bibitem{lean4}
+Leonardo de Moura and Sebastian Ullrich.
+\newblock The Lean 4 theorem prover and programming language.
+\newblock In \emph{Automated Deduction -- CADE 28}, pages 625--635,
+Springer, 2021.
+\newblock \url{https://doi.org/10.1007/978-3-030-79876-5_37}.
+
+\bibitem{mathlib}
+The mathlib Community.
+\newblock The Lean Mathematical Library.
+\newblock In \emph{Proceedings of the 9th ACM SIGPLAN International
+Conference on Certified Programs and Proofs (CPP 2020)}, pages 367--381,
+ACM, 2020.
+\newblock \url{https://doi.org/10.1145/3372885.3373824}.
+
+\end{thebibliography}
+
+\section*{Availability and licence}
+
+The complete Lean source, build instructions, and dependency audit are publicly
+available at
+\begin{center}
+\url{https://github.com/pczerkas/sparse-deletion-lean}.
+\end{center}
+
+This manuscript is licensed under the
+\href{https://creativecommons.org/licenses/by/4.0/}{Creative Commons
+Attribution 4.0 International (CC BY 4.0) licence}.  The accompanying Lean
+software repository is distributed separately under its repository licence
+(MIT at the time of this manuscript).
+
+\section*{AI-use declaration}
+
+AI systems, including OpenAI ChatGPT, were used for mathematical exploration,
+proof development, refactoring, and Lean assistance.  The author reviewed the
+mathematical statement and the formal development.  The machine-checkable
+formal proof and its pinned dependencies are available in the repository cited
+above.
+
+\end{document}
