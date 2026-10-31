@@ -37,8 +37,8 @@ theorem largePrime_modulus_le_polynomial (r : ℕ) :
         _ ≤ (64 * (r + 1 + 50) ^ 2) ^ r *
               (64 * (r + 1 + 50) ^ 2) :=
           Nat.mul_le_mul hpow hbase
-        _ = (64 * (r + 1 + 50) ^ 2) ^ (r + 1) := by
-          rw [pow_succ]
+        _ = (64 * (r + 1 + 50) ^ 2) ^ (r + 1) :=
+          (pow_succ (64 * (r + 1 + 50) ^ 2) r).symm
 
 /-- Fully explicit finite-N bound with a polynomially growing modulus. -/
 theorem quantitative_value_bound_polynomial
