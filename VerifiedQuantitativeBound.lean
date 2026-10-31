@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import QuantitativeLogChoice
+public import QuantitativeLogRate
 
 @[expose] public section
 
@@ -47,3 +47,6 @@ The original main theorem is not modified by this optional extension.
 #print axioms SparseDeletion.quantitative_index_frequency_real
 
 #print axioms SparseDeletion.quantitative_log_choice_budget
+
+#print axioms SparseDeletion.quantitative_value_loglog_bound
+#print axioms SparseDeletion.quantitative_index_loglog_bound

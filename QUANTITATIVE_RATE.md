@@ -206,3 +206,21 @@ The threshold 2048 allows the inequality
 `448(r+50)^2 ≤ (log Q)^3` to be proved with elementary
 real inequalities. At the time of writing it has *not* passed
 CI and is not kernel-verified.
+
+## Explicit log/loglog rate (optional final Lean module, CI pending)
+
+The new `QuantitativeLogRate.lean` attempts to formalize the entire
+optimized rate for `L=log(N/(e(N)+1))≥2048`:
+
+```text
+H_E(N)/N ≤ (7/3) * exp(-(log(7/6)/8) * L/log L).
+```
+
+A retained-index version normalizes the hit count by `2N+2`
+and assumes the usual bound on the N-th retained integer. The
+coefficient `7/3` comes from the certified finite threshold
+`2*(6/7)^r` and rounding `r=floor(L/(8log L))`.
+It is weaker in its constant than the earlier paper derivation
+with `13/6`, but is simpler to formalize. Both estimates have
+the same asymptotic rate. The new declarations require CI before
+being treated as verified.

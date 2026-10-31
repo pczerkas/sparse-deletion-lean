@@ -238,6 +238,21 @@ the remaining step before the explicit log-log frequency estimate.
 **The new source is pending CI validation**; the earlier finite
 budget and real-ratio modules are already certified.
 
+## Explicit log/loglog rate (optional final corollary)
+
+`QuantitativeLogRate.lean` derives the **real log/loglog bound** from
+the previously certified threshold. Write
+`Q=N/(e(N)+1)`, `L=log Q`. For `N>0` and `L≥2048` it claims
+
+```text
+H_E(N)/N ≤ (7/3) * exp(-log(7/6) * L/(8*log L)).
+```
+
+There is also a retained-index version normalized by `2N+2`,
+under the existing Nth-survivor assumption. This final module
+requires a successful GitHub Actions compilation before its
+statements can be considered kernel-certified.
+
 ## Independent exact cubic value-set result
 
 We also prove an **optional**, stronger, classical formula, independently

@@ -219,6 +219,14 @@ attempts to prove that `log Q ≥ 2048` makes the choice
 The final log/loglog frequency bound remains a separate corollary.
 No changes to the import graph of the main theorem.
 
+### Optional final log/loglog rate (CI pending)
+
+`QuantitativeLogRate.lean` imports `QuantitativeLogChoice.lean`
+and translates its certified integer budget into explicit
+log/loglog decay of real frequencies. The threshold `log Q≥2048`
+is deliberately conservative. The extra module remains outside
+the main theorem's import graph.
+
 ## Removed alternatives
 
 The working tree no longer contains the historical fixed-prime

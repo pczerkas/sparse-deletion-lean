@@ -212,6 +212,16 @@ budget for all `log Q ≥ 2048`. This is an optional analytic
 extension, not an assumption in the main theorem. CI verification
 is pending; it must not be described as kernel-certified yet.
 
+## Explicit log/loglog bounds (CI pending)
+
+`QuantitativeLogRate.lean` adds the last real logarithmic comparison,
+aiming to prove
+`H_E(N)/N ≤ (7/3)*exp(-log(7/6)*log Q/(8*log(log Q)))`
+for `log Q≥2048`, and a retained-index counterpart. It depends
+only on the existing verified chain (including `QuantitativeLogChoice`),
+but the new conclusions require separate CI certification. No changes
+to the main theorem's statement or imports.
+
 ## 6. Conclusions and risks
 
 - **Statement correspondence:** PASS — formal statement matches
