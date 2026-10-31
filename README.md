@@ -175,7 +175,8 @@ optimization and its limitations are explained in
 proving the smaller modulus bound
 `M_r ≤ 37^r * 2^(r*(r-1)/2)` and the corresponding sharper value-index
 and retained-index estimates. Both use the existing finite-field sieve.
-The new certificate must pass CI before being considered verified.
+This improved result was Lean-certified by GitHub Actions run
+`41236256862` (commit `4b65c88`, `BUILD_EXIT=0`, no `sorryAx`).
 The logarithmic corollary
 is not yet a Lean theorem. Verified with pinned Lean 4.35.0,
 Mathlib v4.35.0 and only standard axioms in [GitHub Actions run 41234713571](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41234713571).
@@ -183,6 +184,17 @@ This computational verification is distinct from an independent mathematical
 review or a literature novelty assessment. They do not invoke any theorem about
 representation as five distinct squares. Both optional modules are kept
 out of the main theorem's import graph.
+
+## Polynomial growth of the sieve primes (optional experimental module)
+
+The optional `PrimePolynomialBound.lean` uses Mathlib's
+`Chebyshev.pi_ge` and elementary logarithm inequalities to prove
+a coarse polynomial upper bound `largePrime r ≤ 64*(r+50)^2`.
+This is the next input needed for a sharper quantitative decay rate
+`exp(-c log(Q)/loglog(Q))`. It is an independent extension that does
+not alter the main proof. The new Lean declarations require a fresh
+successful CI build; they must not be described as verified until
+that build passes.
 
 ## Independent exact cubic value-set result
 

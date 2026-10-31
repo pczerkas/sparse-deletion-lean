@@ -175,6 +175,12 @@ representations or assume a decay rate for the deleted-set density.
 `QuantitativeSharper.lean` additionally improves the modulus bound to
 `37^r * 2^(r*(r-1)/2)`, using the exact triangular exponent sum.
 The additional corollaries remain outside the main proof graph.
+The additional optional `PrimePolynomialBound.lean` imports `QuantitativeSharper`
+and Mathlib's elementary Chebyshev lower bound for prime counting;
+its claimed quadratic bound on `largePrime r` remains subject to CI
+verification. It is not a dependency of the main theorem.
+The improved certificate passed GitHub Actions run `41236256862`
+(commit `4b65c88`) with only the standard Lean axioms.
 
 ### Additional corollary
 

@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import QuantitativeSharper
+public import PrimePolynomialBound
 
 @[expose] public section
 
@@ -31,3 +31,7 @@ The original main theorem is not modified by this optional extension.
 #print axioms SparseDeletion.largePrime_modulus_le_half_square
 #print axioms SparseDeletion.quantitative_value_bound_sharper
 #print axioms SparseDeletion.quantitative_index_bound_sharper
+
+#print axioms SparseDeletion.primeCounting_quadratic_lower
+#print axioms SparseDeletion.primeCounting_le_largePrime_count_add_37
+#print axioms SparseDeletion.largePrime_le_quadratic

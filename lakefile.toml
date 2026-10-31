@@ -92,6 +92,9 @@ name = "QuantitativeEffective"
 name = "QuantitativeSharper"
 
 [[lean_lib]]
+name = "PrimePolynomialBound"
+
+[[lean_lib]]
 name = "RemovedSquares"
 
 [[lean_lib]]

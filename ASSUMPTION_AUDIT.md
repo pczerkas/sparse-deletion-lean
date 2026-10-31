@@ -170,7 +170,19 @@ real-logarithm optimization is documented in `QUANTITATIVE_RATE.md`
 but is not yet formalized in Lean; a stronger prime-counting-based
 rate is also not formalized. The further optional module
 `QuantitativeSharper.lean` reduces the Bertrand exponent to
-`r*(r-1)/2`; its separate CI verification is still required.
+`r*(r-1)/2`. Its separate certificate passed GitHub Actions run
+`41236256862` (commit `4b65c88`) with `BUILD_EXIT=0`; all four
+new declarations use only `propext`, `Classical.choice`,
+`Quot.sound`, with no `sorryAx`.
+
+## Polynomial prime-family bound (experimental, awaiting verification)
+
+`PrimePolynomialBound.lean` is a new optional experiment using
+`Chebyshev.pi_ge` from Mathlib, an elementary lower bound for the
+prime-counting function, to target
+`largePrime r ≤ 64*(r+50)^2`.
+It is not part of the original theorem, and its CI proof status is
+pending.
 
 ## 6. Conclusions and risks
 
