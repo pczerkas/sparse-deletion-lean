@@ -252,6 +252,25 @@ under the existing Nth-survivor assumption. The full module passed GitHub Action
 (commit `a7fd3b7`; `BUILD_EXIT=0`, no `sorryAx`,
 only `propext`, `Classical.choice`, `Quot.sound`).
 
+## Improved explicit constants and further research
+
+The experimental optional module `QuantitativeConstants.lean`
+aims to reduce the elementary prime upper bound from
+`64*(r+50)^2` to `16*(r+50)^2`, lowering the explicit CRT
+modulus to `(16*(r+50)^2)^r`. Its certification is pending
+GitHub Actions; it does not alter the existing verified bound.
+
+[OPTIMALITY_CONSTRUCTION.md](OPTIMALITY_CONSTRUCTION.md) develops
+a mathematical construction (using classical results of Wright
+and Siegel) of arbitrarily sparse deletion sets with infinitely
+many triangular hits. It is not a Lean proof and **does not
+establish optimality of the quantitative upper bound**.
+
+[LITERATURE_REVIEW.md](LITERATURE_REVIEW.md) records a targeted
+literature comparison and separates classical ingredients from
+our precise sparse-deletion statement. No claim of research
+novelty is made.
+
 ## Independent exact cubic value-set result
 
 We also prove an **optional**, stronger, classical formula, independently

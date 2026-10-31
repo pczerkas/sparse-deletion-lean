@@ -162,3 +162,18 @@ as a separate named Lean theorem.
 `QuantitativePolynomial.lean`, `QuantitativeRate.lean`,
 `QuantitativeReal.lean`, `QuantitativeLogChoice.lean`,
 `QuantitativeLogRate.lean` and `VerifiedQuantitativeBound.lean`.
+
+## Refined Chebyshev base: experimental improvement
+
+A new optional module `QuantitativeConstants.lean` aims to
+prove `largePrime r ≤ 16*(r+50)^2` rather than
+`64*(r+50)^2`. If the new CI check passes, the corresponding
+general finite inequality will improve to
+
+```text
+H_E(N)/N ≤ (6/7)^r + (16*(r+50)^2)^r/Q(N).
+```
+
+The previously certified logarithmic conclusion remains
+unchanged. The new prime constant should NOT be
+described as kernel-certified until the CI test passes.

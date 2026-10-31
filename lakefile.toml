@@ -110,6 +110,9 @@ name = "QuantitativeLogChoice"
 name = "QuantitativeLogRate"
 
 [[lean_lib]]
+name = "QuantitativeConstants"
+
+[[lean_lib]]
 name = "RemovedSquares"
 
 [[lean_lib]]

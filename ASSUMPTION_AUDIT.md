@@ -224,6 +224,22 @@ and both new conclusions passed GitHub Actions run
 main theorem's statement or imports. No `sorryAx` and only
 `propext`, `Classical.choice`, `Quot.sound` were reported.
 
+## Optimized constants, sharpness and literature (new research)
+
+`QuantitativeConstants.lean` attempts a stronger explicit
+prime-growth base 16 instead of 64 using the same
+Chebyshev inequality. The improvement needs an independent
+CI build. `OPTIMALITY_CONSTRUCTION.md` gives an unformalized
+construction with infinitely many hits and arbitrarily
+slowly increasing deletion counts, conditional on invoking
+published Wright and Siegel theorems. This does not
+establish sharpness of the quantitative rate.
+
+`LITERATURE_REVIEW.md` contains a preliminary search of
+Finkelstein--London, Bateman--Hildebrand--Purdy, Wright,
+Cilleruelo--Luca and modular-sieve precedents. Research
+novelty is not established.
+
 ## 6. Conclusions and risks
 
 - **Statement correspondence:** PASS — formal statement matches

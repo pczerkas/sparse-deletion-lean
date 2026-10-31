@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import QuantitativeLogRate
+public import QuantitativeConstants
 
 @[expose] public section
 
@@ -50,3 +50,9 @@ The original main theorem is not modified by this optional extension.
 
 #print axioms SparseDeletion.quantitative_value_loglog_bound
 #print axioms SparseDeletion.quantitative_index_loglog_bound
+
+#print axioms SparseDeletion.primeCounting_quadratic_lower_16
+#print axioms SparseDeletion.largePrime_le_quadratic_16
+#print axioms SparseDeletion.largePrime_modulus_le_polynomial_16
+#print axioms SparseDeletion.quantitative_value_bound_polynomial_16
+#print axioms SparseDeletion.quantitative_index_bound_polynomial_16

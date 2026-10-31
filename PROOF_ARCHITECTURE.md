@@ -229,6 +229,17 @@ is deliberately conservative. The extra module passed GitHub
 Actions run `41240273708` (commit `a7fd3b7`, `BUILD_EXIT=0`,
 no `sorryAx`) and remains outside the main theorem's import graph.
 
+### Further optional prime-constant refinement (CI pending)
+
+`QuantitativeConstants.lean` imports the already verified
+quantitative chain and uses the same Chebyshev proof
+to attempt `largePrime r ≤ 16*(r+50)^2`. Its new
+finite-N CRT bounds are outside the main proof graph.
+
+The non-finiteness construction and preliminary literature
+survey are recorded separately in `OPTIMALITY_CONSTRUCTION.md`
+and `LITERATURE_REVIEW.md`, not as Lean theorems.
+
 ## Removed alternatives
 
 The working tree no longer contains the historical fixed-prime
