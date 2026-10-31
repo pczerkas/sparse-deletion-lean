@@ -228,6 +228,16 @@ hypothesis. This is deliberately separate from the final analytic
 choice of r; both statements passed GitHub Actions run `41238649297`
 (commit `ab671d6`, no `sorryAx`).
 
+## Logarithmic depth selection (separate optional module)
+
+`QuantitativeLogChoice.lean` formalizes the real-analytic budget check
+for `r = floor(log Q/(8*log(log Q)))`, where `Q=N/(e(N)+1)`,
+assuming `N>0` and `log Q ≥ 2048`. Its conclusion is precisely
+the integer budget required by `QuantitativeRate.lean`. This is
+the remaining step before the explicit log-log frequency estimate.
+**The new source is pending CI validation**; the earlier finite
+budget and real-ratio modules are already certified.
+
 ## Independent exact cubic value-set result
 
 We also prove an **optional**, stronger, classical formula, independently

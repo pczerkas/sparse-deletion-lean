@@ -204,6 +204,14 @@ only `propext`, `Classical.choice`, and `Quot.sound`).
 N>0. It does not assert a log-log corollary. Both real-frequency results passed GitHub Actions run `41238649297`,
 commit `ab671d6`, using only standard Lean axioms.
 
+## Analytic log-choice budget (CI pending)
+
+`QuantitativeLogChoice.lean` attempts to certify that the choice
+`r = floor(log Q / (8*log(log Q)))` meets the exact integer
+budget for all `log Q ≥ 2048`. This is an optional analytic
+extension, not an assumption in the main theorem. CI verification
+is pending; it must not be described as kernel-certified yet.
+
 ## 6. Conclusions and risks
 
 - **Statement correspondence:** PASS — formal statement matches

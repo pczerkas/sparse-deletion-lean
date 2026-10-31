@@ -211,6 +211,14 @@ is separate from the final logarithmic optimization, which has
 not yet been formalized. The real-ratio bridge passed GitHub
 Actions run `41238649297` (commit `ab671d6`, no `sorryAx`).
 
+### Optional logarithmic depth (CI pending)
+
+`QuantitativeLogChoice.lean` imports `QuantitativeReal.lean` and
+attempts to prove that `log Q ≥ 2048` makes the choice
+`r=floor(log Q/(8 loglog Q))` satisfy the integer sieve budget.
+The final log/loglog frequency bound remains a separate corollary.
+No changes to the import graph of the main theorem.
+
 ## Removed alternatives
 
 The working tree no longer contains the historical fixed-prime

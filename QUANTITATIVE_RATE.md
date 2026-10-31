@@ -196,3 +196,13 @@ proves a version for retained-sequence indices, normalized by 2N+2.
 Its purpose is to isolate exact casts, positivity and fractions from
 the remaining analytic log/loglog optimization. Both real-frequency inequalities were kernel-checked in GitHub
 Actions run `41238649297` (commit `ab671d6`).
+
+## Formalization of the logarithmic depth (new, CI pending)
+
+The optional module `QuantitativeLogChoice.lean` is designed to
+prove the exact integer condition for
+`r=floor(log Q/(8*log(log Q)))` when `log Q≥2048`.
+The threshold 2048 allows the inequality
+`448(r+50)^2 ≤ (log Q)^3` to be proved with elementary
+real inequalities. At the time of writing it has *not* passed
+CI and is not kernel-verified.
