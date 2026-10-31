@@ -111,27 +111,30 @@ but improves the finite-N constants; it does not prove the
 
 ## Chebyshev prime-counting route: polynomial-size CRT modulus
 
-The experimental module `PrimePolynomialBound.lean` uses the explicit
-Chebyshev lower bound already present in Mathlib and aims to establish
+The Lean-certified module `PrimePolynomialBound.lean` uses the explicit
+Chebyshev lower bound already present in Mathlib and proves
 
 ```text
 largePrime r ≤ 64*(r+50)^2.
 ```
 
-The corresponding planned module `QuantitativePolynomial.lean` derives
+The companion Lean-certified module `QuantitativePolynomial.lean` proves
 
 ```text
 M_r ≤ (64*(r+50)^2)^r
 H_E(N)/N ≤ (6/7)^r + (64*(r+50)^2)^r / Q(N).
 ```
 
-**CI status:** these additional declarations have not yet passed the
-verification pipeline. Neither should be cited as Lean-verified until
-that happens. Unlike the Bertrand-only estimates above, their proof
+**CI status:** both modules passed verification: `PrimePolynomialBound.lean`
+on run `41236892361` (commit `67fa5d4`) and
+`QuantitativePolynomial.lean` on run `41237410122` (commit `a0862e0`).
+The final logarithmic optimization in this document remains a
+mathematical derivation outside Lean; the finite-N polynomial-modulus
+inequalities are kernel-certified. Unlike the Bertrand-only estimates above, their proof
 uses Chebyshev's elementary prime-counting inequality (not the prime
 number theorem).
 
-### Derivation of the stronger asymptotic rate, conditional on that finite bound
+### Mathematical derivation of the stronger asymptotic rate from the verified finite bound
 
 Put `L = log Q(N)` and assume `L ≥ 256`. Choose
 `r = floor(L/(8 log L))`. Then `r ≤ L`, `r+50 ≤ 2L`, and
@@ -156,7 +159,7 @@ corollary would be
 H_E(N)/N ≤ (13/6)*exp(-(log(7/6)/8)*log Q(N)/log(log Q(N))).
 ```
 
-The optimization from the finite bound to the logarithmic expression
-is not yet formalized in Lean. This calculation is independent of
-any unproved prime-counting conjecture, provided the stated Chebyshev
-module finishes kernel verification.
+The optimization from the Lean-verified finite bound to the logarithmic
+expression is not yet formalized in Lean. The numerical threshold and
+constants above follow by elementary real inequalities, independent of
+any unproved prime-counting conjecture.

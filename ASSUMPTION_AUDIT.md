@@ -175,16 +175,18 @@ rate is also not formalized. The further optional module
 new declarations use only `propext`, `Classical.choice`,
 `Quot.sound`, with no `sorryAx`.
 
-## Polynomial prime-family bound (experimental, awaiting verification)
+## Polynomial prime-family bound (verified in CI)
 
-`PrimePolynomialBound.lean` is a new optional experiment using
+`PrimePolynomialBound.lean` is an optional verified module using
 `Chebyshev.pi_ge` from Mathlib, an elementary lower bound for the
-prime-counting function, to target
+prime-counting function, proving
 `largePrime r ≤ 64*(r+50)^2`.
 It is not part of the original theorem. The bound passed GitHub
 Actions run `41236892361` at commit `67fa5d4`, with no `sorryAx`
 and only the standard Lean axioms. `QuantitativePolynomial.lean` is
-a further optional finite-N corollary and must be verified separately.
+a further optional finite-N corollary that passed GitHub Actions
+run `41237410122` (commit `a0862e0`, `BUILD_EXIT=0`, no `sorryAx`,
+only the standard axioms).
 
 ## 6. Conclusions and risks
 
@@ -194,7 +196,7 @@ a further optional finite-N corollary and must be verified separately.
   the key uniform modular bound is proved, not merely assumed.
 - **Main proof structure:** PASS by source audit and the recorded
   pre-clean successful build.
-- **Fresh CI build of current branch:** PASS (2026-10-31, `4629474`).
+- **Fresh CI build of all current Lean code:** PASS (2026-10-31, commit `a0862e0`, run `41237410122`).
 - **Independently established novelty:** NOT ASSESSED. The
   `x³−x` exact value-set formula is classical.
 - **Potential overclaims to avoid:** finite number of triangular

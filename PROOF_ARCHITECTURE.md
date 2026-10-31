@@ -181,7 +181,8 @@ its quadratic bound `largePrime r ≤ 64*(r+50)^2` was verified by
 GitHub Actions run `41236892361`, commit `67fa5d4`. The companion
 `QuantitativePolynomial.lean` multiplies the bounds to obtain the
 explicit CRT modulus bound `(64*(r+50)^2)^r` and the two finite-N
-hit-count estimates; the companion module requires a new CI build. It is not a dependency of the main theorem.
+hit-count estimates. The companion module passed GitHub Actions run
+`41237410122` (commit `a0862e0`), with no `sorryAx`. It is not a dependency of the main theorem.
 The improved certificate passed GitHub Actions run `41236256862`
 (commit `4b65c88`) with only the standard Lean axioms.
 

@@ -177,9 +177,10 @@ proving the smaller modulus bound
 and retained-index estimates. Both use the existing finite-field sieve.
 This improved result was Lean-certified by GitHub Actions run
 `41236256862` (commit `4b65c88`, `BUILD_EXIT=0`, no `sorryAx`).
-The logarithmic corollary
-is not yet a Lean theorem. Verified with pinned Lean 4.35.0,
-Mathlib v4.35.0 and only standard axioms in [GitHub Actions run 41234713571](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41234713571).
+The logarithmic corollary is not yet a Lean theorem. The *finite-N*
+statements were verified with pinned Lean 4.35.0 and Mathlib v4.35.0,
+including the polynomial extension in [GitHub Actions run 41237410122](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41237410122).
+All printed axioms are the three standard Lean axioms.
 This computational verification is distinct from an independent mathematical
 review or a literature novelty assessment. They do not invoke any theorem about
 representation as five distinct squares. Both optional modules are kept
@@ -194,7 +195,8 @@ This prime bound passed GitHub Actions run `41236892361` (commit
 `67fa5d4`, no `sorryAx`, only standard axioms). The companion module
 `QuantitativePolynomial.lean` uses it to prove the explicit CRT modulus bound
 `M_r ≤ (64*(r+50)^2)^r`, and both value-index and retained-index finite-N
-inequalities. That additional module still requires its own CI verification.
+inequalities. That companion module passed GitHub Actions run `41237410122` (commit
+`a0862e0`, `BUILD_EXIT=0`, no `sorryAx`, only standard axioms).
 The further real-logarithm optimization is documented in
 [QUANTITATIVE_RATE.md](QUANTITATIVE_RATE.md), not yet formalized in Lean.
 
