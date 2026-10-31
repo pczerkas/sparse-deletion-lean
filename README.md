@@ -200,6 +200,23 @@ inequalities. That companion module passed GitHub Actions run `41237410122` (com
 The further real-logarithm optimization is documented in
 [QUANTITATIVE_RATE.md](QUANTITATIVE_RATE.md), not yet formalized in Lean.
 
+## Certified explicit sieve-depth threshold
+
+The optional module `QuantitativeRate.lean` translates the polynomial
+CRT estimate into a finite, fully integer-valued rate statement. For
+any depth `r`, if the deletion budget obeys
+
+```text
+(448*(r+50)^2)^r * (e(N)+1) ≤ N,
+```
+
+then `7^r*H_E(N) ≤ 2*6^r*N`. The same threshold is proved
+for retained-sequence indexing under the standard Nth-survivor
+hypothesis. This avoids logarithms and is intended as an independently
+checkable stepping stone to the optimized real-logarithm corollary.
+Its CI status must be checked before claiming the new lemmata are
+kernel-certified.
+
 ## Independent exact cubic value-set result
 
 We also prove an **optional**, stronger, classical formula, independently

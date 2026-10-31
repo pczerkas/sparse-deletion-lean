@@ -98,6 +98,9 @@ name = "PrimePolynomialBound"
 name = "QuantitativePolynomial"
 
 [[lean_lib]]
+name = "QuantitativeRate"
+
+[[lean_lib]]
 name = "RemovedSquares"
 
 [[lean_lib]]

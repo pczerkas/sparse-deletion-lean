@@ -163,3 +163,21 @@ The optimization from the Lean-verified finite bound to the logarithmic
 expression is not yet formalized in Lean. The numerical threshold and
 constants above follow by elementary real inequalities, independent of
 any unproved prime-counting conjecture.
+
+## Integer-only sieve-depth threshold (new Lean module)
+
+The optional `QuantitativeRate.lean` isolates the following implication
+without real logarithms:
+
+```text
+if (448*(r+50)^2)^r * (e(N)+1) ≤ N
+then 7^r * H_E(N) ≤ 2 * 6^r * N.
+```
+
+A parallel statement holds for retained-sequence indexing at N+1,
+with the deletion count and budget evaluated at 2N+2, assuming the
+usual Nth-survivor bound. This modular threshold makes the rate
+*effective and computable* for fixed N; the subsequent optimization
+using `r=floor(log Q/(8 loglog Q))` is still a separate analytical
+step and not yet formalized in Lean. The new source requires its
+own CI verification before being called kernel-certified.

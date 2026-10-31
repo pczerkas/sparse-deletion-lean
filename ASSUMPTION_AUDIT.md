@@ -188,6 +188,14 @@ a further optional finite-N corollary that passed GitHub Actions
 run `41237410122` (commit `a0862e0`, `BUILD_EXIT=0`, no `sorryAx`,
 only the standard axioms).
 
+## Explicit finite-budget rates (new optional module; CI pending)
+
+`QuantitativeRate.lean` proves an integer-only conditional rate from
+the independently certified polynomial CRT estimate. The hypothesis
+is a concrete growth threshold on `N/(e(N)+1)`, not an additional
+assumption needed by the main theorem. The new certificate must pass
+GitHub Actions; it is not yet treated as kernel-verified.
+
 ## 6. Conclusions and risks
 
 - **Statement correspondence:** PASS — formal statement matches

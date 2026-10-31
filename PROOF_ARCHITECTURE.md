@@ -192,6 +192,14 @@ The improved certificate passed GitHub Actions run `41236256862`
 and a Mathlib proof that primes have natural density zero. It is
 verified separately as one of the default build targets.
 
+### Optional explicit rate (finite-budget form)
+
+`QuantitativeRate.lean` imports only `QuantitativePolynomial.lean`.
+It proves a fully explicit threshold:
+`(448*(r+50)^2)^r*(e(N)+1) ≤ N` implies
+`7^r*H_E(N) ≤ 2*6^r*N`, and its retained-index counterpart.
+The final choice of `r` via real logarithms is not yet formalized.
+
 ## Removed alternatives
 
 The working tree no longer contains the historical fixed-prime

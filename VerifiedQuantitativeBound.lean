@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import QuantitativePolynomial
+public import QuantitativeRate
 
 @[expose] public section
 
@@ -39,3 +39,6 @@ The original main theorem is not modified by this optional extension.
 #print axioms SparseDeletion.largePrime_modulus_le_polynomial
 #print axioms SparseDeletion.quantitative_value_bound_polynomial
 #print axioms SparseDeletion.quantitative_index_bound_polynomial
+
+#print axioms SparseDeletion.quantitative_value_bound_under_polynomial_budget
+#print axioms SparseDeletion.quantitative_index_bound_under_polynomial_budget
