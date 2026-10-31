@@ -157,7 +157,8 @@ bound on the N-th retained integer.
 ```text
 IndexTransfer ──→ QuantitativeBound ──→ QuantitativeSieve
                                                └──→ QuantitativeEffective
-                                                           └──→ VerifiedQuantitativeBound
+                                                           └──→ QuantitativeSharper
+                                                                      └──→ VerifiedQuantitativeBound
 ```
 
 `QuantitativeSieve.lean` also imports `MainUnconditionalValueSet.lean` to
@@ -171,6 +172,9 @@ Bertrand postulate and proves the loose elementary modulus bound
 of the deletion count, both for value indices and for retained-sequence
 indices under the stated survivor-growth hypothesis. These optional results do not use five-square
 representations or assume a decay rate for the deleted-set density.
+`QuantitativeSharper.lean` additionally improves the modulus bound to
+`37^r * 2^(r*(r-1)/2)`, using the exact triangular exponent sum.
+The additional corollaries remain outside the main proof graph.
 
 ### Additional corollary
 

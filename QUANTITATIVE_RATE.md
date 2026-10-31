@@ -11,7 +11,7 @@ Write
 - `H_E(N) = # {n < N : sum of squares of positive integers ≤ n outside E is triangular}`;
 - `Q(N) = N/(e(N)+1)`, for `N > 0`.
 
-The verified finite estimate is, for every `E`, `N` and `r ≥ 0`,
+The original verified finite estimate is, for every `E`, `N` and `r ≥ 0`,
 
 ```text
 7^r * H_E(N) ≤ 6^r * N + 7^r * 37^r * 2^(r*r) * (e(N)+1).
@@ -92,3 +92,19 @@ with `Q(2N+2)` in place of `Q(N)` and harmless constant factors.
 - The logarithmic optimization in this note is a mathematical
   derivation, **not** yet a Lean theorem. A future formalization would
   require elementary real exponential/logarithm estimates.
+
+## Sharper finite modulus estimate
+
+The separately compiled `QuantitativeSharper.lean` (pending fresh CI at
+the time of this note) improves the purely elementary Bertrand bound to
+`M_r ≤ 37^r 2^(r*(r-1)/2)`, by multiplying
+`largePrime i ≤ 37·2^i` for `0≤i<r` instead of bounding all
+factors by `37·2^r`. Thus the finite inequality can be sharpened to
+
+```text
+H_E(N)/N ≤ (6/7)^r + 37^r * 2^(r*(r-1)/2) / Q(N).
+```
+
+This keeps the same `exp(-c sqrt(log Q))` *type* of asymptotic decay,
+but improves the finite-N constants; it does not prove the
+`exp(-c log Q/loglog Q)` rate.

@@ -89,6 +89,9 @@ name = "QuantitativeSieve"
 name = "QuantitativeEffective"
 
 [[lean_lib]]
+name = "QuantitativeSharper"
+
+[[lean_lib]]
 name = "RemovedSquares"
 
 [[lean_lib]]

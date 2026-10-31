@@ -170,7 +170,13 @@ less than `2*N+2`. These statements remove the hidden modulus,
 but the bounds are loose and not a finiteness result. The new module is
 included in the optional Lean verification target. The elementary real-logarithm
 optimization and its limitations are explained in
-[QUANTITATIVE_RATE.md](QUANTITATIVE_RATE.md); that logarithmic corollary
+[QUANTITATIVE_RATE.md](QUANTITATIVE_RATE.md). A further optional module
+`QuantitativeSharper.lean` retains each individual Bertrand factor,
+proving the smaller modulus bound
+`M_r ≤ 37^r * 2^(r*(r-1)/2)` and the corresponding sharper value-index
+and retained-index estimates. Both use the existing finite-field sieve.
+The new certificate must pass CI before being considered verified.
+The logarithmic corollary
 is not yet a Lean theorem. Verified with pinned Lean 4.35.0,
 Mathlib v4.35.0 and only standard axioms in [GitHub Actions run 41234713571](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41234713571).
 This computational verification is distinct from an independent mathematical

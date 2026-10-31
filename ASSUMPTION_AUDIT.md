@@ -168,7 +168,9 @@ The optional *retained-index* corollary passed GitHub Actions run
 only `propext`, `Classical.choice`, `Quot.sound`. The separate
 real-logarithm optimization is documented in `QUANTITATIVE_RATE.md`
 but is not yet formalized in Lean; a stronger prime-counting-based
-rate is also not formalized.
+rate is also not formalized. The further optional module
+`QuantitativeSharper.lean` reduces the Bertrand exponent to
+`r*(r-1)/2`; its separate CI verification is still required.
 
 ## 6. Conclusions and risks
 

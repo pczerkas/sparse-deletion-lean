@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import QuantitativeEffective
+public import QuantitativeSharper
 
 @[expose] public section
 
@@ -26,3 +26,8 @@ The original main theorem is not modified by this optional extension.
 #print axioms SparseDeletion.quantitative_value_bound_under_budget
 
 #print axioms SparseDeletion.quantitative_index_bound_explicit
+
+#print axioms SparseDeletion.largePrime_modulus_le_sum_exponent
+#print axioms SparseDeletion.largePrime_modulus_le_half_square
+#print axioms SparseDeletion.quantitative_value_bound_sharper
+#print axioms SparseDeletion.quantitative_index_bound_sharper
