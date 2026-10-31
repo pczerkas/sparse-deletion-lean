@@ -32,7 +32,7 @@ The logical argument consists of:
 The main theorem is **not** a finiteness result and does not apply
 directly to prime-square prefix sums.
 
-## Physical imports: three verified targets
+## Physical imports and verification targets
 
 ### Generic mathematical layer — independently importable
 
@@ -146,6 +146,23 @@ formula for `x³−x`. It does **not** lie in the main density theorem's
 import graph. The weaker lower bound is enough for the sieve and makes
 the main proof smaller.
 
+### Optional quantitative extension
+
+`QuantitativeBound.lean` imports `IndexTransfer.lean` and proves
+finite-N upper bounds by specializing the *existing* `perturb_count_bound`.
+Its statements hold for any finite N and any uniform shifted modular
+block sieve. The enumeration-index estimate additionally assumes a
+bound on the N-th retained integer.
+
+```text
+IndexTransfer ──→ QuantitativeBound ──→ VerifiedQuantitativeBound
+```
+
+This is a separate consumer of the main proof infrastructure and
+**does not** feed back into `MainUnconditionalValueSet.lean`. It does
+not use the five-square representation theorem or assume a decay rate
+for deleted-set density.
+
 ### Additional corollary
 
 `CompositeCorollary.lean` imports `MainUnconditionalValueSet.lean`
@@ -175,11 +192,13 @@ lake build
 lake env lean VerifiedPerturbation.lean
 lake env lean VerifiedExactValueSet.lean
 lake env lean VerifiedCompleteProof.lean
+lake env lean VerifiedQuantitativeBound.lean
 ```
 
-`lake build` builds all four maintained verification entry points.
-All reported axioms are among `propext`, `Classical.choice`,
-`Quot.sound`; there is no `sorryAx` in their proof terms.
+`lake build` includes four original verification entry points and the
+optional quantitative certificate. The previous axiom audit covered the
+original four certificates (`propext`, `Classical.choice`, `Quot.sound`;
+no `sorryAx`). The optional certificate needs its own fresh CI result.
 
 When a module is renamed or removed, update **both** this document,
 `README.md`, `lakefile.toml`, and the GitHub Actions workflow.

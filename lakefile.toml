@@ -1,6 +1,6 @@
 name = "SparseDeletion"
 version = "0.1.0"
-defaultTargets = ["VerifiedCompleteProof", "CompositeCorollary", "VerifiedExactValueSet", "VerifiedPerturbation"]
+defaultTargets = ["VerifiedCompleteProof", "CompositeCorollary", "VerifiedExactValueSet", "VerifiedPerturbation", "VerifiedQuantitativeBound"]
 
 [[require]]
 name = "mathlib"
@@ -80,6 +80,9 @@ name = "PrimeFamily"
 name = "PrimeSquarePass"
 
 [[lean_lib]]
+name = "QuantitativeBound"
+
+[[lean_lib]]
 name = "RemovedSquares"
 
 [[lean_lib]]
@@ -108,3 +111,6 @@ name = "VerifiedExactValueSet"
 
 [[lean_lib]]
 name = "VerifiedPerturbation"
+
+[[lean_lib]]
+name = "VerifiedQuantitativeBound"

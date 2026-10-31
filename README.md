@@ -47,12 +47,15 @@ lake build
 ```
 
 You can instead run the tracked `./setup_and_check.sh` bootstrap script.
-All four verification certificates are the default build targets:
+The four original verification certificates and the new quantitative certificate
+are the default build targets:
 
 - `VerifiedCompleteProof.lean` — unconditional density theorem;
 - `CompositeCorollary.lean` — density theorem for composite squares;
 - `VerifiedExactValueSet.lean` — exact finite-field formula;
-- `VerifiedPerturbation.lean` — independent generic perturbation lemma.
+- `VerifiedPerturbation.lean` — independent generic perturbation lemma;
+- `VerifiedQuantitativeBound.lean` — finite-N upper bounds for triangular hits
+  after sparse deletions (experimental branch; requires a successful CI build).
 
 To inspect the printed axioms, run:
 
@@ -60,6 +63,7 @@ To inspect the printed axioms, run:
 lake env lean VerifiedCompleteProof.lean
 lake env lean VerifiedExactValueSet.lean
 lake env lean VerifiedPerturbation.lean
+lake env lean VerifiedQuantitativeBound.lean
 ```
 
 All key theorems use only the standard Lean axioms `propext`,
@@ -116,6 +120,29 @@ The full physical dependency and logical explanation are in
 The separate mathematical and assumption-level review is in
 [ASSUMPTION_AUDIT.md](ASSUMPTION_AUDIT.md), including the limitations
 of the last clean-build verification attempt.
+
+## Quantitative finite-N bounds (feature branch)
+
+The optional module `QuantitativeBound.lean` reuses the *existing* shifted
+uniform sieve and counting lemma. For every fixed block length `M > 0`
+and uniform bound `C` for the number of shifted candidates in a block,
+it proves (with `countUpTo` counting indices below `N`):
+
+```text
+#value-hits below N <= C * (N / M) + M * #deleted-below-N + (N % M).
+```
+
+It also transfers this bound to enumeration indices if the `N`-th
+retained integer is less than `2*N+2`, and proves a simplified variant.
+No zero-density hypothesis is required for the finite value-index bound;
+its hypotheses are the uniform shifted block estimate and `M > 0`.
+The index bound additionally requires infinitude of retained positives
+and the explicit upper bound on their `N`-th element.
+
+These are *upper bounds*, not a proof of finiteness and not a new
+unconditional numerical decay rate. They do not invoke any theorem about
+representation as five distinct squares. The optional module is kept
+out of the main theorem's import graph.
 
 ## Independent exact cubic value-set result
 

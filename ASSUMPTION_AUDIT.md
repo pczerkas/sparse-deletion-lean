@@ -150,6 +150,17 @@ and `Quot.sound`, never `sorryAx`. A fresh successful CI
 build of the current commit is still recommended before
 publication.
 
+## Optional quantitative extension (feature/quantitative-hit-bound)
+
+The additional module `QuantitativeBound.lean` specializes the existing
+uniform block counting lemma to exact finite-N estimates for triangular
+hits, both by original integer values and by retained-sequence indices.
+It does not strengthen the mathematical conclusion to finiteness and does
+not introduce a five-square representation assumption. The source
+statement has not been covered by the 2026-10-30 build audit; verify its
+new certificate independently in GitHub Actions before claiming it is
+kernel-checked.
+
 ## 6. Conclusions and risks
 
 - **Statement correspondence:** PASS — formal statement matches
