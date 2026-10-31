@@ -233,25 +233,24 @@ choice of r; both statements passed GitHub Actions run `41238649297`
 `QuantitativeLogChoice.lean` formalizes the real-analytic budget check
 for `r = floor(log Q/(8*log(log Q)))`, where `Q=N/(e(N)+1)`,
 assuming `N>0` and `log Q ≥ 2048`. Its conclusion is precisely
-the integer budget required by `QuantitativeRate.lean`. This is
-the remaining step before the explicit log-log frequency estimate.
-**The new source is pending CI validation**; the earlier finite
-budget and real-ratio modules are already certified.
+the integer budget required by `QuantitativeRate.lean`. This step passed GitHub Actions run `41239749155` (commit
+`d83bdb5`). Its certificate prints only standard axioms, and
+the original main proof is unaffected.
 
 ## Explicit log/loglog rate (optional final corollary)
 
 `QuantitativeLogRate.lean` derives the **real log/loglog bound** from
 the previously certified threshold. Write
-`Q=N/(e(N)+1)`, `L=log Q`. For `N>0` and `L≥2048` it claims
+`Q=N/(e(N)+1)`, `L=log Q`. For `N>0` and `L≥2048` it proves
 
 ```text
 H_E(N)/N ≤ (7/3) * exp(-log(7/6) * L/(8*log L)).
 ```
 
 There is also a retained-index version normalized by `2N+2`,
-under the existing Nth-survivor assumption. This final module
-requires a successful GitHub Actions compilation before its
-statements can be considered kernel-certified.
+under the existing Nth-survivor assumption. The full module passed GitHub Actions run `41240273708`
+(commit `a7fd3b7`; `BUILD_EXIT=0`, no `sorryAx`,
+only `propext`, `Classical.choice`, `Quot.sound`).
 
 ## Independent exact cubic value-set result
 

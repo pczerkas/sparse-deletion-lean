@@ -204,23 +204,25 @@ only `propext`, `Classical.choice`, and `Quot.sound`).
 N>0. It does not assert a log-log corollary. Both real-frequency results passed GitHub Actions run `41238649297`,
 commit `ab671d6`, using only standard Lean axioms.
 
-## Analytic log-choice budget (CI pending)
+## Analytic log-choice budget (CI verified)
 
-`QuantitativeLogChoice.lean` attempts to certify that the choice
+`QuantitativeLogChoice.lean` certifies that the choice
 `r = floor(log Q / (8*log(log Q)))` meets the exact integer
 budget for all `log Q ≥ 2048`. This is an optional analytic
-extension, not an assumption in the main theorem. CI verification
-is pending; it must not be described as kernel-certified yet.
+extension, not an assumption in the main theorem. GitHub Actions run `41239749155` (commit `d83bdb5`)
+passed with `BUILD_EXIT=0` and standard axioms only.
 
-## Explicit log/loglog bounds (CI pending)
+## Explicit log/loglog bounds (CI verified)
 
 `QuantitativeLogRate.lean` adds the last real logarithmic comparison,
-aiming to prove
+proving
 `H_E(N)/N ≤ (7/3)*exp(-log(7/6)*log Q/(8*log(log Q)))`
 for `log Q≥2048`, and a retained-index counterpart. It depends
 only on the existing verified chain (including `QuantitativeLogChoice`),
-but the new conclusions require separate CI certification. No changes
-to the main theorem's statement or imports.
+and both new conclusions passed GitHub Actions run
+`41240273708` (commit `a7fd3b7`). No changes to the
+main theorem's statement or imports. No `sorryAx` and only
+`propext`, `Classical.choice`, `Quot.sound` were reported.
 
 ## 6. Conclusions and risks
 
@@ -230,7 +232,8 @@ to the main theorem's statement or imports.
   the key uniform modular bound is proved, not merely assumed.
 - **Main proof structure:** PASS by source audit and the recorded
   pre-clean successful build.
-- **Fresh CI build of all current Lean code:** PASS (2026-10-31, commit `a0862e0`, run `41237410122`).
+- **Latest successful CI build of all Lean code:** PASS (2026-10-31,
+  commit `a7fd3b7`, run `41240273708`).
 - **Independently established novelty:** NOT ASSESSED. The
   `x³−x` exact value-set formula is classical.
 - **Potential overclaims to avoid:** finite number of triangular

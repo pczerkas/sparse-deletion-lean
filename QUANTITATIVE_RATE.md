@@ -1,226 +1,164 @@
-# Quantitative decay from the elementary Bertrand modulus bound
+# Quantitative rate for triangular square-prefix hits
 
-**Status:** mathematical consequence of the Lean-certified finite-`N`
-inequality in `QuantitativeEffective.lean`. The real-analysis optimization
-below has **not** been formalized in Lean. It is not a claim of publication
-novelty.
+**Status (2026-10-31):** the finite bounds **and the explicit log/loglog
+estimate** are certified by Lean 4.35.0 / Mathlib v4.35.0.
+GitHub Actions run [41240273708](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41240273708)
+successfully compiled the complete `VerifiedQuantitativeBound.lean`
+certificate, with `BUILD_EXIT=0`, no `sorryAx`, and only the standard
+`propext`, `Classical.choice`, `Quot.sound` axioms.
 
-Write
+The following statements are additional **consequences** of the original
+main density-zero theorem. They are logically kept in optional modules
+and do not modify the statement or imports of the main theorem.
 
-- `e(N) = # (E ∩ [0,N))`;
-- `H_E(N) = # {n < N : sum of squares of positive integers ≤ n outside E is triangular}`;
-- `Q(N) = N/(e(N)+1)`, for `N > 0`.
+## Definitions and conventions
 
-The original verified finite estimate is, for every `E`, `N` and `r ≥ 0`,
+For any deletion set `E ⊆ ℕ` and `N>0`, write
+
+- `e(N) = #(E ∩ [0,N))`;
+- `H_E(N) = # {n < N : the sum of squares of positive k ≤ n
+  with k ∉ E is triangular}`;
+- `Q(N) = N/(e(N)+1)`, a positive real number.
+
+These `H_E` values count hits **by the original integer value**, not
+by position in the surviving enumeration. A separate, formally
+verified result below addresses the enumeration index.
+
+## The finite-N results
+
+`QuantitativeBound.lean` and `QuantitativeSieve.lean` specialize the
+original shifted modular sieve and the perturbation-count lemma. They
+give, for each depth `r`, a positive CRT modulus `M_r` and the bound
 
 ```text
-7^r * H_E(N) ≤ 6^r * N + 7^r * 37^r * 2^(r*r) * (e(N)+1).
+7^r * H_E(N) ≤ 6^r * N + 7^r * M_r * (e(N)+1).
 ```
 
-Dividing by `7^r N` gives
+These inequalities do **not** assume that `E` has zero density.
+
+Two separate elementary bounds on `M_r` were formalized:
+
+- **Bertrand-only:** `M_r ≤ 37^r * 2^(r*(r-1)/2)`, in
+  `QuantitativeSharper.lean`.
+- **Chebyshev prime-counting bound:**
+  `largePrime r ≤ 64*(r+50)^2` and
+  `M_r ≤ (64*(r+50)^2)^r`, in
+  `PrimePolynomialBound.lean` and `QuantitativePolynomial.lean`.
+
+The second gives the stronger general estimate
 
 ```text
-H_E(N)/N ≤ (6/7)^r + (37^r * 2^(r*r))/Q(N).
-```
-
-## An explicit asymptotic rate
-
-For `Q(N)>1` put `L = log Q(N)` (natural logarithm), and select
-
-```text
-r = floor(sqrt L).
-```
-
-Let `alpha = log(7/6) > 0`. Since `sqrt L - 1 < r ≤ sqrt L`,
-
-```text
-(6/7)^r ≤ (7/6) * exp(-alpha * sqrt L).
-```
-
-Moreover
-
-```text
-(37^r * 2^(r*r))/Q(N)
-  ≤ exp(log(37) * sqrt L - (1-log(2)) * L).
-```
-
-Because `1-log(2)>0`, the second term is bounded by
-`exp(-alpha*sqrt L)` for all sufficiently large `L`. Hence the
-concrete asymptotic consequence is
-
-```text
-H_E(N)/N ≤ (13/6) * exp(-log(7/6) * sqrt(log Q(N)))
-```
-
-whenever `Q(N)` is sufficiently large.
-
-The implicit threshold is absolute (independent of `E`). Therefore,
-for any density-zero deletion set `E` (so `Q(N)→∞`),
-
-```text
-H_E(N) = O( N * exp(-log(7/6) * sqrt(log (N/(e(N)+1)))) ).
-```
-
-This is stronger than merely `H_E(N)=o(N)`, but weaker than the
-previously proposed `exp(-c log(Q)/loglog(Q))` rate obtainable only with
-a better bound on prime growth. The larger `37^r * 2^(r*r)` here is
-a consequence of using Bertrand alone.
-
-## Retained-sequence indexing
-
-The separate Lean theorem `quantitative_index_bound_explicit` gives
-for `N` with `keptNth E N < 2*N+2`:
-
-```text
-7^r * #index-hits below (N+1)
-  ≤ 6^r*(2*N+2)
-    + 7^r*37^r*2^(r*r)*(e(2*N+2)+1).
-```
-
-The survivor hypothesis holds eventually when `E` has density zero
-(by `IndexGrowth.lean`). Consequently the same type of asymptotic
-rate follows for hits counted by the position in the retained sequence,
-with `Q(2N+2)` in place of `Q(N)` and harmless constant factors.
-
-## Scope / limitations
-
-- The upper bounds concern *triangular hits*, not their eventual
-  disappearance; infinitely many rare hits are not excluded.
-- No theorem about representations as five distinct squares is used.
-- The finite inequalities are Lean-certified only after a successful
-  CI run for the commit containing the corresponding declarations.
-- The logarithmic optimization in this note is a mathematical
-  derivation, **not** yet a Lean theorem. A future formalization would
-  require elementary real exponential/logarithm estimates.
-
-## Sharper finite modulus estimate
-
-The separately compiled `QuantitativeSharper.lean` (verified in GitHub Actions run
-`41236256862`, commit `4b65c88`) improves the purely elementary Bertrand bound to
-`M_r ≤ 37^r 2^(r*(r-1)/2)`, by multiplying
-`largePrime i ≤ 37·2^i` for `0≤i<r` instead of bounding all
-factors by `37·2^r`. Thus the finite inequality can be sharpened to
-
-```text
-H_E(N)/N ≤ (6/7)^r + 37^r * 2^(r*(r-1)/2) / Q(N).
-```
-
-This keeps the same `exp(-c sqrt(log Q))` *type* of asymptotic decay,
-but improves the finite-N constants; it does not prove the
-`exp(-c log Q/loglog Q)` rate.
-
-## Chebyshev prime-counting route: polynomial-size CRT modulus
-
-The Lean-certified module `PrimePolynomialBound.lean` uses the explicit
-Chebyshev lower bound already present in Mathlib and proves
-
-```text
-largePrime r ≤ 64*(r+50)^2.
-```
-
-The companion Lean-certified module `QuantitativePolynomial.lean` proves
-
-```text
-M_r ≤ (64*(r+50)^2)^r
 H_E(N)/N ≤ (6/7)^r + (64*(r+50)^2)^r / Q(N).
 ```
 
-**CI status:** both modules passed verification: `PrimePolynomialBound.lean`
-on run `41236892361` (commit `67fa5d4`) and
-`QuantitativePolynomial.lean` on run `41237410122` (commit `a0862e0`).
-The final logarithmic optimization in this document remains a
-mathematical derivation outside Lean; the finite-N polynomial-modulus
-inequalities are kernel-certified. Unlike the Bertrand-only estimates above, their proof
-uses Chebyshev's elementary prime-counting inequality (not the prime
-number theorem).
+Here `r` is any natural number. The proof uses Mathlib's explicit
+elementary Chebyshev inequality, not the prime number theorem, and
+does not involve any assertion about five distinct squares.
 
-### Mathematical derivation of the stronger asymptotic rate from the verified finite bound
+## Certified effective integer budget
 
-Put `L = log Q(N)` and assume `L ≥ 256`. Choose
-`r = floor(L/(8 log L))`. Then `r ≤ L`, `r+50 ≤ 2L`, and
-`64*(r+50)^2 ≤ 256 L^2 ≤ L^3`. Therefore
+`QuantitativeRate.lean` proves the exact implication
 
 ```text
-r * log(64*(r+50)^2) ≤ 3*r*log L ≤ 3*L/8.
+if (448*(r+50)^2)^r * (e(N)+1) ≤ N, then
+7^r * H_E(N) ≤ 2 * 6^r * N.
 ```
 
-Thus the perturbation term is at most `exp(-5L/8)`. Also, since
-`r ≥ L/(8 log L)-1`, the sieve contraction obeys
+For `N>0`, `QuantitativeReal.lean` equivalently derives
 
 ```text
-(6/7)^r ≤ (7/6)*exp(-(log(7/6)/8)*L/log L).
+H_E(N)/N ≤ 2*(6/7)^r.
 ```
 
-For `L ≥ 256`, `exp(-5L/8)` is bounded by the last exponential
-without the `7/6` factor. Consequently the *mathematical*
-corollary would be
+This is effective for any explicit finite `N, r` and `e(N)`, without
+calculating logarithms.
+
+## Fully certified log/loglog decay
+
+Assume `N>0` and set
 
 ```text
-H_E(N)/N ≤ (13/6)*exp(-(log(7/6)/8)*log Q(N)/log(log Q(N))).
+Q = N/(e(N)+1)
+L = log Q.
 ```
 
-The optimization from the Lean-verified finite bound to the logarithmic
-expression is not yet formalized in Lean. The numerical threshold and
-constants above follow by elementary real inequalities, independent of
-any unproved prime-counting conjecture.
-
-## Integer-only sieve-depth threshold (new Lean module)
-
-The optional `QuantitativeRate.lean` isolates the following implication
-without real logarithms:
+For the conservative numerical threshold `L ≥ 2048`, select
 
 ```text
-if (448*(r+50)^2)^r * (e(N)+1) ≤ N
-then 7^r * H_E(N) ≤ 2 * 6^r * N.
+r = floor(L/(8*log L)).
 ```
 
-A parallel statement holds for retained-sequence indexing at N+1,
-with the deletion count and budget evaluated at 2N+2, assuming the
-usual Nth-survivor bound. This modular threshold makes the rate
-*effective and computable* for fixed N; the subsequent optimization
-using `r=floor(log Q/(8 loglog Q))` is still a separate analytical
-step and not yet formalized in Lean. The source passed GitHub Actions run `41238649297` (commit
-`ab671d6`, `BUILD_EXIT=0`, standard axioms only).
+`QuantitativeLogChoice.lean` proves that this `r` **satisfies**
+the integer budget above. The underlying elementary calculations
+are `r ≤ L`, `448*(r+50)^2 ≤ L^3`, and
+`r*3*log L ≤ L`, whence
+`(448*(r+50)^2)^r ≤ exp L = Q`.
 
-## Real-frequency bridge (new module, CI pending)
-
-The optional `QuantitativeReal.lean` converts the integer-only
-finite threshold into the real-valued inequality
+`QuantitativeLogRate.lean` adds the exact floor-rounding estimate
+and **kernel-certifies** the final inequality
 
 ```text
-H_E(N)/N ≤ 2*(6/7)^r
+H_E(N)/N ≤ (7/3) *
+  exp( -(log(7/6)/8) * log(Q)/log(log(Q)) )
 ```
 
-for every N>0 and r meeting the certified threshold. It also
-proves a version for retained-sequence indices, normalized by 2N+2.
-Its purpose is to isolate exact casts, positivity and fractions from
-the remaining analytic log/loglog optimization. Both real-frequency inequalities were kernel-checked in GitHub
-Actions run `41238649297` (commit `ab671d6`).
+for all `N>0` with `log Q≥2048`.
 
-## Formalization of the logarithmic depth (new, CI pending)
-
-The optional module `QuantitativeLogChoice.lean` is designed to
-prove the exact integer condition for
-`r=floor(log Q/(8*log(log Q)))` when `log Q≥2048`.
-The threshold 2048 allows the inequality
-`448(r+50)^2 ≤ (log Q)^3` to be proved with elementary
-real inequalities. At the time of writing it has *not* passed
-CI and is not kernel-verified.
-
-## Explicit log/loglog rate (optional final Lean module, CI pending)
-
-The new `QuantitativeLogRate.lean` attempts to formalize the entire
-optimized rate for `L=log(N/(e(N)+1))≥2048`:
+Equivalently, with the explicit positive constant
+`c = log(7/6)/8`, one obtains
 
 ```text
-H_E(N)/N ≤ (7/3) * exp(-(log(7/6)/8) * L/log L).
+H_E(N) ≤ (7/3) * N *
+  exp(-c * log Q/log(log Q)).
 ```
 
-A retained-index version normalizes the hit count by `2N+2`
-and assumes the usual bound on the N-th retained integer. The
-coefficient `7/3` comes from the certified finite threshold
-`2*(6/7)^r` and rounding `r=floor(L/(8log L))`.
-It is weaker in its constant than the earlier paper derivation
-with `13/6`, but is simpler to formalize. Both estimates have
-the same asymptotic rate. The new declarations require CI before
-being treated as verified.
+No assumption of `d(E)=0` is needed in these finite-parameter
+statements. When `d(E)=0`, then `Q(N)→∞`, so the bound eventually
+applies and improves the qualitative density-zero conclusion.
+
+## Indices in the retained sequence
+
+Let `a_0<a_1<⋯` enumerate the surviving positive integers and
+let `H_E^ind(N+1)` count triangular square-prefix hits among the
+first `N+1` enumeration positions.
+
+`QuantitativeLogRate.lean` proves the analogous inequality
+
+```text
+H_E^ind(N+1)/(2*N+2) ≤ (7/3) *
+  exp( -(log(7/6)/8) * log(Q₂)/log(log(Q₂)) ),
+Q₂ = (2*N+2)/(e(2*N+2)+1).
+```
+
+The formal hypotheses include:
+- the surviving positive integers are infinite;
+- `a_N < 2*N+2` (as an explicit survivor-growth bound);
+- `log Q₂ ≥ 2048`.
+
+When `E` has zero density, these additional growth and threshold
+conditions hold eventually. To normalize by the number of enumeration
+positions, observe that
+`H_E^ind(N+1)/(N+1)=2*H_E^ind(N+1)/(2*N+2)`;
+therefore a corresponding bound with coefficient `14/3` follows
+mathematically. The factor-of-two normalization is not presented
+as a separate named Lean theorem.
+
+## Interpretation and limitations
+
+- **Upper-density result, not finiteness.** The bounds allow
+  infinitely many rare triangular hits.
+- The numerical threshold `log Q ≥ 2048` is **enormous**.
+  Constants are chosen for proof simplicity, not practical sharpness.
+- None of the results settles the initial-prime square-prefix
+  problem. The primes themselves have density zero, whereas the
+  hypotheses concern deleting a zero-density subset from all integers.
+- A successful Lean build verifies formal implication between
+  definitions and hypotheses. It does **not** establish research
+  novelty or replace independent peer review.
+
+**Sources in this repository:** `QuantitativeBound.lean`,
+`QuantitativeSieve.lean`, `QuantitativeEffective.lean`,
+`QuantitativeSharper.lean`, `PrimePolynomialBound.lean`,
+`QuantitativePolynomial.lean`, `QuantitativeRate.lean`,
+`QuantitativeReal.lean`, `QuantitativeLogChoice.lean`,
+`QuantitativeLogRate.lean` and `VerifiedQuantitativeBound.lean`.

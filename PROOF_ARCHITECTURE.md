@@ -211,21 +211,23 @@ is separate from the final logarithmic optimization, which has
 not yet been formalized. The real-ratio bridge passed GitHub
 Actions run `41238649297` (commit `ab671d6`, no `sorryAx`).
 
-### Optional logarithmic depth (CI pending)
+### Optional logarithmic depth (CI verified)
 
 `QuantitativeLogChoice.lean` imports `QuantitativeReal.lean` and
 attempts to prove that `log Q ≥ 2048` makes the choice
 `r=floor(log Q/(8 loglog Q))` satisfy the integer sieve budget.
-The final log/loglog frequency bound remains a separate corollary.
-No changes to the import graph of the main theorem.
+The formal logarithmic depth lemma passed GitHub Actions run
+`41239749155` (commit `d83bdb5`). No changes to the import
+graph of the main theorem.
 
-### Optional final log/loglog rate (CI pending)
+### Optional final log/loglog rate (CI verified)
 
 `QuantitativeLogRate.lean` imports `QuantitativeLogChoice.lean`
 and translates its certified integer budget into explicit
 log/loglog decay of real frequencies. The threshold `log Q≥2048`
-is deliberately conservative. The extra module remains outside
-the main theorem's import graph.
+is deliberately conservative. The extra module passed GitHub
+Actions run `41240273708` (commit `a7fd3b7`, `BUILD_EXIT=0`,
+no `sorryAx`) and remains outside the main theorem's import graph.
 
 ## Removed alternatives
 
@@ -256,9 +258,10 @@ lake env lean VerifiedQuantitativeBound.lean
 `lake build` includes four original verification entry points and the
 optional quantitative certificate. The previous axiom audit covered the
 original four certificates (`propext`, `Classical.choice`, `Quot.sound`;
-no `sorryAx`). The optional certificate was successfully built and independently
-checked in GitHub Actions run `41234713571` (2026-10-31, commit
-`4629474`), reporting only the same three standard axioms.
+no `sorryAx`). The full optional quantitative certificate, including the final
+log/loglog inequalities, passed GitHub Actions run `41240273708`
+(2026-10-31, commit `a7fd3b7`), reporting only the same three
+standard axioms, with no `sorryAx`.
 
 When a module is renamed or removed, update **both** this document,
 `README.md`, `lakefile.toml`, and the GitHub Actions workflow.
