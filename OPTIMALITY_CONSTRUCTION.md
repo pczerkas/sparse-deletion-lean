@@ -135,7 +135,8 @@ P(3500)-522-133077=14297658651=T(169101).
 
 The original hit at 87 is preserved, since all new deleted
 integers exceed 87. These identities have been verified with
-exact integer arithmetic, not as an asymptotic argument.
+exact integer arithmetic, not as an asymptotic argument. Run
+`python3 verify_optimality_examples.py` to reproduce both checks.
 
 ## What this proves / does NOT prove
 

@@ -175,5 +175,16 @@ H_E(N)/N ≤ (6/7)^r + (16*(r+50)^2)^r/Q(N).
 ```
 
 The previously certified logarithmic conclusion remains
-unchanged. The new prime constant should NOT be
-described as kernel-certified until the CI test passes.
+unchanged. The improved prime constant and both corresponding finite
+inequalities were Lean-verified in GitHub Actions run
+`41241354688` (commit `e9c4b3f`).
+
+## Faster exponent (experimental)
+
+The optional module `QuantitativeExponent.lean` aims to
+replace `floor(L/(8*log L))` by `floor(L/(3*log L))`
+for `L=log Q≥2048`. It would strengthen the exponential
+rate constant from `log(7/6)/8` to `log(7/6)/3`.
+The original loglog theorem remains unchanged and
+certified independently. The proposed faster rate is
+**not** certified until its own CI run succeeds.

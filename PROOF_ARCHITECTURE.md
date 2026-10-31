@@ -233,8 +233,10 @@ no `sorryAx`) and remains outside the main theorem's import graph.
 
 `QuantitativeConstants.lean` imports the already verified
 quantitative chain and uses the same Chebyshev proof
-to attempt `largePrime r ≤ 16*(r+50)^2`. Its new
-finite-N CRT bounds are outside the main proof graph.
+to attempt `largePrime r ≤ 16*(r+50)^2`. Its finite-N CRT bounds passed GitHub Actions run `41241354688`
+(commit `e9c4b3f`) and are outside the main proof graph.
+A separate `QuantitativeExponent.lean` attempts the faster
+depth `floor(L/(3*log L))`; this latter result is CI pending.
 
 The non-finiteness construction and preliminary literature
 survey are recorded separately in `OPTIMALITY_CONSTRUCTION.md`

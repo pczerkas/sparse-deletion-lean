@@ -228,8 +228,10 @@ main theorem's statement or imports. No `sorryAx` and only
 
 `QuantitativeConstants.lean` attempts a stronger explicit
 prime-growth base 16 instead of 64 using the same
-Chebyshev inequality. The improvement needs an independent
-CI build. `OPTIMALITY_CONSTRUCTION.md` gives an unformalized
+Chebyshev inequality. The improvement passed GitHub Actions run `41241354688`
+(commit `e9c4b3f`), with no `sorryAx` and only standard
+axioms. The further faster logarithmic depth in
+`QuantitativeExponent.lean` is awaiting CI. `OPTIMALITY_CONSTRUCTION.md` gives an unformalized
 construction with infinitely many hits and arbitrarily
 slowly increasing deletion counts, conditional on invoking
 published Wright and Siegel theorems. This does not
