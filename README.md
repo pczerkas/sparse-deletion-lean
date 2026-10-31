@@ -254,19 +254,19 @@ only `propext`, `Classical.choice`, `Quot.sound`).
 
 ## Improved explicit constants and further research
 
-The experimental optional module `QuantitativeConstants.lean`
-aims to reduce the elementary prime upper bound from
+The verified optional module `QuantitativeConstants.lean`
+reduces the elementary prime upper bound from
 `64*(r+50)^2` to `16*(r+50)^2`, lowering the explicit CRT
 modulus to `(16*(r+50)^2)^r`. Its finite-N statements passed GitHub Actions run `41241354688`
 (commit `e9c4b3f`, only standard axioms and no `sorryAx`).
 
-A separate experimental module `QuantitativeExponent.lean`
-also tests a stronger logarithmic sieve depth
-`floor(L/(3*log L))` instead of `floor(L/(8*log L))`,
-with an anticipated improvement of the exponential
-coefficient `log(7/6)/8` to `log(7/6)/3`. This
-additional assertion is **pending CI** and must not be
-considered certified yet.
+The separate `QuantitativeExponent.lean` **proves** a stronger
+logarithmic sieve depth `floor(L/(3*log L))` instead of
+`floor(L/(8*log L))`, improving the exponential coefficient
+from `log(7/6)/8` to `log(7/6)/3` for `log Q ≥ 2048`.
+The value- and retained-index versions passed GitHub Actions
+run `41241698431` (commit `07e6d2a`, `BUILD_EXIT=0`,
+no `sorryAx` and only standard axioms).
 
 [OPTIMALITY_CONSTRUCTION.md](OPTIMALITY_CONSTRUCTION.md) develops
 a mathematical construction (using classical results of Wright

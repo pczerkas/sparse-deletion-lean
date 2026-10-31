@@ -229,14 +229,15 @@ is deliberately conservative. The extra module passed GitHub
 Actions run `41240273708` (commit `a7fd3b7`, `BUILD_EXIT=0`,
 no `sorryAx`) and remains outside the main theorem's import graph.
 
-### Further optional prime-constant refinement (CI pending)
+### Verified optional prime-constant and exponent refinements
 
 `QuantitativeConstants.lean` imports the already verified
 quantitative chain and uses the same Chebyshev proof
-to attempt `largePrime r ≤ 16*(r+50)^2`. Its finite-N CRT bounds passed GitHub Actions run `41241354688`
+to establish `largePrime r ≤ 16*(r+50)^2`. Its finite-N CRT bounds passed GitHub Actions run `41241354688`
 (commit `e9c4b3f`) and are outside the main proof graph.
-A separate `QuantitativeExponent.lean` attempts the faster
-depth `floor(L/(3*log L))`; this latter result is CI pending.
+A separate `QuantitativeExponent.lean` proves the faster
+depth `floor(L/(3*log L))` and log/loglog bounds, confirmed by
+GitHub Actions run `41241698431` (commit `07e6d2a`).
 
 The non-finiteness construction and preliminary literature
 survey are recorded separately in `OPTIMALITY_CONSTRUCTION.md`
@@ -271,10 +272,10 @@ lake env lean VerifiedQuantitativeBound.lean
 `lake build` includes four original verification entry points and the
 optional quantitative certificate. The previous axiom audit covered the
 original four certificates (`propext`, `Classical.choice`, `Quot.sound`;
-no `sorryAx`). The full optional quantitative certificate, including the final
-log/loglog inequalities, passed GitHub Actions run `41240273708`
-(2026-10-31, commit `a7fd3b7`), reporting only the same three
-standard axioms, with no `sorryAx`.
+no `sorryAx`). The full optional quantitative certificate, including the
+stronger `log(7/6)/3` exponent, passed GitHub Actions run
+`41241698431` (2026-10-31, commit `07e6d2a`),
+reporting only standard axioms and no `sorryAx`.
 
 When a module is renamed or removed, update **both** this document,
 `README.md`, `lakefile.toml`, and the GitHub Actions workflow.

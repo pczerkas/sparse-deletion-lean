@@ -179,12 +179,12 @@ unchanged. The improved prime constant and both corresponding finite
 inequalities were Lean-verified in GitHub Actions run
 `41241354688` (commit `e9c4b3f`).
 
-## Faster exponent (experimental)
+## Faster exponent: Lean verified
 
-The optional module `QuantitativeExponent.lean` aims to
-replace `floor(L/(8*log L))` by `floor(L/(3*log L))`
-for `L=log Q≥2048`. It would strengthen the exponential
-rate constant from `log(7/6)/8` to `log(7/6)/3`.
-The original loglog theorem remains unchanged and
-certified independently. The proposed faster rate is
-**not** certified until its own CI run succeeds.
+`QuantitativeExponent.lean` proves that for `L=log Q≥2048` the sieve depth may be `floor(L/(3*log L))` instead of `floor(L/(8*log L))`. Consequently:
+
+```text
+H_E(N)/N ≤ (7/3) * exp(-(log(7/6)/3) * log Q/log(log Q)).
+```
+
+An analogous bound for indices in the retained sequence is also proven under the usual survivor-growth hypothesis. This strengthens the exponential constant from `log(7/6)/8` to `log(7/6)/3`. The earlier bound remains independently certified. The new declarations passed GitHub Actions run `41241698431` at commit `07e6d2a`, with `BUILD_EXIT=0`, no `sorryAx`, and only standard axioms.

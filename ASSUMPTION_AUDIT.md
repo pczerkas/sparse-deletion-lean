@@ -226,12 +226,14 @@ main theorem's statement or imports. No `sorryAx` and only
 
 ## Optimized constants, sharpness and literature (new research)
 
-`QuantitativeConstants.lean` attempts a stronger explicit
+`QuantitativeConstants.lean` proves a stronger explicit
 prime-growth base 16 instead of 64 using the same
 Chebyshev inequality. The improvement passed GitHub Actions run `41241354688`
 (commit `e9c4b3f`), with no `sorryAx` and only standard
 axioms. The further faster logarithmic depth in
-`QuantitativeExponent.lean` is awaiting CI. `OPTIMALITY_CONSTRUCTION.md` gives an unformalized
+`QuantitativeExponent.lean` passed GitHub Actions run
+`41241698431` (commit `07e6d2a`), also with no `sorryAx`
+and only standard axioms. `OPTIMALITY_CONSTRUCTION.md` gives an unformalized
 construction with infinitely many hits and arbitrarily
 slowly increasing deletion counts, conditional on invoking
 published Wright and Siegel theorems. This does not
@@ -251,7 +253,7 @@ novelty is not established.
 - **Main proof structure:** PASS by source audit and the recorded
   pre-clean successful build.
 - **Latest successful CI build of all Lean code:** PASS (2026-10-31,
-  commit `a7fd3b7`, run `41240273708`).
+  commit `07e6d2a`, run `41241698431`).
 - **Independently established novelty:** NOT ASSESSED. The
   `x³−x` exact value-set formula is classical.
 - **Potential overclaims to avoid:** finite number of triangular
