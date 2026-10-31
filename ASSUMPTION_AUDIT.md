@@ -196,6 +196,13 @@ is a concrete growth threshold on `N/(e(N)+1)`, not an additional
 assumption needed by the main theorem. The new certificate must pass
 GitHub Actions; it is not yet treated as kernel-verified.
 
+## Real-frequency bridge (optional, CI pending)
+
+`QuantitativeReal.lean` adds a direct relative-frequency consequence
+`(H_E(N):ℝ)/N ≤ 2*(6/7)^r` subject to the explicit budget and
+N>0. It does not assert a log-log corollary. A fresh CI is required
+before claiming kernel verification.
+
 ## 6. Conclusions and risks
 
 - **Statement correspondence:** PASS — formal statement matches

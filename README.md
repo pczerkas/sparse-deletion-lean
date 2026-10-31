@@ -217,6 +217,16 @@ checkable stepping stone to the optimized real-logarithm corollary.
 Its CI status must be checked before claiming the new lemmata are
 kernel-certified.
 
+## Real-frequency statement (optional bridge to logarithmic optimization)
+
+`QuantitativeReal.lean` converts the integer-budget bounds to the
+real relative-frequency inequality
+`(H_E(N):ℝ)/N ≤ 2*(6/7)^r`, for each positive N and
+each sieve depth satisfying the explicit budget. An analogous
+retained-index statement is also provided with its Nth-survivor
+hypothesis. This is deliberately separate from the final analytic
+choice of r; verification of this new module is pending CI.
+
 ## Independent exact cubic value-set result
 
 We also prove an **optional**, stronger, classical formula, independently

@@ -181,3 +181,18 @@ usual Nth-survivor bound. This modular threshold makes the rate
 using `r=floor(log Q/(8 loglog Q))` is still a separate analytical
 step and not yet formalized in Lean. The new source requires its
 own CI verification before being called kernel-certified.
+
+## Real-frequency bridge (new module, CI pending)
+
+The optional `QuantitativeReal.lean` converts the integer-only
+finite threshold into the real-valued inequality
+
+```text
+H_E(N)/N ≤ 2*(6/7)^r
+```
+
+for every N>0 and r meeting the certified threshold. It also
+proves a version for retained-sequence indices, normalized by 2N+2.
+Its purpose is to isolate exact casts, positivity and fractions from
+the remaining analytic log/loglog optimization. Kernel verification
+must still be checked via GitHub Actions for the new commit.

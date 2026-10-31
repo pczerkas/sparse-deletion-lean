@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import QuantitativeRate
+public import QuantitativeReal
 
 @[expose] public section
 
@@ -42,3 +42,6 @@ The original main theorem is not modified by this optional extension.
 
 #print axioms SparseDeletion.quantitative_value_bound_under_polynomial_budget
 #print axioms SparseDeletion.quantitative_index_bound_under_polynomial_budget
+
+#print axioms SparseDeletion.quantitative_value_frequency_real
+#print axioms SparseDeletion.quantitative_index_frequency_real

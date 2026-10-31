@@ -101,6 +101,9 @@ name = "QuantitativePolynomial"
 name = "QuantitativeRate"
 
 [[lean_lib]]
+name = "QuantitativeReal"
+
+[[lean_lib]]
 name = "RemovedSquares"
 
 [[lean_lib]]

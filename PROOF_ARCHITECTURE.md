@@ -200,6 +200,14 @@ It proves a fully explicit threshold:
 `7^r*H_E(N) ≤ 2*6^r*N`, and its retained-index counterpart.
 The final choice of `r` via real logarithms is not yet formalized.
 
+### Optional real ratio bridge
+
+`QuantitativeReal.lean` imports `QuantitativeRate.lean` and
+uses exact casts and positive denominators to turn the finite
+integer threshold into an upper bound on real frequencies. This
+is separate from the final logarithmic optimization, which has
+not yet been formalized.
+
 ## Removed alternatives
 
 The working tree no longer contains the historical fixed-prime
