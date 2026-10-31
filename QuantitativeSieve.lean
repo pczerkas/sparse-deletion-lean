@@ -26,7 +26,6 @@ theorem quantitative_prime_modular_bound
     7 * ((Finset.range (largePrime r)).filter (primeSquarePass r b)).card ≤
       6 * largePrime r := by
   classical
-  intro r b
   let _ := Fact.mk (largePrime_prime r)
   let p := largePrime r
   have hp : 37 ≤ p := largePrime_ge r
