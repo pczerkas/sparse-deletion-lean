@@ -177,8 +177,11 @@ representations or assume a decay rate for the deleted-set density.
 The additional corollaries remain outside the main proof graph.
 The additional optional `PrimePolynomialBound.lean` imports `QuantitativeSharper`
 and Mathlib's elementary Chebyshev lower bound for prime counting;
-its claimed quadratic bound on `largePrime r` remains subject to CI
-verification. It is not a dependency of the main theorem.
+its quadratic bound `largePrime r ≤ 64*(r+50)^2` was verified by
+GitHub Actions run `41236892361`, commit `67fa5d4`. The companion
+`QuantitativePolynomial.lean` multiplies the bounds to obtain the
+explicit CRT modulus bound `(64*(r+50)^2)^r` and the two finite-N
+hit-count estimates; the companion module requires a new CI build. It is not a dependency of the main theorem.
 The improved certificate passed GitHub Actions run `41236256862`
 (commit `4b65c88`) with only the standard Lean axioms.
 

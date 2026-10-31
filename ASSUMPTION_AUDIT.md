@@ -181,8 +181,10 @@ new declarations use only `propext`, `Classical.choice`,
 `Chebyshev.pi_ge` from Mathlib, an elementary lower bound for the
 prime-counting function, to target
 `largePrime r ≤ 64*(r+50)^2`.
-It is not part of the original theorem, and its CI proof status is
-pending.
+It is not part of the original theorem. The bound passed GitHub
+Actions run `41236892361` at commit `67fa5d4`, with no `sorryAx`
+and only the standard Lean axioms. `QuantitativePolynomial.lean` is
+a further optional finite-N corollary and must be verified separately.
 
 ## 6. Conclusions and risks
 

@@ -95,8 +95,8 @@ with `Q(2N+2)` in place of `Q(N)` and harmless constant factors.
 
 ## Sharper finite modulus estimate
 
-The separately compiled `QuantitativeSharper.lean` (pending fresh CI at
-the time of this note) improves the purely elementary Bertrand bound to
+The separately compiled `QuantitativeSharper.lean` (verified in GitHub Actions run
+`41236256862`, commit `4b65c88`) improves the purely elementary Bertrand bound to
 `M_r ≤ 37^r 2^(r*(r-1)/2)`, by multiplying
 `largePrime i ≤ 37·2^i` for `0≤i<r` instead of bounding all
 factors by `37·2^r`. Thus the finite inequality can be sharpened to
@@ -108,3 +108,55 @@ H_E(N)/N ≤ (6/7)^r + 37^r * 2^(r*(r-1)/2) / Q(N).
 This keeps the same `exp(-c sqrt(log Q))` *type* of asymptotic decay,
 but improves the finite-N constants; it does not prove the
 `exp(-c log Q/loglog Q)` rate.
+
+## Chebyshev prime-counting route: polynomial-size CRT modulus
+
+The experimental module `PrimePolynomialBound.lean` uses the explicit
+Chebyshev lower bound already present in Mathlib and aims to establish
+
+```text
+largePrime r ≤ 64*(r+50)^2.
+```
+
+The corresponding planned module `QuantitativePolynomial.lean` derives
+
+```text
+M_r ≤ (64*(r+50)^2)^r
+H_E(N)/N ≤ (6/7)^r + (64*(r+50)^2)^r / Q(N).
+```
+
+**CI status:** these additional declarations have not yet passed the
+verification pipeline. Neither should be cited as Lean-verified until
+that happens. Unlike the Bertrand-only estimates above, their proof
+uses Chebyshev's elementary prime-counting inequality (not the prime
+number theorem).
+
+### Derivation of the stronger asymptotic rate, conditional on that finite bound
+
+Put `L = log Q(N)` and assume `L ≥ 256`. Choose
+`r = floor(L/(8 log L))`. Then `r ≤ L`, `r+50 ≤ 2L`, and
+`64*(r+50)^2 ≤ 256 L^2 ≤ L^3`. Therefore
+
+```text
+r * log(64*(r+50)^2) ≤ 3*r*log L ≤ 3*L/8.
+```
+
+Thus the perturbation term is at most `exp(-5L/8)`. Also, since
+`r ≥ L/(8 log L)-1`, the sieve contraction obeys
+
+```text
+(6/7)^r ≤ (7/6)*exp(-(log(7/6)/8)*L/log L).
+```
+
+For `L ≥ 256`, `exp(-5L/8)` is bounded by the last exponential
+without the `7/6` factor. Consequently the *mathematical*
+corollary would be
+
+```text
+H_E(N)/N ≤ (13/6)*exp(-(log(7/6)/8)*log Q(N)/log(log Q(N))).
+```
+
+The optimization from the finite bound to the logarithmic expression
+is not yet formalized in Lean. This calculation is independent of
+any unproved prime-counting conjecture, provided the stated Chebyshev
+module finishes kernel verification.

@@ -190,11 +190,13 @@ out of the main theorem's import graph.
 The optional `PrimePolynomialBound.lean` uses Mathlib's
 `Chebyshev.pi_ge` and elementary logarithm inequalities to prove
 a coarse polynomial upper bound `largePrime r ≤ 64*(r+50)^2`.
-This is the next input needed for a sharper quantitative decay rate
-`exp(-c log(Q)/loglog(Q))`. It is an independent extension that does
-not alter the main proof. The new Lean declarations require a fresh
-successful CI build; they must not be described as verified until
-that build passes.
+This prime bound passed GitHub Actions run `41236892361` (commit
+`67fa5d4`, no `sorryAx`, only standard axioms). The companion module
+`QuantitativePolynomial.lean` uses it to prove the explicit CRT modulus bound
+`M_r ≤ (64*(r+50)^2)^r`, and both value-index and retained-index finite-N
+inequalities. That additional module still requires its own CI verification.
+The further real-logarithm optimization is documented in
+[QUANTITATIVE_RATE.md](QUANTITATIVE_RATE.md), not yet formalized in Lean.
 
 ## Independent exact cubic value-set result
 
