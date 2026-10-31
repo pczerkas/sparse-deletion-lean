@@ -49,6 +49,7 @@ private theorem logarithmic_sieve_contraction
         rw [Real.log_pow]
       _ = Real.exp (-(r : ℝ) * c) := by
         rw [hinv, Real.log_inv]
+        dsimp [c]
         ring
   have he : (2 : ℝ) * Real.exp (-(r : ℝ) * c) ≤
       2 * Real.exp (c - c * t) := by
@@ -58,7 +59,7 @@ private theorem logarithmic_sieve_contraction
       (7 / 3 : ℝ) * Real.exp (-c * t) := by
     dsimp [c]
     rw [sub_eq_add_neg, Real.exp_add, Real.exp_log (by norm_num : (0 : ℝ) < 7 / 6)]
-    ring
+    ring_nf
   calc
     2 * ((6 : ℝ) / 7) ^ r =
         2 * Real.exp (-(r : ℝ) * c) := by rw [hp]
