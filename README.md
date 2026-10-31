@@ -55,7 +55,7 @@ are the default build targets:
 - `VerifiedExactValueSet.lean` — exact finite-field formula;
 - `VerifiedPerturbation.lean` — independent generic perturbation lemma;
 - `VerifiedQuantitativeBound.lean` — finite-N upper bounds for triangular hits
-  after sparse deletions (experimental branch; requires a successful CI build).
+  after sparse deletions (independently CI-checked on the feature branch).
 
 To inspect the printed axioms, run:
 
@@ -139,9 +139,23 @@ its hypotheses are the uniform shifted block estimate and `M > 0`.
 The index bound additionally requires infinitude of retained positives
 and the explicit upper bound on their `N`-th element.
 
-These are *upper bounds*, not a proof of finiteness and not a new
+The companion module `QuantitativeSieve.lean` reuses the same elementary
+prime-field estimate and CRT to establish, for every `r, N` and every deleted
+set `E`, the existence of a positive modulus `M_r` satisfying:
+
+```text
+7^r * H_E(N) <= 6^r * N + 7^r * M_r * (e_E(N) + 1).
+```
+
+This is an unconditional **finite** inequality (no density assumption on E)
+and is also available after transferring to retained-sequence indices,
+provided an explicit upper bound on the N-th survivor is supplied.
+The modulus depends on the sieve depth; the displayed inequality must not
+be interpreted as an effective N-only decay rate without controlling M_r.
+
+These are *upper bounds*, not a proof of finiteness and not yet an optimized
 unconditional numerical decay rate. They do not invoke any theorem about
-representation as five distinct squares. The optional module is kept
+representation as five distinct squares. Both optional modules are kept
 out of the main theorem's import graph.
 
 ## Independent exact cubic value-set result

@@ -83,6 +83,9 @@ name = "PrimeSquarePass"
 name = "QuantitativeBound"
 
 [[lean_lib]]
+name = "QuantitativeSieve"
+
+[[lean_lib]]
 name = "RemovedSquares"
 
 [[lean_lib]]

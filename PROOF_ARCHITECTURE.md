@@ -155,13 +155,16 @@ block sieve. The enumeration-index estimate additionally assumes a
 bound on the N-th retained integer.
 
 ```text
-IndexTransfer ──→ QuantitativeBound ──→ VerifiedQuantitativeBound
+IndexTransfer ──→ QuantitativeBound ──→ QuantitativeSieve ──→ VerifiedQuantitativeBound
 ```
 
-This is a separate consumer of the main proof infrastructure and
-**does not** feed back into `MainUnconditionalValueSet.lean`. It does
-not use the five-square representation theorem or assume a decay rate
-for deleted-set density.
+`QuantitativeSieve.lean` also imports `MainUnconditionalValueSet.lean` to
+reuse the proven cubic value-set bound. It establishes for every depth `r`
+a concrete CRT bound with contraction `(6/7)^r`, with no assumption that
+the deleted set has zero density. The multiplier modulus `M_r` depends
+on `r`. These optional files do **not** feed back into the main theorem.
+They do not use five-square representations or assume a decay rate
+for the deleted-set density.
 
 ### Additional corollary
 

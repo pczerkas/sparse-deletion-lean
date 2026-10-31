@@ -156,10 +156,12 @@ The additional module `QuantitativeBound.lean` specializes the existing
 uniform block counting lemma to exact finite-N estimates for triangular
 hits, both by original integer values and by retained-sequence indices.
 It does not strengthen the mathematical conclusion to finiteness and does
-not introduce a five-square representation assumption. The source
-statement has not been covered by the 2026-10-30 build audit; verify its
-new certificate independently in GitHub Actions before claiming it is
-kernel-checked.
+not introduce a five-square representation assumption. The first feature-branch CI run (2026-10-31, commit `0556cff`)
+passed and reported only `propext`, `Classical.choice`, and `Quot.sound`
+for its three quantitative results. The later module `QuantitativeSieve.lean`
+derives a full finite-N CRT estimate at arbitrary sieve depth `r`.
+Its separate CI verification must be checked before treating the new
+results as kernel-certified.
 
 ## 6. Conclusions and risks
 
