@@ -214,8 +214,8 @@ then `7^r*H_E(N) ≤ 2*6^r*N`. The same threshold is proved
 for retained-sequence indexing under the standard Nth-survivor
 hypothesis. This avoids logarithms and is intended as an independently
 checkable stepping stone to the optimized real-logarithm corollary.
-Its CI status must be checked before claiming the new lemmata are
-kernel-certified.
+Both new budget lemmas passed [GitHub Actions run 41238649297](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41238649297)
+(commit `ab671d6`, `BUILD_EXIT=0`, only standard axioms).
 
 ## Real-frequency statement (optional bridge to logarithmic optimization)
 
@@ -225,7 +225,8 @@ real relative-frequency inequality
 each sieve depth satisfying the explicit budget. An analogous
 retained-index statement is also provided with its Nth-survivor
 hypothesis. This is deliberately separate from the final analytic
-choice of r; verification of this new module is pending CI.
+choice of r; both statements passed GitHub Actions run `41238649297`
+(commit `ab671d6`, no `sorryAx`).
 
 ## Independent exact cubic value-set result
 

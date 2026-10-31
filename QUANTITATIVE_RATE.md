@@ -179,8 +179,8 @@ with the deletion count and budget evaluated at 2N+2, assuming the
 usual Nth-survivor bound. This modular threshold makes the rate
 *effective and computable* for fixed N; the subsequent optimization
 using `r=floor(log Q/(8 loglog Q))` is still a separate analytical
-step and not yet formalized in Lean. The new source requires its
-own CI verification before being called kernel-certified.
+step and not yet formalized in Lean. The source passed GitHub Actions run `41238649297` (commit
+`ab671d6`, `BUILD_EXIT=0`, standard axioms only).
 
 ## Real-frequency bridge (new module, CI pending)
 
@@ -194,5 +194,5 @@ H_E(N)/N ≤ 2*(6/7)^r
 for every N>0 and r meeting the certified threshold. It also
 proves a version for retained-sequence indices, normalized by 2N+2.
 Its purpose is to isolate exact casts, positivity and fractions from
-the remaining analytic log/loglog optimization. Kernel verification
-must still be checked via GitHub Actions for the new commit.
+the remaining analytic log/loglog optimization. Both real-frequency inequalities were kernel-checked in GitHub
+Actions run `41238649297` (commit `ab671d6`).

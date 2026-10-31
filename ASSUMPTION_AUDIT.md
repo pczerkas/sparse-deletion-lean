@@ -193,15 +193,16 @@ only the standard axioms).
 `QuantitativeRate.lean` proves an integer-only conditional rate from
 the independently certified polynomial CRT estimate. The hypothesis
 is a concrete growth threshold on `N/(e(N)+1)`, not an additional
-assumption needed by the main theorem. The new certificate must pass
-GitHub Actions; it is not yet treated as kernel-verified.
+assumption needed by the main theorem. The certificate passed GitHub Actions run `41238649297`
+(commit `ab671d6`, `BUILD_EXIT=0`, no `sorryAx`,
+only `propext`, `Classical.choice`, and `Quot.sound`).
 
 ## Real-frequency bridge (optional, CI pending)
 
 `QuantitativeReal.lean` adds a direct relative-frequency consequence
 `(H_E(N):ℝ)/N ≤ 2*(6/7)^r` subject to the explicit budget and
-N>0. It does not assert a log-log corollary. A fresh CI is required
-before claiming kernel verification.
+N>0. It does not assert a log-log corollary. Both real-frequency results passed GitHub Actions run `41238649297`,
+commit `ab671d6`, using only standard Lean axioms.
 
 ## 6. Conclusions and risks
 

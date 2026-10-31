@@ -199,6 +199,8 @@ It proves a fully explicit threshold:
 `(448*(r+50)^2)^r*(e(N)+1) ≤ N` implies
 `7^r*H_E(N) ≤ 2*6^r*N`, and its retained-index counterpart.
 The final choice of `r` via real logarithms is not yet formalized.
+The finite budget module passed GitHub Actions run `41238649297`,
+commit `ab671d6`, with only the standard axioms.
 
 ### Optional real ratio bridge
 
@@ -206,7 +208,8 @@ The final choice of `r` via real logarithms is not yet formalized.
 uses exact casts and positive denominators to turn the finite
 integer threshold into an upper bound on real frequencies. This
 is separate from the final logarithmic optimization, which has
-not yet been formalized.
+not yet been formalized. The real-ratio bridge passed GitHub
+Actions run `41238649297` (commit `ab671d6`, no `sorryAx`).
 
 ## Removed alternatives
 
