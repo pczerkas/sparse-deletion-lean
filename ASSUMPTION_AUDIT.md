@@ -137,18 +137,15 @@ Consequently, **the final theorem is not conditional on**
 Weil, Hasse, the Riemann hypothesis, numerical searches,
 or any unproven cubic character-sum estimate.
 
-The last successful full multi-target build was obtained **before**
-`lake clean` during repository pruning. On 2026-10-30,
-a clean rebuild and cache restoration on Kompik were interrupted
-by practical build/cache/resource limits; the post-clean rebuild
-has **not yet been certified**. Do not conflate that engineering
-task with the mathematical assumption check.
+On 2026-10-30, clean rebuild attempts on Kompik were interrupted by
+build/cache/resource limits. Subsequently, GitHub Actions verified the
+feature branch on 2026-10-31 at commit `4629474` (workflow run
+`41234713571`): fresh runner, `lake build` completed with `BUILD_EXIT=0`.
+This does not replace independent mathematical peer review.
 
-Earlier compiled `#print axioms` results for all four certificate
-targets reported only `propext`, `Classical.choice`,
-and `Quot.sound`, never `sorryAx`. A fresh successful CI
-build of the current commit is still recommended before
-publication.
+The CI log for the current feature-branch commit reports only
+`propext`, `Classical.choice`, and `Quot.sound` for the original
+certificates, with no `sorryAx`.
 
 ## Optional quantitative extension (feature/quantitative-hit-bound)
 
@@ -158,10 +155,12 @@ hits, both by original integer values and by retained-sequence indices.
 It does not strengthen the mathematical conclusion to finiteness and does
 not introduce a five-square representation assumption. The first feature-branch CI run (2026-10-31, commit `0556cff`)
 passed and reported only `propext`, `Classical.choice`, and `Quot.sound`
-for its three quantitative results. The later module `QuantitativeSieve.lean`
-derives a full finite-N CRT estimate at arbitrary sieve depth `r`.
-Its separate CI verification must be checked before treating the new
-results as kernel-certified.
+for its three quantitative results. The later module `QuantitativeSieve.lean` derives a full finite-N CRT
+estimate at arbitrary sieve depth `r`. Commit `4629474` passed GitHub
+Actions run `41234713571`; all seven named quantitative axioms reports
+showed only `propext`, `Classical.choice`, `Quot.sound`. The new formal
+finite-N bound is kernel-certified. An optimized N-only asymptotic rate
+using quantitative prime growth is not yet formalized.
 
 ## 6. Conclusions and risks
 
@@ -171,7 +170,7 @@ results as kernel-certified.
   the key uniform modular bound is proved, not merely assumed.
 - **Main proof structure:** PASS by source audit and the recorded
   pre-clean successful build.
-- **Fresh post-clean build:** NOT YET CONFIRMED.
+- **Fresh CI build of current branch:** PASS (2026-10-31, `4629474`).
 - **Independently established novelty:** NOT ASSESSED. The
   `x³−x` exact value-set formula is classical.
 - **Potential overclaims to avoid:** finite number of triangular

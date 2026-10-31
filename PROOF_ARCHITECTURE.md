@@ -201,7 +201,9 @@ lake env lean VerifiedQuantitativeBound.lean
 `lake build` includes four original verification entry points and the
 optional quantitative certificate. The previous axiom audit covered the
 original four certificates (`propext`, `Classical.choice`, `Quot.sound`;
-no `sorryAx`). The optional certificate needs its own fresh CI result.
+no `sorryAx`). The optional certificate was successfully built and independently
+checked in GitHub Actions run `41234713571` (2026-10-31, commit
+`4629474`), reporting only the same three standard axioms.
 
 When a module is renamed or removed, update **both** this document,
 `README.md`, `lakefile.toml`, and the GitHub Actions workflow.

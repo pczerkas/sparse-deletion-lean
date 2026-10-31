@@ -55,7 +55,7 @@ are the default build targets:
 - `VerifiedExactValueSet.lean` — exact finite-field formula;
 - `VerifiedPerturbation.lean` — independent generic perturbation lemma;
 - `VerifiedQuantitativeBound.lean` — finite-N upper bounds for triangular hits
-  after sparse deletions (independently CI-checked on the feature branch).
+  after sparse deletions (GitHub Actions run 41234713571 passed).
 
 To inspect the printed axioms, run:
 
@@ -154,7 +154,10 @@ The modulus depends on the sieve depth; the displayed inequality must not
 be interpreted as an effective N-only decay rate without controlling M_r.
 
 These are *upper bounds*, not a proof of finiteness and not yet an optimized
-unconditional numerical decay rate. They do not invoke any theorem about
+unconditional numerical decay rate. Verified with pinned Lean 4.35.0,
+Mathlib v4.35.0 and only standard axioms in [GitHub Actions run 41234713571](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41234713571).
+This computational verification is distinct from an independent mathematical
+review or a literature novelty assessment. They do not invoke any theorem about
 representation as five distinct squares. Both optional modules are kept
 out of the main theorem's import graph.
 
