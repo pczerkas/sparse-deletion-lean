@@ -86,6 +86,9 @@ name = "QuantitativeBound"
 name = "QuantitativeSieve"
 
 [[lean_lib]]
+name = "QuantitativeEffective"
+
+[[lean_lib]]
 name = "RemovedSquares"
 
 [[lean_lib]]

@@ -155,7 +155,9 @@ block sieve. The enumeration-index estimate additionally assumes a
 bound on the N-th retained integer.
 
 ```text
-IndexTransfer ──→ QuantitativeBound ──→ QuantitativeSieve ──→ VerifiedQuantitativeBound
+IndexTransfer ──→ QuantitativeBound ──→ QuantitativeSieve
+                                               └──→ QuantitativeEffective
+                                                           └──→ VerifiedQuantitativeBound
 ```
 
 `QuantitativeSieve.lean` also imports `MainUnconditionalValueSet.lean` to
@@ -163,8 +165,11 @@ reuse the proven cubic value-set bound. It establishes for every depth `r`
 a concrete CRT bound with contraction `(6/7)^r`, with no assumption that
 the deleted set has zero density. The multiplier modulus `M_r` depends
 on `r`. These optional files do **not** feed back into the main theorem.
-They do not use five-square representations or assume a decay rate
-for the deleted-set density.
+The optional module `QuantitativeEffective.lean` imports Mathlib's
+Bertrand postulate and proves the loose elementary modulus bound
+`M_r ≤ 37^r * 2^(r*r)`, yielding an explicit finite-N bound in terms
+of the deletion count. These optional results do not use five-square
+representations or assume a decay rate for the deleted-set density.
 
 ### Additional corollary
 

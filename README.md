@@ -153,8 +153,21 @@ provided an explicit upper bound on the N-th survivor is supplied.
 The modulus depends on the sieve depth; the displayed inequality must not
 be interpreted as an effective N-only decay rate without controlling M_r.
 
-These are *upper bounds*, not a proof of finiteness and not yet an optimized
-unconditional numerical decay rate. Verified with pinned Lean 4.35.0,
+A further optional module `QuantitativeEffective.lean` obtains an **explicit**
+albeit loose bound on the sieve modulus from Bertrand's postulate:
+`M_r ≤ 37^r·2^(r²)`. Consequently, with `e(N) = #E∩[0,N)`,
+`H_E(N)` value-index hits satisfy the unconditional finite estimate:
+
+```text
+7^r * H_E(N) <= 6^r * N + 7^r * (37^r * 2^(r*r)) * (e(N)+1).
+```
+
+Under the stated sparsity budget
+`7^r * (37^r * 2^(r*r)) * (e(N)+1) ≤ 6^r*N`, a separate theorem gives
+`7^r*H_E(N) ≤ 2*6^r*N`. These statements remove the hidden modulus,
+but the bounds are loose and not a finiteness result. The new module is
+included in the optional Lean verification target. Its CI status must be
+checked separately for the new commit. Verified with pinned Lean 4.35.0,
 Mathlib v4.35.0 and only standard axioms in [GitHub Actions run 41234713571](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41234713571).
 This computational verification is distinct from an independent mathematical
 review or a literature novelty assessment. They do not invoke any theorem about

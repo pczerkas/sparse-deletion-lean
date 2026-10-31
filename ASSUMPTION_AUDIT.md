@@ -159,8 +159,10 @@ for its three quantitative results. The later module `QuantitativeSieve.lean` de
 estimate at arbitrary sieve depth `r`. Commit `4629474` passed GitHub
 Actions run `41234713571`; all seven named quantitative axioms reports
 showed only `propext`, `Classical.choice`, `Quot.sound`. The new formal
-finite-N bound is kernel-certified. An optimized N-only asymptotic rate
-using quantitative prime growth is not yet formalized.
+finite-N bound is kernel-certified. The new optional module `QuantitativeEffective.lean` instead
+uses Bertrand to derive an explicit modulus upper bound and finite-N
+inequality. It has NOT yet been checked by CI at this writing. A
+sharper prime-counting-based asymptotic rate is not formalized.
 
 ## 6. Conclusions and risks
 
