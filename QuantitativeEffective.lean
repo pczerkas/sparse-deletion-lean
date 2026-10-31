@@ -20,7 +20,9 @@ from the quantitative inequality, without any prime number theorem.
 /-- Consecutive sieve primes grow by at most a factor of two. -/
 theorem largePrime_succ_le_twice (r : ℕ) :
     largePrime (r + 1) ≤ 2 * largePrime r := by
-  have hn : largePrime r ≠ 0 := by omega
+  have hn : largePrime r ≠ 0 := by
+    have hp := largePrime_positive r
+    omega
   obtain ⟨p, hp, hgt, htwice⟩ := Nat.bertrand (largePrime r) hn
   have hpred : largePrimePred p := ⟨hp, by
     have h37 := largePrime_ge r
@@ -64,7 +66,7 @@ theorem largePrime_modulus_le_exponential (r : ℕ) :
           ring
         _ ≤ 37 ^ (r + 1) * 2 ^ ((r + 1) * (r + 1)) :=
           Nat.mul_le_mul_left _ (pow_le_pow_right₀
-            (by decide : (1 : ℕ) ≤ 2) (by omega))
+            (by decide : (1 : ℕ) ≤ 2) (by nlinarith))
 
 /-- An explicitly identified block modulus, rather than an existential
 one. The proof is the same CRT counting step as the generic sieve. -/
@@ -150,6 +152,11 @@ theorem quantitative_value_bound_under_budget
         (countUpTo E N + 1) ≤ 6 ^ r * N) :
     7 ^ r * countUpTo (hitSet E) N ≤ 2 * 6 ^ r * N := by
   have hb := quantitative_value_bound_explicit E r N
-  omega
+  calc
+    7 ^ r * countUpTo (hitSet E) N ≤
+        6 ^ r * N +
+          7 ^ r * (37 ^ r * 2 ^ (r * r)) * (countUpTo E N + 1) := hb
+    _ ≤ 6 ^ r * N + 6 ^ r * N := Nat.add_le_add_left hbudget _
+    _ = 2 * 6 ^ r * N := by ring
 
 end SparseDeletion
