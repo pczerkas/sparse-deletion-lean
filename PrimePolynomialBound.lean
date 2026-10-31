@@ -51,7 +51,11 @@ logarithm estimates. -/
 theorem primeCounting_quadratic_lower (r : ℕ) :
     r + 38 ≤ Nat.primeCounting (64 * (r + 50) ^ 2) := by
   let n : ℕ := 64 * (r + 50) ^ 2
-  have hn : 1 < n := by dsimp [n]; omega
+  have hn : 1 < n := by
+    have ht : 0 < r + 50 := by omega
+    have hp : 0 < (r + 50) ^ 2 := pow_pos ht 2
+    dsimp [n]
+    omega
   have hnreal : (n : ℝ) = 64 * ((r : ℝ) + 50) ^ 2 := by
     simp only [n, Nat.cast_mul, Nat.cast_pow, Nat.cast_add, Nat.cast_ofNat]
   have hsqrt : Real.sqrt (n : ℝ) = 8 * ((r : ℝ) + 50) := by
@@ -83,7 +87,7 @@ theorem primeCounting_quadratic_lower (r : ℕ) :
       ((r : ℝ) + 38) * Real.log (n : ℝ) ≤
         ((r : ℝ) + 38) * (2 * Real.sqrt (n : ℝ)) := ha
       _ ≤ (n : ℝ) / 2 - 3 * Real.sqrt (n : ℝ) := by
-        rw [hnreal, hsqrt]
+        rw [hsqrt, hnreal]
         nlinarith [sq_nonneg (r : ℝ)]
       _ ≤ (n : ℝ) * Real.log 2 - Real.log ((n : ℝ) + 1) := hb
   have hlogpos : 0 < Real.log (n : ℝ) :=
@@ -123,7 +127,7 @@ theorem primeCounting_le_largePrime_count_add_37 (n : ℕ) :
     simpa [all, Nat.primesLE_eq_filter_range] using
       (Nat.primesLE_card_eq_primeCounting n)
   have hlarge : large.card = Nat.count largePrimePred (n + 1) := by
-    simpa only [large, Nat.count_eq_card_filter_range]
+    simp only [large, Nat.count_eq_card_filter_range]
   omega
 
 /-- An unconditional polynomial upper bound on our enumerated primes. -/
