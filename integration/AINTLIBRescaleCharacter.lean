@@ -48,7 +48,7 @@ theorem triangular_cubic_character_sum_rescale
     quadraticCharFun F (X ^ 3 + 4 * X ^ 2 +
       (32 / 9) * X + (64 / 9) * (8 * b + 1))
   have hperm : (∑ X : F, g X) = ∑ x : F, g (a * x) := by
-    exact ((Equiv.mulLeft₀ a ha).sum_comp g).symm
+    exact (Equiv.sum_comp (Equiv.mulLeft₀ a ha) g).symm
   have hpointwise : ∀ x : F,
       g (a * x) =
         quadraticCharFun F
