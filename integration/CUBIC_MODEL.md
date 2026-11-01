@@ -53,6 +53,74 @@ The AINTLIB `hasse_bound` gives
 for non-singular fibers once the field-theoretic equation
 and point count are formally identified.
 
+## Explicit discriminant of the proposed model
+
+A direct symbolic expansion of the standard Weierstrass
+discriminant for the five displayed coefficients gives
+
+```text
+Δ(W_b) = -(65536/729)*(15552*b² + 3888*b + 239).
+```
+
+This identity is valid over fields of characteristic
+different from 2 and 3. In particular for `F=ZMod p`,
+`p≥37`, the model is nonsingular **if and only if**
+`15552*b²+3888*b+239 ≠ 0` in `F`.
+
+This provides an explicit and decidable case split:
+use Hasse when the quadratic expression is nonzero;
+apply the double-root character-sum lemma if it is zero.
+
+The algebraic expansion was checked symbolically, but is
+**not yet a Lean theorem**. Do not infer that all fibers
+are elliptic: those with vanishing discriminant must be
+handled by the singular branch.
+
+## Explicit factorization of every singular fiber
+
+A further exact polynomial identity removes the need for an abstract
+cubic-factorization theorem. Set
+
+```text
+q(b) = 15552*b² + 3888*b + 239,
+u(b) = 18*b + 7/4,
+v(b) = -36*b - 5.
+```
+
+Then **over any field of characteristic different from 2 and 3**,
+
+```text
+f_b(x) - (8/3)*(x-u(b))²*(x-v(b))
+  = ((x-12*b-1)/6)*q(b).
+```
+
+This identity has been checked by symbolic polynomial expansion.
+It is not yet a formal Lean theorem.
+
+Since `Δ(W_b)=-(65536/729)*q(b)`, when the discriminant
+vanishes in characteristic `p≥37`, the displayed identity
+gives the explicit factorization
+
+```text
+f_b(x) = (8/3)*(x-u(b))²*(x-v(b)).
+```
+
+The **already Lean-certified** generic theorem
+`quadraticCharFun_double_root_sum` therefore applies,
+without using splitting fields, root multiplicities or
+Hasse's theorem:
+
+```text
+Σ_x χ(f_b(x)) = -χ(8/3) * χ(u(b)-v(b)).
+```
+
+It follows mathematically that the absolute value of this
+sum is ≤1. To make the entire singular branch
+kernel-certified, the explicit algebraic factorization
+and its connection to `primeCubicPoly` still need
+a Lean proof. This is now a straightforward polynomial
+identity, rather than a general algebraic-geometry task.
+
 For singular fibers the derivative of the cubic is a
 separable quadratic (characteristic p≥37), so triple roots
 cannot occur. A singular cubic factors as

@@ -49,6 +49,29 @@ theorem triangular_cubic_rescale_identity
   field_simp [h2, h3, h6, h9]
   ring
 
+/-- Exact discriminant of the triangular-prefix Weierstrass family.
+This makes the nonsingular/singular case split explicit. -/
+theorem triangular_weierstrass_discriminant
+    {F : Type*} [Field F] (b : F)
+    (h3 : (3 : F) ≠ 0) :
+    (triangularWeierstrass b).Δ =
+      -(65536 / 729 : F) * (15552 * b^2 + 3888 * b + 239) := by
+  have h9 : (9 : F) ≠ 0 := by
+    have heq : (9 : F) = (3 : F)^2 := by norm_num
+    rw [heq]
+    exact pow_ne_zero 2 h3
+  have h729 : (729 : F) ≠ 0 := by
+    have heq : (729 : F) = (3 : F)^6 := by norm_num
+    rw [heq]
+    exact pow_ne_zero 6 h3
+  dsimp [triangularWeierstrass, WeierstrassCurve.Δ,
+    WeierstrassCurve.b₂, WeierstrassCurve.b₄,
+    WeierstrassCurve.b₆, WeierstrassCurve.b₈]
+  field_simp [h3, h9, h729]
+  ring
+
+#print axioms SparseDeletion.AINTLIBBridge.triangular_weierstrass_discriminant
+
 end SparseDeletion.AINTLIBBridge
 
 #print axioms SparseDeletion.AINTLIBBridge.triangular_cubic_rescale_identity
