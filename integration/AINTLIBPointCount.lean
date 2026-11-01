@@ -28,26 +28,37 @@ theorem pointCount_eq_one_add_card_equation
       1 + ((Finset.univ : Finset (K × K)).filter
         (fun (xy : K × K) => W.toAffine.Equation xy.1 xy.2)).card := by
   classical
-  letI : Fintype (WithZero
-      {xy : K × K // W.toAffine.Equation xy.1 xy.2}) :=
-    Fintype.ofEquiv W.toAffine.Point (W.toAffine.pointEquiv)
-  have heq :
-      Fintype.card W.toAffine.Point =
-        Fintype.card (WithZero
-          {xy : K × K // W.toAffine.Equation xy.1 xy.2}) :=
-    Fintype.card_congr (W.toAffine.pointEquiv)
-  have hcard :
-      Fintype.card {xy : K × K // W.toAffine.Equation xy.1 xy.2} =
-        ((Finset.univ : Finset (K × K)).filter
-          (fun (xy : K × K) => W.toAffine.Equation xy.1 xy.2)).card := by
+  let A : Type _ :=
+    {xy : K × K // W.toAffine.Equation xy.1 xy.2}
+  let finiteOption : Fintype (Option A) := inferInstance
+  let e : W.toAffine.Point ≃ WithZero A := W.toAffine.pointEquiv
+  let finiteWithZero : Fintype (WithZero A) :=
+    Fintype.ofEquiv W.toAffine.Point e
+  letI : Fintype (WithZero A) := finiteWithZero
+  have heq : Fintype.card W.toAffine.Point =
+      Fintype.card (WithZero A) :=
+    Fintype.card_congr e
+  have hop : Fintype.card (WithZero A) =
+      @Fintype.card (Option A) finiteOption :=
+    @Fintype.card_congr (WithZero A) (Option A)
+      finiteWithZero finiteOption (Equiv.refl (Option A))
+  have hopt : @Fintype.card (Option A) finiteOption =
+      Fintype.card A + 1 := by
+    simpa using (Fintype.card_option (α := A))
+  have hcard : Fintype.card A =
+      ((Finset.univ : Finset (K × K)).filter
+        (fun (xy : K × K) => W.toAffine.Equation xy.1 xy.2)).card := by
+    dsimp [A]
     rw [Fintype.card_subtype]
   dsimp [HasseWeil.pointCount]
-  rw [heq]
-  change Fintype.card
-    (Option {xy : K × K // W.toAffine.Equation xy.1 xy.2}) =
-      1 + ((Finset.univ : Finset (K × K)).filter
-        (fun (xy : K × K) => W.toAffine.Equation xy.1 xy.2)).card
-  simp [hcard, Nat.add_comm]
+  calc
+    Fintype.card W.toAffine.Point =
+        Fintype.card (WithZero A) := heq
+    _ = @Fintype.card (Option A) finiteOption := hop
+    _ = Fintype.card A + 1 := hopt
+    _ = 1 + ((Finset.univ : Finset (K × K)).filter
+        (fun (xy : K × K) => W.toAffine.Equation xy.1 xy.2)).card := by
+      omega
 
 end SparseDeletion.AINTLIBBridge
 
