@@ -72,6 +72,44 @@ theorem triangular_weierstrass_discriminant
 
 #print axioms SparseDeletion.AINTLIBBridge.triangular_weierstrass_discriminant
 
+/-- Nonsingular fibers are elliptic curves. The explicit denominator
+conditions hold automatically over ZMod p for primes p >= 37. -/
+theorem triangular_weierstrass_isElliptic
+    {F : Type*} [Field F] (b : F)
+    (h2 : (2 : F) ≠ 0) (h3 : (3 : F) ≠ 0)
+    (hq : 15552 * b^2 + 3888 * b + 239 ≠ 0) :
+    (triangularWeierstrass b).IsElliptic := by
+  have h65536 : (65536 : F) ≠ 0 := by
+    have heq : (65536 : F) = (2 : F)^16 := by norm_num
+    rw [heq]
+    exact pow_ne_zero 16 h2
+  have h729 : (729 : F) ≠ 0 := by
+    have heq : (729 : F) = (3 : F)^6 := by norm_num
+    rw [heq]
+    exact pow_ne_zero 6 h3
+  have hΔ : (triangularWeierstrass b).Δ ≠ 0 := by
+    rw [triangular_weierstrass_discriminant b h3]
+    exact mul_ne_zero
+      (neg_ne_zero.mpr (div_ne_zero h65536 h729)) hq
+  exact ⟨isUnit_iff_ne_zero.mpr hΔ⟩
+
+/-- Apply the genuine upstream Hasse theorem to our *explicit*
+nonsingular triangular-prefix Weierstrass model. -/
+theorem triangular_weierstrass_hasse_bound
+    {F : Type*} [Field F] [Fintype F] [DecidableEq F]
+    (b : F)
+    (h2 : (2 : F) ≠ 0) (h3 : (3 : F) ≠ 0)
+    (hq : 15552 * b^2 + 3888 * b + 239 ≠ 0)
+    [Fintype (triangularWeierstrass b).toAffine.Point] :
+    |((HasseWeil.pointCount (triangularWeierstrass b).toAffine : ℝ) -
+      (Fintype.card F : ℝ) - 1)| ≤
+      2 * Real.sqrt (Fintype.card F : ℝ) := by
+  letI : (triangularWeierstrass b).toAffine.IsElliptic :=
+    triangular_weierstrass_isElliptic b h2 h3 hq
+  exact HasseWeil.WeilPairing.hasse_bound (triangularWeierstrass b)
+
+#print axioms SparseDeletion.AINTLIBBridge.triangular_weierstrass_hasse_bound
+
 end SparseDeletion.AINTLIBBridge
 
 #print axioms SparseDeletion.AINTLIBBridge.triangular_cubic_rescale_identity
