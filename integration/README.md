@@ -164,3 +164,19 @@ The theorem matches the mathematical content of the remaining
 normalization and the separate Lean compiler version. This new
 specialization needs its own successful CI run and is **not yet**
 verified.
+
+## Matching the old project's polynomial coefficients (new, CI pending)
+
+The original Lean 4.35 theorem uses the polynomial
+`primeCubicPoly p b`, whose coefficients are
+`16/6, 24/6, 8/6, 8b+1` in `ZMod p`.
+The new `AINTLIBPrimePolyBridge.lean` **reproduces that definition**
+inside the Lean 4.36 AINTLIB workspace, proves the polynomial-evaluation
+identity, and applies the prime-modulus Hasse/Weil estimate.
+
+This will establish the exact *mathematical statement* of the
+character-sum input required by `CubicWeilCharacterUpper`.
+It still does not permit importing a Lean 4.36 certificate directly
+into the pinned Lean 4.35 proof; solving that compatibility problem
+remains a separate task. The new file and its declared axioms have
+not yet passed GitHub Actions.

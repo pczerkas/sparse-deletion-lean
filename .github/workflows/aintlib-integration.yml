@@ -282,6 +282,23 @@ jobs:
             exit 1
           fi
 
+      - name: Install exact original polynomial interface
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp integration/AINTLIBPrimePolyBridge.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/PrimePolyBridge.lean
+
+      - name: Verify same cubic polynomial coefficients as the main Lean project
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake build HasseWeil.SparseDeletion.PrimePolyBridge 2>&1 | tee ../aintlib-prime-poly.log
+          if grep -Fq 'sorryAx' ../aintlib-prime-poly.log; then
+            echo "Untrusted sorryAx in coefficient-level cubic bridge" >&2
+            exit 1
+          fi
+
       - name: Upload diagnostic log
         if: always()
         uses: actions/upload-artifact@v4
@@ -302,5 +319,6 @@ jobs:
             aintlib-original-hasse.log
             aintlib-all-fibers.log
             aintlib-zmod-weil.log
+            aintlib-prime-poly.log
           if-no-files-found: ignore
           retention-days: 14
