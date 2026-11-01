@@ -42,6 +42,11 @@ theorem triangular_character_upper_zmod
   let A : Type := {xy : ZMod p × ZMod p //
     W.toAffine.Nonsingular xy.1 xy.2}
   let e : W.toAffine.Point ≃ WithZero A := W.toAffine.nonsingularPointEquiv
+  let finiteOption : Fintype (Option A) := inferInstance
+  letI : Fintype (Option A) := finiteOption
+  let finiteWithZero : Fintype (WithZero A) :=
+    Fintype.ofEquiv (Option A) (Equiv.refl (Option A))
+  letI : Fintype (WithZero A) := finiteWithZero
   letI : Fintype W.toAffine.Point := Fintype.ofEquiv (WithZero A) e.symm
   have h := triangular_original_character_sum_abs_bound_all
     b htwo hthree hchar
