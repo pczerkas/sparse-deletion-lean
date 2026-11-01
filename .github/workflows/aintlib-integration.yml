@@ -190,6 +190,46 @@ jobs:
             exit 1
           fi
 
+      - name: Verify singular double-root character sum
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake env lean ../integration/AINTLIBSingularSum.lean 2>&1 | tee ../aintlib-singular-sum.log
+          if grep -Fq 'sorryAx' ../aintlib-singular-sum.log; then
+            echo "Untrusted sorryAx in singular cubic certificate" >&2
+            exit 1
+          fi
+
+      - name: Install character-sum rescaling in isolated AINTLIB workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp integration/AINTLIBRescaleCharacter.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/RescaleCharacter.lean
+          cp integration/AINTLIBOriginalHasse.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/OriginalHasse.lean
+
+      - name: Verify quadratic character sum rescaling
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake build HasseWeil.SparseDeletion.RescaleCharacter 2>&1 | tee ../aintlib-rescale-character.log
+          if grep -Fq 'sorryAx' ../aintlib-rescale-character.log; then
+            echo "Untrusted sorryAx in rescaling certificate" >&2
+            exit 1
+          fi
+
+      - name: Verify original cubic character Hasse bound
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake build HasseWeil.SparseDeletion.OriginalHasse 2>&1 | tee ../aintlib-original-hasse.log
+          if grep -Fq 'sorryAx' ../aintlib-original-hasse.log; then
+            echo "Untrusted sorryAx in original cubic certificate" >&2
+            exit 1
+          fi
+
       - name: Upload diagnostic log
         if: always()
         uses: actions/upload-artifact@v4
@@ -204,5 +244,8 @@ jobs:
             aintlib-character-sum.log
             aintlib-cubic-character.log
             aintlib-monic-hasse.log
+            aintlib-singular-sum.log
+            aintlib-rescale-character.log
+            aintlib-original-hasse.log
           if-no-files-found: ignore
           retention-days: 14

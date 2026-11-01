@@ -28,7 +28,7 @@ theorem triangular_model_equation_iff
   change (Y ^ 2 + (0 : F) * X * Y + 0 * Y -
     (X ^ 3 + 4 * X ^ 2 + (32 / 9) * X +
       (64 / 9) * (8 * b + 1)) = 0) ↔ _
-  simp only [zero_mul, zero_add, sub_eq_zero]
+  simp only [zero_mul, add_zero, sub_eq_zero]
 
 theorem triangular_pointCount_character_sum
     {F : Type*} [Field F] [Fintype F] [DecidableEq F]
