@@ -66,7 +66,8 @@ theorem pointCount_eq_field_card_add_character_sum
     _ = 1 + (((Finset.univ : Finset (F × F)).filter
           (fun (xy : F × F) => xy.2 ^ 2 = g xy.1)).card : ℤ) := by rw [hSet]
     _ = 1 + ∑ x : F, (((Finset.univ : Finset F).filter
-          (fun y => y ^ 2 = g x)).card : ℤ) := by rw [hFiber]
+          (fun y => y ^ 2 = g x)).card : ℤ) := by
+      exact congrArg (fun z : ℤ => 1 + z) hFiber
     _ = 1 + ∑ x : F, (1 + quadraticCharFun F (g x)) := by rw [hChar]
     _ = (Fintype.card F : ℤ) + 1 +
           ∑ x : F, quadraticCharFun F (g x) := by

@@ -160,6 +160,36 @@ jobs:
             exit 1
           fi
 
+      - name: Install monic cubic specialization into the isolated runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp integration/AINTLIBCubicModel.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/CubicModel.lean
+          cp integration/AINTLIBCubicCharacter.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/CubicCharacter.lean
+          cp integration/AINTLIBMonicHasse.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/MonicHasse.lean
+
+      - name: Verify monic cubic point-count character identity
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake build HasseWeil.SparseDeletion.CubicCharacter 2>&1 | tee ../aintlib-cubic-character.log
+          if grep -Fq 'sorryAx' ../aintlib-cubic-character.log; then
+            echo "Untrusted sorryAx in cubic character certificate" >&2
+            exit 1
+          fi
+
+      - name: Verify Hasse bound for our nonsingular monic cubic
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake build HasseWeil.SparseDeletion.MonicHasse 2>&1 | tee ../aintlib-monic-hasse.log
+          if grep -Fq 'sorryAx' ../aintlib-monic-hasse.log; then
+            echo "Untrusted sorryAx in Hasse specialization" >&2
+            exit 1
+          fi
+
       - name: Upload diagnostic log
         if: always()
         uses: actions/upload-artifact@v4
@@ -172,5 +202,7 @@ jobs:
             aintlib-fiber.log
             aintlib-fubini.log
             aintlib-character-sum.log
+            aintlib-cubic-character.log
+            aintlib-monic-hasse.log
           if-no-files-found: ignore
           retention-days: 14
