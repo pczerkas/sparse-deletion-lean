@@ -1,7 +1,9 @@
 # Joint AINTLIB + original Lean proof compatibility test
 
-**Status:** experimental GitHub Actions test. The currently certified
-AINTLIB-side theorem is independent of this joint build.
+**Status:** **SUCCESS — kernel-certified** in GitHub Actions run
+[41320828513](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41320828513)
+at commit `733a9f6`. The full original conditional proof and the
+AINTLIB Hasse theorem were built together under Lean 4.36.0-rc2.
 
 The workflow `.github/workflows/aintlib-root-compat.yml` exercises
 source-level portability without changing the committed original
@@ -32,7 +34,11 @@ In a disposable GitHub-hosted runner only:
 The new downstream file is
 `integration/RootWeilDischarge.lean`.
 
-**Important:** this is a migration/compatibility **test**.
-Until the GitHub Actions run succeeds, claims in steps 4–7 above
-are targets, **not verified results**. The original Lean 4.35
-`main` proof remains intact regardless of the outcome.
+**Verified result:** every stage of this joint-build test passed,
+including both unconditional final log/loglog theorems and the exact
+original `CubicWeilCharacterUpper` proposition. Each of the four
+printed declarations depends only on `propext`, `Classical.choice`,
+and `Quot.sound`; no `sorryAx` appears. The original Lean 4.35
+`main` proof remains intact. The stronger theorem is certified
+in the **joint Lean 4.36 workspace**, not in the unmodified
+Lean 4.35 default package.

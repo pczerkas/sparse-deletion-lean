@@ -318,10 +318,12 @@ L = log(N/(e(N)+1)), L≥2048.
 ```
 
 The matching retained-index inequality is also certified
-under its survivor-growth hypothesis. **The deep Weil
-character-sum inequality itself remains unformalized.**
-This is a rigorously certified *conditional* theorem,
-not a stronger unconditional result.
+under its survivor-growth hypothesis. **These declarations in the
+pinned Lean 4.35 build remain explicitly conditional.** In the
+separate Lean 4.36/AINTLIB joint build, however, the missing
+character-sum premise has been **fully proved** using Hasse
+and the elementary singular-cubic case; see the certified
+unconditional integration below.
 
 [SIEVE_EXPERIMENT.md](SIEVE_EXPERIMENT.md) reports
 exact modular tests for every prime `37≤p≤500`
@@ -335,24 +337,46 @@ arbitrarily sparse five-square construction.
 It is not a matching lower bound for the
 current upper rate and is not Lean-certified.
 
-## Next formalization milestone: Hasse/Weil external integration
+## AINTLIB integration: unconditional strong rate (Lean 4.36)
 
-[HASSE_INTEGRATION_PLAN.md](HASSE_INTEGRATION_PLAN.md) identifies a
-separate Lean library, `CBirkbeck/AINTLIB`, containing a claimed
-sorry-free, exported `HasseWeil.WeilPairing.hasse_bound`
-for finite-field elliptic curves. The project has not been added
-as a dependency: its Lean/Mathlib versions must be reconciled with
-the pinned toolchain before any integration.
+The optional integration branch proves the exact missing statement
+`CubicWeilCharacterUpper` and thus **discharges the only hypothesis**
+of our stronger `3/4`-sieve corollaries. The proof imports the genuine
+`HasseWeil.WeilPairing.hasse_bound` from the pinned
+[CBirkbeck/AINTLIB](https://github.com/CBirkbeck/AINTLIB) source, deals
+with singular and nonsingular cubic fibers separately, and verifies
+`primeCubicPoly` matches the independently reconstructed polynomial.
 
-The missing character bound is now split into:
-1. a **nonsingular** cubic case, reducing the quadratic-character
-   sum to an elliptic-curve point count and invoking Hasse;
-2. a **singular** cubic case, which can be handled by an elementary
-   double-root factorization with character sum of absolute value 1.
+A separate GitHub Actions job temporarily compiles our **unchanged**
+original Lean source modules together with AINTLIB under **Lean
+4.36.0-rc2**, without modifying the repository's pinned Lean 4.35
+configuration. It constructs proofs of:
 
-Neither of these two new proofs is yet certified in this project;
-the conditional Weil CRT/logarithmic reductions remain formally
-verified, and the main unconditional theorem is unchanged.
+- `SparseDeletion.cubicWeilCharacterUpper_from_AINTLIB`;
+- `SparseDeletion.quantitative_weil_value_loglog_unconditional`;
+- `SparseDeletion.quantitative_weil_index_loglog_unconditional`.
+
+The full joint build passed [GitHub Actions run 41320828513](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41320828513)
+(commit `733a9f6`). `#print axioms` reports **only**
+`propext`, `Classical.choice`, and `Quot.sound`; no `sorryAx`.
+
+For `N>0`, `e(N)=#(E∩[0,N))`, `Q=N/(e(N)+1)`, and
+`L=log Q≥2048`, the formally certified result is
+
+```text
+H_E(N)/N ≤ (8/3)*exp(-(log(4/3)/2)*L/log L).
+```
+
+The result does **not** require `E` to have density zero; that
+assumption instead makes `Q(N)→∞` and the threshold eventually
+applicable. The surviving-index result retains its explicit growth
+hypothesis.
+
+The joint certificate is
+[integration/RootWeilDischarge.lean](integration/RootWeilDischarge.lean);
+the reproducible GitHub workflow is
+[.github/workflows/aintlib-root-compat.yml](.github/workflows/aintlib-root-compat.yml).
+The primary Lean 4.35 proof and `main` remain untouched.
 
 ## Independent exact cubic value-set result
 

@@ -5,6 +5,25 @@ proofs in the repository root. **Kompik is used only for lightweight
 text edits, Git branching and pushing.** All Lean, Lake, Mathlib
 downloads and builds run on GitHub-hosted Actions runners.
 
+## Current result — full integration certified
+
+The staged joint environment has **succeeded**: [GitHub Actions run
+41320828513](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41320828513)
+(commit `733a9f6`) compiled the original `PrimeCubicPoly` and
+`WeilConditionalLogRate` sources under the pinned AINTLIB Lean 4.36
+toolchain and proved `SparseDeletion.cubicWeilCharacterUpper_from_AINTLIB`.
+It also proved both formerly conditional quantitative log/loglog
+corollaries **without a Weil hypothesis**. `#print axioms` confirmed
+only the three standard Lean axioms and no `sorryAx`.
+
+The proof is in `RootWeilDischarge.lean`, built by the separate
+`aintlib-root-compat.yml` workflow. The original Lean 4.35 sources,
+root `lakefile.toml`, and the `main` branch were **not changed**.
+
+**Historical sections below record the development milestones and
+their earlier CI-pending status; the current certified status above
+takes precedence.**
+
 ## Why an isolated pipeline?
 
 - Original proof toolchain: Lean 4.35.0, pinned Mathlib.
@@ -159,11 +178,11 @@ It aims to prove for every shift `b:ZMod p`:
   ≤ 2 * sqrt(p).
 ```
 
-The theorem matches the mathematical content of the remaining
-`CubicWeilCharacterUpper` premise, modulo the exact polynomial
-normalization and the separate Lean compiler version. This new
-specialization needs its own successful CI run and is **not yet**
-verified.
+The `ZMod p` specialization passed GitHub Actions run
+`41318485477` (commit `c0ccd1d`). The exact polynomial
+normalization was subsequently verified, and the original
+`CubicWeilCharacterUpper` premise discharged in the joint run
+`41320828513` (commit `733a9f6`).
 
 ## Matching the old project's polynomial coefficients (new, CI pending)
 
@@ -174,9 +193,10 @@ The new `AINTLIBPrimePolyBridge.lean` **reproduces that definition**
 inside the Lean 4.36 AINTLIB workspace, proves the polynomial-evaluation
 identity, and applies the prime-modulus Hasse/Weil estimate.
 
-This will establish the exact *mathematical statement* of the
-character-sum input required by `CubicWeilCharacterUpper`.
-It still does not permit importing a Lean 4.36 certificate directly
-into the pinned Lean 4.35 proof; solving that compatibility problem
-remains a separate task. The new file and its declared axioms have
-not yet passed GitHub Actions.
+This polynomial identity and the corresponding character bound
+passed GitHub Actions run `41320135716` (commit `d4c4cd0`).
+The joint Lean 4.36 workflow subsequently confirmed definitional
+equality with the **actual original** `primeCubicPoly` and
+discharged the missing `CubicWeilCharacterUpper` condition
+(run `41320828513`). The original root stays pinned to Lean 4.35;
+no invalid cross-version `.olean` import is attempted.

@@ -263,10 +263,14 @@ passed GitHub Actions runs `41290984477`, `41291253800`,
 The one-premise `WeilSingleHypothesis.lean` and final
 `WeilConditionalLogRate.lean` also passed GitHub Actions
 run `41292331952` (commit `42256a8`, `BUILD_EXIT=0`,
-only standard axioms). The nontrivial **Weil character-sum
-bound remains unproved inside Lean**. All the improved
-Weil results are explicit implications from that
-unproved-in-Lean premise, not unconditional theorems. Finite experiments
+only standard axioms). In the pinned Lean 4.35 build the
+`CubicWeilCharacterUpper` declaration **remains a hypothesis**.
+However, the independent AINTLIB joint workspace (Lean 4.36)
+has now **proved that exact hypothesis** and instantiated the
+final log/loglog theorems unconditionally (GitHub Actions run
+`41320828513`, commit `733a9f6`). This is a separately
+certified result and is not an import into the Lean 4.35 build.
+Finite experiments
 in `SIEVE_EXPERIMENT.md` have no bearing on the proof for all
 primes. The lower-bound construction in
 `OPTIMALITY_CONSTRUCTION.md` uses Wright and Siegel and
@@ -291,3 +295,31 @@ also remains outside Lean.
 Any publication should identify the density-zero conclusion
 precisely and include the pinned toolchain, independent build
 log, exact statement, and `#print axioms` certificate.
+
+## 7. Unconditional AINTLIB joint verification — 2026-11-01
+
+The optional integration branch contains a runnable GitHub workflow
+`.github/workflows/aintlib-root-compat.yml`. It stages unchanged
+source files from the original Lean 4.35 package into a temporary
+AINTLIB Lean 4.36.0-rc2 workspace, then uses the pinned AINTLIB
+Hasse proof to close the actual original `CubicWeilCharacterUpper`
+proposition. It also instantiates both original 3/4-sieve
+log/loglog corollaries.
+
+**Certified run:** [41320828513](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41320828513)
+(commit `733a9f6`): `SUCCESS`, no `sorryAx`, with the three
+standard Lean axioms only. Exact declaration names:
+
+- `SparseDeletion.primeCubicPoly_eq_aintlib`
+- `SparseDeletion.cubicWeilCharacterUpper_from_AINTLIB`
+- `SparseDeletion.quantitative_weil_value_loglog_unconditional`
+- `SparseDeletion.quantitative_weil_index_loglog_unconditional`
+
+**Separation of guarantees:** the original pinned Lean 4.35
+default build remains independently verified and does not import
+AINTLIB. The strengthened result is fully kernel-certified
+**in the joint Lean 4.36 workspace**. It should not be described
+as already compiled under the unchanged root `lean-toolchain`.
+
+Research novelty and optimality are separate questions not
+settled by this CI certificate.

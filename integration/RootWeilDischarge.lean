@@ -68,7 +68,15 @@ theorem quantitative_weil_index_loglog_unconditional
 
 end SparseDeletion
 
+/-- info: 'SparseDeletion.primeCubicPoly_eq_aintlib' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
 #print axioms SparseDeletion.primeCubicPoly_eq_aintlib
+/-- info: 'SparseDeletion.cubicWeilCharacterUpper_from_AINTLIB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
 #print axioms SparseDeletion.cubicWeilCharacterUpper_from_AINTLIB
+/-- info: 'SparseDeletion.quantitative_weil_value_loglog_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
 #print axioms SparseDeletion.quantitative_weil_value_loglog_unconditional
+/-- info: 'SparseDeletion.quantitative_weil_index_loglog_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in
 #print axioms SparseDeletion.quantitative_weil_index_loglog_unconditional
