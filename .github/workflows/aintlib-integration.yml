@@ -201,6 +201,24 @@ jobs:
             exit 1
           fi
 
+      - name: Install singular factorization modules in isolated AINTLIB workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp integration/AINTLIBSingularSum.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/SingularSum.lean
+          cp integration/AINTLIBSingularFactor.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/SingularFactor.lean
+
+      - name: Verify exact factorization of singular triangular cubic
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake build HasseWeil.SparseDeletion.SingularFactor 2>&1 | tee ../aintlib-singular-factor.log
+          if grep -Fq 'sorryAx' ../aintlib-singular-factor.log; then
+            echo "Untrusted sorryAx in singular factorization certificate" >&2
+            exit 1
+          fi
+
       - name: Install character-sum rescaling in isolated AINTLIB workspace
         shell: bash
         run: |
@@ -245,6 +263,7 @@ jobs:
             aintlib-cubic-character.log
             aintlib-monic-hasse.log
             aintlib-singular-sum.log
+            aintlib-singular-factor.log
             aintlib-rescale-character.log
             aintlib-original-hasse.log
           if-no-files-found: ignore

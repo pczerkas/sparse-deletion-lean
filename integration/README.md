@@ -100,3 +100,31 @@ is described as kernel-certified.
 
 The remaining work is counting the quadratic roots in each fiber,
 transporting them through the rescaling, and handling singular fibers.
+
+## Singular-fiber factorization
+
+The earlier `AINTLIBSingularSum.lean` certifies the quadratic-character
+sum for a cubic whose factorization `a*(x-u)^2*(x-v)` is already given.
+The new `AINTLIBSingularFactor.lean` attempts to prove the **missing
+factorization for our actual cubic**, whenever the discriminant
+factor `15552*b²+3888*b+239` vanishes.
+
+A concrete polynomial identity is used (valid for fields where 2 and 3
+are invertible), rather than choosing a root in an algebraic closure:
+
+```text
+t = 3*(24*b+3)/2
+u = (t-1)/2
+v = (-2*t-1)/2
+f_b(x) - (8/3)*(x-u)^2*(x-v)
+  = (x-12*b-1)*(15552*b²+3888*b+239)/6.
+```
+
+This identity was independently checked with exact symbolic algebra.
+The Lean implementation remains **pending GitHub Actions verification**
+until the commit containing the new module passes. No external
+character-sum conjecture is involved in the singular case.
+
+The stronger uniform cubic character bound will still require
+a separate theorem that splits on whether the discriminant vanishes,
+and a final bridge back to the original Lean 4.35 project.
