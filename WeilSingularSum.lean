@@ -31,7 +31,7 @@ theorem quadraticCharFun_sum_sub_zero
   calc
     (∑ x : F, quadraticCharFun F (x - v)) =
         (∑ x : F, quadraticCharFun F x) := by
-          simpa only [sub_eq_add_neg] using
+          simpa [Equiv.addRight, sub_eq_add_neg, add_comm] using
             (Equiv.sum_comp (Equiv.addRight (-v)) (quadraticCharFun F))
     _ = 0 := hz
 
@@ -64,6 +64,7 @@ theorem quadraticCharFun_double_root_sum
         (∑ x : F, quadraticCharFun F (x - v)) -
         quadraticCharFun F a * quadraticCharFun F (u - v) := by
           rw [← Finset.mul_sum, Finset.sum_ite_eq']
+          simp
     _ = -(quadraticCharFun F a) * quadraticCharFun F (u - v) := by
           rw [quadraticCharFun_sum_sub_zero F hF v]
           ring
