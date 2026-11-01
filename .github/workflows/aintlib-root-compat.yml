@@ -1,0 +1,130 @@
+name: AINTLIB + original proof joint Lean environment (experimental)
+
+on:
+  push:
+    branches:
+      - feature/aintlib-integration
+    paths:
+      - ".github/workflows/aintlib-root-compat.yml"
+      - "integration/RootWeilDischarge.lean"
+      - "integration/AINTLIBPrimePolyBridge.lean"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aintlib-joint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  joint-build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    env:
+      LEAN_NUM_THREADS: "2"
+    steps:
+      - name: Checkout original proof sources
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Checkout pinned AINTLIB
+        uses: actions/checkout@v4
+        with:
+          repository: CBirkbeck/AINTLIB
+          ref: 8dafefa0f1f45af275e66007cfc6c28cbcd97089
+          path: aintlib
+          persist-credentials: false
+
+      - name: Install elan and Lake in GitHub runner
+        uses: leanprover/lean-action@v1
+        with:
+          build: false
+          test: false
+          lint: false
+          use-github-cache: false
+
+      - name: Restore Mathlib for pinned AINTLIB toolchain
+        working-directory: aintlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(cat lean-toolchain)" = "leanprover/lean4:v4.36.0-rc2"
+          lake exe cache get
+
+      - name: Restore cached AINTLIB Hasse build
+        uses: actions/cache/restore@v4
+        with:
+          path: aintlib/.lake/build
+          key: aintlib-hasse-8dafefa0-lean436rc2-v1
+
+      - name: Stage original Lean 4.35 source into isolated Lean 4.36 workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          from shutil import copy2
+          src = Path(".")
+          dst = Path("aintlib/compat-src")
+          dst.mkdir(parents=True, exist_ok=True)
+          files = sorted(src.glob("*.lean"))
+          assert files and len(files) >= 40, f"Unexpected original sources: {len(files)}"
+          lake = Path("aintlib/lakefile.toml")
+          with lake.open("a") as handle:
+              handle.write("\n# Temporary compatibility modules; original repository remains untouched.\n")
+              for f in files:
+                  copy2(f, dst / f.name)
+                  handle.write(f'\n[[lean_lib]]\nname = "{f.stem}"\nsrcDir = "compat-src"\n')
+          print(f"Staged {len(files)} exact original sources (not modified).")
+          PY
+
+      - name: Test original cubic-poly module on AINTLIB Mathlib version
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake build PrimeCubicPoly 2>&1 | tee ../compat-prime-poly.log
+
+      - name: Test original conditional Weil chain on AINTLIB Mathlib version
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake build WeilConditionalLogRate 2>&1 | tee ../compat-weil-conditional.log
+
+      - name: Install prior AINTLIB bridges and exact polynomial interface
+        shell: bash
+        run: |
+          set -euo pipefail
+          dst=aintlib/projects/HasseWeil/HasseWeil/SparseDeletion
+          mkdir -p "$dst"
+          for module in PointCount Fubini CharacterFiber PointCharacterSum CubicModel CubicCharacter MonicHasse SingularSum SingularFactor RescaleCharacter OriginalHasse AllFibers ZModWeil PrimePolyBridge; do
+            test -f "integration/AINTLIB${module}.lean"
+            cp "integration/AINTLIB${module}.lean" "$dst/${module}.lean"
+          done
+          cp integration/RootWeilDischarge.lean "$dst/RootWeilDischarge.lean"
+
+      - name: Prove original unconditional 3/4 loglog bound with AINTLIB
+        working-directory: aintlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          lake build HasseWeil.SparseDeletion.RootWeilDischarge 2>&1 | tee ../compat-root-discharge.log
+          if grep -Fq 'sorryAx' ../compat-root-discharge.log; then
+            echo "sorryAx in merged proof; rejecting" >&2
+            exit 1
+          fi
+
+      - name: Upload isolated compatibility logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aintlib-joint-lean-compat
+          path: |
+            compat-prime-poly.log
+            compat-weil-conditional.log
+            compat-root-discharge.log
+          if-no-files-found: ignore
+          retention-days: 14
