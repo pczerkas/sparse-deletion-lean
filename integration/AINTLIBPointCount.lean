@@ -18,6 +18,8 @@ This is not yet the full cubic character-sum identity.
 
 namespace SparseDeletion.AINTLIBBridge
 
+attribute [local instance] Classical.propDecidable
+
 theorem pointCount_eq_one_add_card_equation
     {K : Type*} [Field K] [Fintype K] [DecidableEq K]
     (W : WeierstrassCurve K)
