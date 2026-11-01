@@ -45,8 +45,32 @@ theorem pointCount_eq_field_card_add_character_sum
     simp only [Finset.mem_filter, Finset.mem_univ, true_and]
     exact hEquation xy.1 xy.2
   have hCount := pointCount_eq_one_add_card_equation W
-  have hFiber := affine_solution_count_eq_fiber_sum
-    (P := fun x y : F => y ^ 2 = g x)
+  -- The filters below carry the very same Decidable instances as
+  -- the goal. Proving the finite Fubini equality locally avoids
+  -- instance-dependent elaboration differences across modules.
+  have hFiber :
+      (((Finset.univ : Finset (F × F)).filter
+        (fun (xy : F × F) => xy.2 ^ 2 = g xy.1)).card : ℤ) =
+      ∑ x : F, (((Finset.univ : Finset F).filter
+        (fun y => y ^ 2 = g x)).card : ℤ) := by
+    calc
+      (((Finset.univ : Finset (F × F)).filter
+        (fun (xy : F × F) => xy.2 ^ 2 = g xy.1)).card : ℤ) =
+          ∑ xy : F × F, if xy.2 ^ 2 = g xy.1 then (1 : ℤ) else 0 := by
+        simpa using (Finset.sum_boole
+          (fun xy : F × F => xy.2 ^ 2 = g xy.1)
+          (Finset.univ : Finset (F × F))).symm
+      _ = ∑ x : F, ∑ y : F, if y ^ 2 = g x then (1 : ℤ) else 0 := by
+        simpa only using
+          (Fintype.sum_prod_type
+            (fun xy : F × F =>
+              if xy.2 ^ 2 = g xy.1 then (1 : ℤ) else 0))
+      _ = ∑ x : F, (((Finset.univ : Finset F).filter
+        (fun y => y ^ 2 = g x)).card : ℤ) := by
+        apply Finset.sum_congr rfl
+        intro x hx
+        simpa using (Finset.sum_boole
+          (fun y : F => y ^ 2 = g x) (Finset.univ : Finset F))
   have hChar :
       (∑ x : F, (((Finset.univ : Finset F).filter
           (fun y => y ^ 2 = g x)).card : ℤ)) =
