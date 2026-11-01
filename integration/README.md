@@ -83,3 +83,20 @@ a concrete `WeierstrassCurve` model and an algebraic identity
 for the triangular-prefix cubic. It is tested in
 AINTLIB's own GitHub-hosted workspace; no local `lake`
 or Mathlib processing is performed on Kompik.
+
+## Status after the first green isolated AINTLIB run
+
+GitHub Actions run `41300991573` (commit `1ea21f9`) succeeded.
+It certified the upstream Hasse import, downstream Hasse implication,
+the exact change of variables, discriminant identity, and the
+concrete Hasse corollary for nonsingular fibers, without `sorryAx`.
+This does **not** yet prove the cubic character-sum bound.
+
+The next module, `integration/AINTLIBPointCount.lean`, uses Mathlib's
+`WeierstrassCurve.Affine.pointEquiv` to identify the elliptic point
+count with one point at infinity plus the number of affine solutions.
+Its own GitHub Actions verification must pass before this statement
+is described as kernel-certified.
+
+The remaining work is counting the quadratic roots in each fiber,
+transporting them through the rescaling, and handling singular fibers.

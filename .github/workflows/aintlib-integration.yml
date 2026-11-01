@@ -106,6 +106,17 @@ jobs:
             exit 1
           fi
 
+      - name: Verify exact count of elliptic points via the affine equation
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake env lean ../integration/AINTLIBPointCount.lean 2>&1 | tee ../aintlib-pointcount.log
+          if grep -Fq 'sorryAx' ../aintlib-pointcount.log; then
+            echo "Untrusted sorryAx in point-count certificate output" >&2
+            exit 1
+          fi
+
       - name: Upload diagnostic log
         if: always()
         uses: actions/upload-artifact@v4
@@ -114,5 +125,6 @@ jobs:
           path: |
             aintlib-hasse-smoke.log
             aintlib-cubic-model.log
+            aintlib-pointcount.log
           if-no-files-found: ignore
           retention-days: 14
