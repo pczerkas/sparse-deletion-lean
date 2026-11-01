@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import QuantitativeHalfRate
+public import WeilCharacterBridge
 public import QuantitativeExponent
 
 @[expose] public section
@@ -67,3 +67,6 @@ The original main theorem is not modified by this optional extension.
 #print axioms SparseDeletion.quantitative_half_log_choice_budget
 #print axioms SparseDeletion.quantitative_value_loglog_bound_half
 #print axioms SparseDeletion.quantitative_index_loglog_bound_half
+
+#print axioms SparseDeletion.square_pass_character_identity
+#print axioms SparseDeletion.three_quarters_of_character_bound
