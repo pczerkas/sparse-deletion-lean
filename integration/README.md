@@ -140,6 +140,27 @@ certified AINTLIB Hasse specialization. The outcome is the uniform
 bound `|sum_x quadraticCharFun(f_b(x))| ≤ 2*sqrt(card F)`, including
 both singular and nonsingular fibers.
 
-**Status:** the new combined module needs its own successful CI run.
-It has not yet been integrated back into the original Lean 4.35
-`CubicWeilCharacterUpper` statement.
+**Status:** the combined theorem passed GitHub Actions run
+`41317306525` (commit `a6c2e44`, SUCCESS). The singular and
+nonsingular cases are therefore verified together in the isolated
+AINTLIB Lean 4.36 workspace. They have not yet been integrated back
+into the original Lean 4.35 `CubicWeilCharacterUpper` statement.
+
+## Uniform prime-modulus specialization (new, CI pending)
+
+`AINTLIBZModWeil.lean` specializes the combined theorem to
+`ZMod p`, under exactly the natural assumptions `p.Prime` and
+`37≤p`, and eliminates the curve-point `Fintype` hypothesis by
+constructing it from the canonical nonsingular-point equivalence.
+It aims to prove for every shift `b:ZMod p`:
+
+```text
+((∑ x : ZMod p, quadraticCharFun (ZMod p) (f_b(x)) : ℤ) : ℝ)
+  ≤ 2 * sqrt(p).
+```
+
+The theorem matches the mathematical content of the remaining
+`CubicWeilCharacterUpper` premise, modulo the exact polynomial
+normalization and the separate Lean compiler version. This new
+specialization needs its own successful CI run and is **not yet**
+verified.

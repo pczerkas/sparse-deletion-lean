@@ -265,6 +265,23 @@ jobs:
             exit 1
           fi
 
+      - name: Install prime-modulus specialization in isolated AINTLIB workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp integration/AINTLIBZModWeil.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/ZModWeil.lean
+
+      - name: Verify unconditional character bound for all primes p >= 37
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake build HasseWeil.SparseDeletion.ZModWeil 2>&1 | tee ../aintlib-zmod-weil.log
+          if grep -Fq 'sorryAx' ../aintlib-zmod-weil.log; then
+            echo "Untrusted sorryAx in ZMod character estimate" >&2
+            exit 1
+          fi
+
       - name: Upload diagnostic log
         if: always()
         uses: actions/upload-artifact@v4
@@ -284,5 +301,6 @@ jobs:
             aintlib-rescale-character.log
             aintlib-original-hasse.log
             aintlib-all-fibers.log
+            aintlib-zmod-weil.log
           if-no-files-found: ignore
           retention-days: 14
