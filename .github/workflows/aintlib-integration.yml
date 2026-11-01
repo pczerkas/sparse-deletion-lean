@@ -1,0 +1,91 @@
+name: AINTLIB Hasse integration (isolated toolchain)
+
+on:
+  push:
+    branches:
+      - feature/aintlib-integration
+    paths:
+      - ".github/workflows/aintlib-integration.yml"
+      - "integration/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aintlib-hasse-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  downstream-hasse-smoke:
+    name: Import AINTLIB Hasse in a downstream module
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    env:
+      LEAN_NUM_THREADS: "2"
+
+    steps:
+      - name: Checkout sparse-deletion integration branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Checkout fixed, reviewed AINTLIB revision
+        uses: actions/checkout@v4
+        with:
+          repository: CBirkbeck/AINTLIB
+          ref: 8dafefa0f1f45af275e66007cfc6c28cbcd97089
+          path: aintlib
+          persist-credentials: false
+
+      - name: Install elan and Lake (no local build)
+        uses: leanprover/lean-action@v1
+        with:
+          build: false
+          test: false
+          lint: false
+          use-github-cache: false
+
+      - name: Check pinned upstream toolchain and mathlib
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(cat aintlib/lean-toolchain)" = "leanprover/lean4:v4.36.0-rc2"
+          grep -F 'rev = "a2f96aabcf72be9e18bece4b5c7c54fcc0c029f4"' aintlib/lakefile.toml
+          test "$(git -C aintlib rev-parse HEAD)" = "8dafefa0f1f45af275e66007cfc6c28cbcd97089"
+          echo "External AINTLIB source and its separate Lean toolchain are pinned."
+
+      - name: Restore Mathlib cache in GitHub runner
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake exe cache get
+
+      - name: Build external AINTLIB Hasse capstone
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake build HasseWeil.HasseBound
+
+      - name: Verify our downstream bridge and exact axioms
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake env lean ../integration/AINTLIBSmoke.lean 2>&1 | tee ../aintlib-hasse-smoke.log
+          if grep -Fq 'sorryAx' ../aintlib-hasse-smoke.log; then
+            echo "Untrusted sorryAx appeared in the certificate output" >&2
+            exit 1
+          fi
+          echo "AINTLIB Hasse and our downstream point-count bridge checked."
+
+      - name: Upload diagnostic log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aintlib-hasse-smoke
+          path: aintlib-hasse-smoke.log
+          if-no-files-found: ignore
+          retention-days: 14
