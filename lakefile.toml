@@ -131,6 +131,9 @@ name = "WeilCharacterBridge"
 name = "WeilConditionalSieve"
 
 [[lean_lib]]
+name = "WeilCubicRoots"
+
+[[lean_lib]]
 name = "RemovedSquares"
 
 [[lean_lib]]

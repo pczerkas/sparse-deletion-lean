@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import WeilConditionalSieve
+public import WeilCubicRoots
 public import QuantitativeExponent
 
 @[expose] public section
@@ -75,3 +75,6 @@ The original main theorem is not modified by this optional extension.
 #print axioms SparseDeletion.quantitative_weil_cubic_sieve
 #print axioms SparseDeletion.quantitative_weil_value_bound
 #print axioms SparseDeletion.quantitative_weil_index_bound
+
+#print axioms SparseDeletion.cubic_polynomial_zeros_le_three
+#print axioms SparseDeletion.primeCubicPoly_zeros_le_three
