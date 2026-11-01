@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import WeilCharacterBridge
+public import WeilConditionalSieve
 public import QuantitativeExponent
 
 @[expose] public section
@@ -70,3 +70,8 @@ The original main theorem is not modified by this optional extension.
 
 #print axioms SparseDeletion.square_pass_character_identity
 #print axioms SparseDeletion.three_quarters_of_character_bound
+
+#print axioms SparseDeletion.quantitative_weil_prime_modular_bound
+#print axioms SparseDeletion.quantitative_weil_cubic_sieve
+#print axioms SparseDeletion.quantitative_weil_value_bound
+#print axioms SparseDeletion.quantitative_weil_index_bound

@@ -128,6 +128,9 @@ name = "QuantitativeHalfRate"
 name = "WeilCharacterBridge"
 
 [[lean_lib]]
+name = "WeilConditionalSieve"
+
+[[lean_lib]]
 name = "RemovedSquares"
 
 [[lean_lib]]
