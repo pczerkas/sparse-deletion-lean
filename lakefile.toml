@@ -140,6 +140,9 @@ name = "WeilSingleHypothesis"
 name = "WeilSingularPointwise"
 
 [[lean_lib]]
+name = "WeilSingularSum"
+
+[[lean_lib]]
 name = "WeilConditionalLogRate"
 
 [[lean_lib]]

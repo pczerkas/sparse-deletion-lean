@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import WeilSingularPointwise
+public import WeilSingularSum
 public import WeilConditionalLogRate
 public import QuantitativeExponent
 
@@ -87,3 +87,6 @@ The original main theorem is not modified by this optional extension.
 #print axioms SparseDeletion.quantitative_weil_index_loglog_bound
 
 #print axioms SparseDeletion.quadraticCharFun_double_root_pointwise
+
+#print axioms SparseDeletion.quadraticCharFun_sum_sub_zero
+#print axioms SparseDeletion.quadraticCharFun_double_root_sum
