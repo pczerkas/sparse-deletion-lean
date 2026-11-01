@@ -33,7 +33,9 @@ theorem affine_solution_count_eq_fiber_sum
         (fun xy : K × K => P xy.1 xy.2)
         (Finset.univ : Finset (K × K))).symm
     _ = ∑ x : K, ∑ y : K, if P x y then (1 : ℤ) else 0 := by
-      rw [Fintype.sum_prod_type']
+      simpa only using
+        (Fintype.sum_prod_type
+          (fun xy : K × K => if P xy.1 xy.2 then (1 : ℤ) else 0))
     _ = ∑ x : K, (((Finset.univ : Finset K).filter
         (fun y => P x y)).card : ℤ) := by
       apply Finset.sum_congr rfl
