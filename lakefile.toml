@@ -137,6 +137,9 @@ name = "WeilCubicRoots"
 name = "WeilSingleHypothesis"
 
 [[lean_lib]]
+name = "WeilSingularPointwise"
+
+[[lean_lib]]
 name = "WeilConditionalLogRate"
 
 [[lean_lib]]

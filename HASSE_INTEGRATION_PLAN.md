@@ -127,3 +127,34 @@ singular cubics, which would be invalid.
 
 All these modules remain optional and isolated from the existing
 unconditional elementary main theorem.
+
+## Confirmed concrete Mathlib APIs in the pinned source
+
+We inspected the installed Mathlib v4.35.0 file
+`Mathlib/NumberTheory/LegendreSymbol/QuadraticChar/Basic.lean`.
+It already includes:
+
+```lean
+quadraticCharFun_mul
+quadraticChar_sq_one'
+quadraticChar_ne_one
+quadraticChar_sum_zero
+```
+
+Of particular importance, the existing theorem has the form
+
+```lean
+theorem quadraticChar_sum_zero (hF : ringChar F ≠ 2) :
+  ∑ a : F, quadraticChar F a = 0
+```
+
+Therefore the singular-cubic case needs only a short
+translation-of-index sum identity, multiplicativity, and
+exclusion of the double root. A new global character-sum
+axiom is **not** needed for the singular branch.
+
+The external `CBirkbeck/AINTLIB` is available on
+[Reservoir](https://reservoir.lean-lang.org/@CBirkbeck/AINTLIB),
+which advertises import `HasseWeil.HasseBound`. But it is
+**not included** in our pinned dependency graph: a successful
+separate build and axiom inspection must precede use.
