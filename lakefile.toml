@@ -116,6 +116,15 @@ name = "QuantitativeConstants"
 name = "QuantitativeExponent"
 
 [[lean_lib]]
+name = "QuantitativeHalfBudget"
+
+[[lean_lib]]
+name = "QuantitativeHalfChoice"
+
+[[lean_lib]]
+name = "QuantitativeHalfRate"
+
+[[lean_lib]]
 name = "RemovedSquares"
 
 [[lean_lib]]

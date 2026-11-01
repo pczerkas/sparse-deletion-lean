@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import QuantitativeExponent
+public import QuantitativeHalfRate
 
 @[expose] public section
 
@@ -60,3 +60,9 @@ The original main theorem is not modified by this optional extension.
 #print axioms SparseDeletion.quantitative_log_choice_budget_fast
 #print axioms SparseDeletion.quantitative_value_loglog_bound_fast
 #print axioms SparseDeletion.quantitative_index_loglog_bound_fast
+
+#print axioms SparseDeletion.quantitative_value_bound_under_polynomial_budget_half
+#print axioms SparseDeletion.quantitative_value_frequency_real_half
+#print axioms SparseDeletion.quantitative_half_log_choice_budget
+#print axioms SparseDeletion.quantitative_value_loglog_bound_half
+#print axioms SparseDeletion.quantitative_index_loglog_bound_half
