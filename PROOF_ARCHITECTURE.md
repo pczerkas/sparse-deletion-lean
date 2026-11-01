@@ -255,9 +255,19 @@ remain visible in `VerifiedQuantitativeBound.lean`.
 The full certificate passed GitHub Actions run `41279672392`
 (commit `080b44b`) with no `sorryAx`.
 
-The character-sum refinement in `WEIL_REFINEMENT.md` is
-**not imported** and not kernel-certified; the separate
-`SIEVE_EXPERIMENT.md` is computational only.
+The Weil character-sum refinement is an optional side branch:
+`WeilCharacterBridge.lean` (exact character-count identity),
+`WeilConditionalSieve.lean` (conditional CRT and finite bounds),
+`WeilCubicRoots.lean` (unconditional cubic root count),
+`WeilSingleHypothesis.lean` (sole remaining Weil premise), and
+`WeilConditionalLogRate.lean` (conditional optimized log/loglog rate).
+The five modules passed GitHub Actions runs
+`41290984477`, `41291253800`, `41292056130`,
+and `41292331952` (the final two in one run). This
+certifies the full conditional `log(4/3)/2` rate, while
+the deep Weil character bound remains an explicit
+hypothesis; it is never introduced as an axiom. The separate `SIEVE_EXPERIMENT.md` is
+computational only.
 
 ## Removed alternatives
 

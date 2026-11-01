@@ -220,3 +220,38 @@ prime 500, and `WEIL_REFINEMENT.md` presents a mathematically
 stronger local `3/4` contraction using Weil's classical character
 sum bound. The Weil-based corollary is **not yet kernel-certified**
 and is deliberately kept out of the elementary proof import graph.
+
+## Exact formalization boundary of the Weil refinement
+
+The following conditional steps are now Lean-certified:
+
+- `WeilCharacterBridge.lean`: exact identity
+  `2*C_p(b)=p+Σ_x χ(f_b(x))+#zeros(f_b)` and the
+  implication `Σχ≤2√p, #zeros≤3 → 4*C_p(b)≤3p`.
+- `WeilConditionalSieve.lean`: the `3/4` bound carries
+  through the full CRT sieve to explicit finite-N
+  hit-count bounds, conditional on those two inputs.
+- `WeilCubicRoots.lean`: the root count bound
+  `#zeros(f_b)≤3` is proved for our specific cubic.
+  All three modules passed CI runs `41290984477`,
+  `41291253800`, and `41292056130`.
+
+The optional `WeilSingleHypothesis.lean` proves that
+the **single remaining** input `CubicWeilCharacterUpper`
+suffices for both finite-N estimates, while
+`WeilConditionalLogRate.lean` **kernel-certifies**
+the conditional `log(4/3)/2` exponent:
+
+```text
+CubicWeilCharacterUpper →
+ H_E(N)/N ≤ (8/3)*exp(-(log(4/3)/2)*L/log L),
+ L = log(N/(e(N)+1)), L≥2048.
+```
+
+A corresponding retained-index inequality is also certified,
+with its standard extra hypotheses.
+Both modules passed GitHub Actions run `41292331952`
+(commit `42256a8`; `BUILD_EXIT=0`, no `sorryAx`,
+only standard axioms). The missing Weil bound itself
+is not currently part of the Lean kernel proof;
+no new global axioms have been added.

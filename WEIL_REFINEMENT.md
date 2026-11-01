@@ -1,8 +1,11 @@
 # Optional Weil character-sum refinement — research note
 
-**Status:** rigorous mathematical deduction from the classical Weil
-bound, **not yet kernel-certified in Lean** and **NOT** imported
-into the original elementary main proof.
+**Status (2026-11-01):** the abstract character-count identity,
+the conditional local `3/4` lemma, the conditional CRT
+reduction, and the concrete cubic-root bound are
+**kernel-certified in Lean**. Full unconditional formalization
+still needs the nontrivial Weil character-sum estimate.
+The original elementary main proof remains unmodified.
 
 The current Lean proof uses an elementary conic/image bound to
 establish that at most `(6/7)p` residues pass a local test.
@@ -135,3 +138,54 @@ with the same survivor-growth condition as the existing theorem.
   of a Siegel zero*, Journal of the London Mathematical Society
   (2022), section on Weil bounds for quadratic characters,
   https://doi.org/10.1112/jlms.12663
+
+## Verified Lean bridge and remaining input
+
+The pinned project now includes the following verified files:
+
+- `WeilCharacterBridge.lean`: the integer quadratic-character
+  identity and a general finite-field proof of the `3/4`
+  local contraction, given `Σχ≤2√p` and at most three roots.
+- `WeilConditionalSieve.lean`: conditional CRT multiplication
+  and both explicit finite-N counting bounds.
+- `WeilCubicRoots.lean`: an unconditional Lean proof
+  that the exact cubic family has no more than three roots.
+
+GitHub Actions runs `41290984477`, `41291253800`,
+and `41292056130` certify those files, with
+`BUILD_EXIT=0` and only standard Lean axioms.
+Two additional files have now **also passed** full CI
+(run `41292331952`, commit `42256a8`, `BUILD_EXIT=0`,
+no `sorryAx`, standard Lean axioms only):
+
+- `WeilSingleHypothesis.lean`: the entire conditional
+  theorem assumes only `CubicWeilCharacterUpper`.
+- `WeilConditionalLogRate.lean`: the corresponding
+  conditional `log(4/3)/2` log/loglog estimate, for both
+  the value and retained-sequence indices.
+
+**One missing deep theorem** remains: for every prime
+`p≥37` in the sieve and every shift `b`, show in Lean
+`Σ_x quadraticCharFun (ZMod p) (f_b(x)) ≤ 2√p`.
+This is a special case of Weil's polynomial character-sum
+theorem (Babai, Theorem 4.3, https://people.cs.uchicago.edu/~laci/HANDOUTS/weil.pdf).
+Importing a hypothetical lemma as an axiom would not
+constitute an unconditional Lean proof and is not our approach.
+
+## Exact final conditional estimate certified by Lean
+
+For `N>0` and `L=log(N/(e(N)+1))≥2048`, the
+new theorem `quantitative_weil_value_loglog_bound` proves
+
+```text
+CubicWeilCharacterUpper →
+  H_E(N)/N ≤ (8/3) * exp(-(log(4/3)/2) * L/log L).
+```
+
+The companion `quantitative_weil_index_loglog_bound`
+handles retained-sequence indices with its original explicit
+survivor-growth hypothesis. These implications are complete
+Lean proofs (run `41292331952`). They DO NOT establish
+`CubicWeilCharacterUpper` without an additional proof of
+Weil's deep character-sum theorem. The existing unconditional
+elementary `log(7/6)/2` bound is unaffected.

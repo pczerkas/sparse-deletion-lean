@@ -253,9 +253,20 @@ proved the stronger coefficient `log(7/6)/2` with threshold
 `080b44b`) completed with `BUILD_EXIT=0`, no `sorryAx`,
 and only `propext`, `Classical.choice`, `Quot.sound`.
 
-The proposed `3/4` local contraction in `WEIL_REFINEMENT.md`
-is a **mathematical deduction from Weil's character sum theorem**,
-and is not certified by the current Lean code. Finite experiments
+The `3/4` local contraction in `WEIL_REFINEMENT.md`
+has now been formalized as a **conditional theorem**, with
+the precise character-sum bound and root-count premises
+visible in the Lean statement. `WeilCharacterBridge.lean`,
+`WeilConditionalSieve.lean`, and `WeilCubicRoots.lean`
+passed GitHub Actions runs `41290984477`, `41291253800`,
+`41292056130` with only standard axioms.
+The one-premise `WeilSingleHypothesis.lean` and final
+`WeilConditionalLogRate.lean` also passed GitHub Actions
+run `41292331952` (commit `42256a8`, `BUILD_EXIT=0`,
+only standard axioms). The nontrivial **Weil character-sum
+bound remains unproved inside Lean**. All the improved
+Weil results are explicit implications from that
+unproved-in-Lean premise, not unconditional theorems. Finite experiments
 in `SIEVE_EXPERIMENT.md` have no bearing on the proof for all
 primes. The lower-bound construction in
 `OPTIMALITY_CONSTRUCTION.md` uses Wright and Siegel and

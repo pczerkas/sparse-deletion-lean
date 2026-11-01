@@ -300,11 +300,28 @@ and only the three standard Lean axioms.
 
 ### Separate research on sharper local sieve constants
 
-[WEIL_REFINEMENT.md](WEIL_REFINEMENT.md) derives a
-**mathematical, not yet Lean-certified** stronger
-contraction `3/4` by invoking Weil's classical
-character-sum theorem. It is not imported by the
-elementary Lean proof.
+[WEIL_REFINEMENT.md](WEIL_REFINEMENT.md) describes the
+stronger local contraction `3/4` and its exact formalization
+boundary. The finite-field character identity,
+the conditional `3/4` lemma, the CRT reduction and
+the cubic root-count lemma are **Lean-certified**
+(GitHub Actions runs `41290984477`, `41291253800`,
+`41292056130`). The follow-up `WeilSingleHypothesis.lean` and
+`WeilConditionalLogRate.lean` modules passed GitHub
+Actions run `41292331952` (commit `42256a8`).
+They show that the **single explicit** input
+`CubicWeilCharacterUpper` suffices to prove
+
+```text
+H_E(N)/N ≤ (8/3)*exp(-(log(4/3)/2)*L/log L),
+L = log(N/(e(N)+1)), L≥2048.
+```
+
+The matching retained-index inequality is also certified
+under its survivor-growth hypothesis. **The deep Weil
+character-sum inequality itself remains unformalized.**
+This is a rigorously certified *conditional* theorem,
+not a stronger unconditional result.
 
 [SIEVE_EXPERIMENT.md](SIEVE_EXPERIMENT.md) reports
 exact modular tests for every prime `37≤p≤500`
