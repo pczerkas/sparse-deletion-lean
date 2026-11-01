@@ -1,6 +1,7 @@
 module -- shake: keep-all
 
 public import QuantitativeHalfRate
+public import QuantitativeExponent
 
 @[expose] public section
 
