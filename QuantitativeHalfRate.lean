@@ -75,7 +75,7 @@ theorem quantitative_value_loglog_bound_half
   let L : ℝ := Real.log ((N : ℝ) / (countUpTo E N + 1))
   let r : ℕ := ⌊L / (2 * Real.log L)⌋₊
   have hbudget :
-      (448 * (r + 50) ^ 2) ^ r * (countUpTo E N + 1) ≤ N := by
+      (112 * (r + 50) ^ 2) ^ r * (countUpTo E N + 1) ≤ N := by
     simpa only [r, L] using quantitative_half_log_choice_budget E N hN hQ
   have hf := quantitative_value_frequency_real_half E N r hN hbudget
   have hlog : 2 * ((6 : ℝ) / 7) ^ r ≤
@@ -104,7 +104,7 @@ theorem quantitative_index_loglog_bound_half
   let r : ℕ := ⌊L / (2 * Real.log L)⌋₊
   have hN : 0 < 2 * N + 2 := by omega
   have hbudget :
-      (448 * (r + 50) ^ 2) ^ r *
+      (112 * (r + 50) ^ 2) ^ r *
         (countUpTo E (2 * N + 2) + 1) ≤ (2 * N + 2) := by
     simpa only [r, L] using
       quantitative_half_log_choice_budget E (2 * N + 2) hN hQ
