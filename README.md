@@ -372,8 +372,8 @@ assumption instead makes `Q(N)→∞` and the threshold eventually
 applicable. The surviving-index result retains its explicit growth
 hypothesis.
 
-The joint certificate is
-[integration/RootWeilDischarge.lean](integration/RootWeilDischarge.lean);
+The joint certificate is the `RootWeilDischarge` module in the
+[integration source directory](integration/);
 the reproducible GitHub workflow is
 [.github/workflows/aintlib-root-compat.yml](.github/workflows/aintlib-root-compat.yml).
 The primary Lean 4.35 proof and `main` remain untouched.
