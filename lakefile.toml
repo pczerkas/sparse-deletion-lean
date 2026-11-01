@@ -143,6 +143,9 @@ name = "WeilSingularPointwise"
 name = "WeilSingularSum"
 
 [[lean_lib]]
+name = "WeilSingularFiberFactor"
+
+[[lean_lib]]
 name = "WeilConditionalLogRate"
 
 [[lean_lib]]

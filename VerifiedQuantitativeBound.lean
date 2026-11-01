@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import WeilSingularSum
+public import WeilSingularFiberFactor
 public import WeilConditionalLogRate
 public import QuantitativeExponent
 
@@ -90,3 +90,7 @@ The original main theorem is not modified by this optional extension.
 
 #print axioms SparseDeletion.quadraticCharFun_sum_sub_zero
 #print axioms SparseDeletion.quadraticCharFun_double_root_sum
+
+#print axioms SparseDeletion.triangular_singular_factorization_identity
+#print axioms SparseDeletion.triangular_singular_factorization
+#print axioms SparseDeletion.triangular_singular_character_sum
