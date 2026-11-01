@@ -134,6 +134,12 @@ name = "WeilConditionalSieve"
 name = "WeilCubicRoots"
 
 [[lean_lib]]
+name = "WeilSingleHypothesis"
+
+[[lean_lib]]
+name = "WeilConditionalLogRate"
+
+[[lean_lib]]
 name = "RemovedSquares"
 
 [[lean_lib]]

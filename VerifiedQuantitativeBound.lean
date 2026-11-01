@@ -1,6 +1,6 @@
 module -- shake: keep-all
 
-public import WeilCubicRoots
+public import WeilConditionalLogRate
 public import QuantitativeExponent
 
 @[expose] public section
@@ -78,3 +78,9 @@ The original main theorem is not modified by this optional extension.
 
 #print axioms SparseDeletion.cubic_polynomial_zeros_le_three
 #print axioms SparseDeletion.primeCubicPoly_zeros_le_three
+
+#print axioms SparseDeletion.cubic_weil_local_input_of_character_upper
+#print axioms SparseDeletion.quantitative_weil_value_bound_of_character_upper
+#print axioms SparseDeletion.quantitative_weil_index_bound_of_character_upper
+#print axioms SparseDeletion.quantitative_weil_value_loglog_bound
+#print axioms SparseDeletion.quantitative_weil_index_loglog_bound
