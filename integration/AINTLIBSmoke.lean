@@ -2,6 +2,8 @@ module
 
 import HasseWeil.HasseBound
 
+@[expose] public section
+
 /-!
 # External downstream smoke test of AINTLIB's Hasse bound
 
