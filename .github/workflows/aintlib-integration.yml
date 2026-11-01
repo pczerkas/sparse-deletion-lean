@@ -248,6 +248,23 @@ jobs:
             exit 1
           fi
 
+      - name: Install complete character bound in isolated AINTLIB workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp integration/AINTLIBAllFibers.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/AllFibers.lean
+
+      - name: Verify combined Hasse and singular cubic bound
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake build HasseWeil.SparseDeletion.AllFibers 2>&1 | tee ../aintlib-all-fibers.log
+          if grep -Fq 'sorryAx' ../aintlib-all-fibers.log; then
+            echo "Untrusted sorryAx in combined Hasse/singular certificate" >&2
+            exit 1
+          fi
+
       - name: Upload diagnostic log
         if: always()
         uses: actions/upload-artifact@v4
@@ -266,5 +283,6 @@ jobs:
             aintlib-singular-factor.log
             aintlib-rescale-character.log
             aintlib-original-hasse.log
+            aintlib-all-fibers.log
           if-no-files-found: ignore
           retention-days: 14

@@ -121,10 +121,25 @@ f_b(x) - (8/3)*(x-u)^2*(x-v)
 ```
 
 This identity was independently checked with exact symbolic algebra.
-The Lean implementation remains **pending GitHub Actions verification**
-until the commit containing the new module passes. No external
-character-sum conjecture is involved in the singular case.
+The Lean implementation **passed** GitHub Actions run
+`41316791670` (commit `98f5a6f`) with the complete workflow green.
+The exact factorization and character-sum identity use only standard
+Lean axioms, with no `sorryAx`. No external character-sum conjecture
+is involved in the singular case.
 
 The stronger uniform cubic character bound will still require
 a separate theorem that splits on whether the discriminant vanishes,
 and a final bridge back to the original Lean 4.35 project.
+
+## Full cubic-character estimate (new downstream module)
+
+The optional `AINTLIBAllFibers.lean` combines the two cases via the
+explicit discriminant expression. The singular case is reduced to a
+sum of absolute value ≤1; the nonsingular case invokes our already
+certified AINTLIB Hasse specialization. The outcome is the uniform
+bound `|sum_x quadraticCharFun(f_b(x))| ≤ 2*sqrt(card F)`, including
+both singular and nonsingular fibers.
+
+**Status:** the new combined module needs its own successful CI run.
+It has not yet been integrated back into the original Lean 4.35
+`CubicWeilCharacterUpper` statement.
