@@ -66,6 +66,6 @@ theorem primeCubicPoly_zeros_le_three (r : ℕ) (b : ℤ) :
   have hroots := cubic_polynomial_zeros_le_three (ZMod p)
     (16 * (6 : ZMod p)⁻¹) (24 * (6 : ZMod p)⁻¹)
     (8 * (6 : ZMod p)⁻¹) (8 * (b : ZMod p) + 1) ha
-  simpa only [p, primeCubicPoly, cubicShape] using hroots
+  simpa [p, primeCubicPoly, cubicShape] using hroots
 
 end SparseDeletion
