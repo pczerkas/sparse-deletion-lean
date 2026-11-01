@@ -335,6 +335,25 @@ arbitrarily sparse five-square construction.
 It is not a matching lower bound for the
 current upper rate and is not Lean-certified.
 
+## Next formalization milestone: Hasse/Weil external integration
+
+[HASSE_INTEGRATION_PLAN.md](HASSE_INTEGRATION_PLAN.md) identifies a
+separate Lean library, `CBirkbeck/AINTLIB`, containing a claimed
+sorry-free, exported `HasseWeil.WeilPairing.hasse_bound`
+for finite-field elliptic curves. The project has not been added
+as a dependency: its Lean/Mathlib versions must be reconciled with
+the pinned toolchain before any integration.
+
+The missing character bound is now split into:
+1. a **nonsingular** cubic case, reducing the quadratic-character
+   sum to an elliptic-curve point count and invoking Hasse;
+2. a **singular** cubic case, which can be handled by an elementary
+   double-root factorization with character sum of absolute value 1.
+
+Neither of these two new proofs is yet certified in this project;
+the conditional Weil CRT/logarithmic reductions remain formally
+verified, and the main unconditional theorem is unchanged.
+
 ## Independent exact cubic value-set result
 
 We also prove an **optional**, stronger, classical formula, independently
