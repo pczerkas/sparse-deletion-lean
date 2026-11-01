@@ -117,6 +117,17 @@ jobs:
             exit 1
           fi
 
+      - name: Verify quadratic character square-root fiber identity
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake env lean ../integration/AINTLIBCharacterFiber.lean 2>&1 | tee ../aintlib-fiber.log
+          if grep -Fq 'sorryAx' ../aintlib-fiber.log; then
+            echo "Untrusted sorryAx in character fiber certificate output" >&2
+            exit 1
+          fi
+
       - name: Upload diagnostic log
         if: always()
         uses: actions/upload-artifact@v4
@@ -126,5 +137,6 @@ jobs:
             aintlib-hasse-smoke.log
             aintlib-cubic-model.log
             aintlib-pointcount.log
+            aintlib-fiber.log
           if-no-files-found: ignore
           retention-days: 14

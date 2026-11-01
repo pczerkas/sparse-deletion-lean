@@ -24,8 +24,11 @@ theorem pointCount_eq_one_add_card_equation
     [W.toAffine.IsElliptic] [Fintype W.toAffine.Point] :
     HasseWeil.pointCount W.toAffine =
       1 + ((Finset.univ : Finset (K × K)).filter
-        (fun xy => W.toAffine.Equation xy.1 xy.2)).card := by
+        (fun (xy : K × K) => W.toAffine.Equation xy.1 xy.2)).card := by
   classical
+  letI : Fintype (WithZero
+      {xy : K × K // W.toAffine.Equation xy.1 xy.2}) :=
+    Fintype.ofEquiv W.toAffine.Point (W.toAffine.pointEquiv)
   have heq :
       Fintype.card W.toAffine.Point =
         Fintype.card (WithZero
@@ -34,10 +37,14 @@ theorem pointCount_eq_one_add_card_equation
   have hcard :
       Fintype.card {xy : K × K // W.toAffine.Equation xy.1 xy.2} =
         ((Finset.univ : Finset (K × K)).filter
-          (fun xy => W.toAffine.Equation xy.1 xy.2)).card := by
-    simp
+          (fun (xy : K × K) => W.toAffine.Equation xy.1 xy.2)).card := by
+    rw [Fintype.card_subtype]
   dsimp [HasseWeil.pointCount]
   rw [heq]
+  change Fintype.card
+    (Option {xy : K × K // W.toAffine.Equation xy.1 xy.2}) =
+      1 + ((Finset.univ : Finset (K × K)).filter
+        (fun (xy : K × K) => W.toAffine.Equation xy.1 xy.2)).card
   simp [hcard, Nat.add_comm]
 
 end SparseDeletion.AINTLIBBridge
