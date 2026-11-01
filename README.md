@@ -279,6 +279,45 @@ literature comparison and separates classical ingredients from
 our precise sparse-deletion statement. No claim of research
 novelty is made.
 
+## Stronger log/loglog rate (fully verified)
+
+The optional modules `QuantitativeHalfBudget.lean`,
+`QuantitativeHalfChoice.lean`, and `QuantitativeHalfRate.lean`
+improve the logarithmic sieve depth to
+`r=floor(L/(2*log L))` with `L=log(N/(e(N)+1))≥2048`.
+They prove the finite-budget threshold using the *verified*
+prime bound `largePrime r≤16*(r+50)^2`, and obtain
+
+```text
+H_E(N)/N ≤ (7/3) * exp(-(log(7/6)/2)*L/log L).
+```
+
+The matching retained-index theorem has the same
+Nth-survivor hypothesis as earlier variants. The full
+certificate passed [GitHub Actions run 41279672392](https://github.com/pczerkas/sparse-deletion-lean/actions/runs/41279672392),
+commit `080b44b`, with `BUILD_EXIT=0`, no `sorryAx`,
+and only the three standard Lean axioms.
+
+### Separate research on sharper local sieve constants
+
+[WEIL_REFINEMENT.md](WEIL_REFINEMENT.md) derives a
+**mathematical, not yet Lean-certified** stronger
+contraction `3/4` by invoking Weil's classical
+character-sum theorem. It is not imported by the
+elementary Lean proof.
+
+[SIEVE_EXPERIMENT.md](SIEVE_EXPERIMENT.md) reports
+exact modular tests for every prime `37≤p≤500`
+with reproducible `explore_sieve_residues.py`.
+These finite tests are *not* a uniform proof.
+
+[OPTIMALITY_CONSTRUCTION.md](OPTIMALITY_CONSTRUCTION.md)
+now also gives a mathematical lower bound
+`H_E(N)≥max(0,floor(e_E(N)/5)-1)` for the
+arbitrarily sparse five-square construction.
+It is not a matching lower bound for the
+current upper rate and is not Lean-certified.
+
 ## Independent exact cubic value-set result
 
 We also prove an **optional**, stronger, classical formula, independently

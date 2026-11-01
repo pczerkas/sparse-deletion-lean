@@ -243,6 +243,22 @@ The non-finiteness construction and preliminary literature
 survey are recorded separately in `OPTIMALITY_CONSTRUCTION.md`
 and `LITERATURE_REVIEW.md`, not as Lean theorems.
 
+### Stronger log/loglog exponent (certified)
+
+`QuantitativeHalfBudget.lean`, `QuantitativeHalfChoice.lean`,
+and `QuantitativeHalfRate.lean` are an optional side branch
+depending on `QuantitativeConstants.lean`. They prove
+`H_E(N)/N ≤ (7/3)*exp(-(log(7/6)/2)*L/log L)` for
+`L=log Q≥2048` and the retained-index counterpart.
+Both the new and earlier `QuantitativeExponent.lean` results
+remain visible in `VerifiedQuantitativeBound.lean`.
+The full certificate passed GitHub Actions run `41279672392`
+(commit `080b44b`) with no `sorryAx`.
+
+The character-sum refinement in `WEIL_REFINEMENT.md` is
+**not imported** and not kernel-certified; the separate
+`SIEVE_EXPERIMENT.md` is computational only.
+
 ## Removed alternatives
 
 The working tree no longer contains the historical fixed-prime
@@ -273,8 +289,8 @@ lake env lean VerifiedQuantitativeBound.lean
 optional quantitative certificate. The previous axiom audit covered the
 original four certificates (`propext`, `Classical.choice`, `Quot.sound`;
 no `sorryAx`). The full optional quantitative certificate, including the
-stronger `log(7/6)/3` exponent, passed GitHub Actions run
-`41241698431` (2026-10-31, commit `07e6d2a`),
+stronger `log(7/6)/2` exponent, passed GitHub Actions run
+`41279672392` (2026-11-01, commit `080b44b`),
 reporting only standard axioms and no `sorryAx`.
 
 When a module is renamed or removed, update **both** this document,

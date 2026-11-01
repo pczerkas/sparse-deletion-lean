@@ -244,6 +244,23 @@ Finkelstein--London, Bateman--Hildebrand--Purdy, Wright,
 Cilleruelo--Luca and modular-sieve precedents. Research
 novelty is not established.
 
+## Sharper log/loglog rate and research limits
+
+The additional optional modules `QuantitativeHalfBudget.lean`,
+`QuantitativeHalfChoice.lean`, and `QuantitativeHalfRate.lean`
+proved the stronger coefficient `log(7/6)/2` with threshold
+`log Q≥2048`. GitHub Actions run `41279672392` (commit
+`080b44b`) completed with `BUILD_EXIT=0`, no `sorryAx`,
+and only `propext`, `Classical.choice`, `Quot.sound`.
+
+The proposed `3/4` local contraction in `WEIL_REFINEMENT.md`
+is a **mathematical deduction from Weil's character sum theorem**,
+and is not certified by the current Lean code. Finite experiments
+in `SIEVE_EXPERIMENT.md` have no bearing on the proof for all
+primes. The lower-bound construction in
+`OPTIMALITY_CONSTRUCTION.md` uses Wright and Siegel and
+also remains outside Lean.
+
 ## 6. Conclusions and risks
 
 - **Statement correspondence:** PASS — formal statement matches
@@ -253,7 +270,7 @@ novelty is not established.
 - **Main proof structure:** PASS by source audit and the recorded
   pre-clean successful build.
 - **Latest successful CI build of all Lean code:** PASS (2026-10-31,
-  commit `07e6d2a`, run `41241698431`).
+  commit `080b44b`, run `41279672392`).
 - **Independently established novelty:** NOT ASSESSED. The
   `x³−x` exact value-set formula is classical.
 - **Potential overclaims to avoid:** finite number of triangular

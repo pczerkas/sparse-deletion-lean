@@ -165,10 +165,9 @@ as a separate named Lean theorem.
 
 ## Refined Chebyshev base: experimental improvement
 
-A new optional module `QuantitativeConstants.lean` aims to
+The optional module `QuantitativeConstants.lean` proves
 prove `largePrime r ≤ 16*(r+50)^2` rather than
-`64*(r+50)^2`. If the new CI check passes, the corresponding
-general finite inequality will improve to
+`64*(r+50)^2`. The corresponding general finite inequality improves to
 
 ```text
 H_E(N)/N ≤ (6/7)^r + (16*(r+50)^2)^r/Q(N).
@@ -179,7 +178,7 @@ unchanged. The improved prime constant and both corresponding finite
 inequalities were Lean-verified in GitHub Actions run
 `41241354688` (commit `e9c4b3f`).
 
-## Faster exponent: Lean verified
+## Faster exponent: Lean verified (previous stage)
 
 `QuantitativeExponent.lean` proves that for `L=log Q≥2048` the sieve depth may be `floor(L/(3*log L))` instead of `floor(L/(8*log L))`. Consequently:
 
@@ -188,3 +187,36 @@ H_E(N)/N ≤ (7/3) * exp(-(log(7/6)/3) * log Q/log(log Q)).
 ```
 
 An analogous bound for indices in the retained sequence is also proven under the usual survivor-growth hypothesis. This strengthens the exponential constant from `log(7/6)/8` to `log(7/6)/3`. The earlier bound remains independently certified. The new declarations passed GitHub Actions run `41241698431` at commit `07e6d2a`, with `BUILD_EXIT=0`, no `sorryAx`, and only standard axioms.
+
+## Strongest Lean-certified exponent: log(7/6)/2
+
+The optional side branch `QuantitativeHalfBudget.lean`,
+`QuantitativeHalfChoice.lean` and `QuantitativeHalfRate.lean`
+combines the polynomial prime bound with `r=floor(L/(2log L))`
+for `L=log Q≥2048`. It establishes:
+
+```text
+H_E(N)/N ≤ (7/3)*exp(-(log(7/6)/2)*L/log L).
+```
+
+The new real-index version is also formally verified under the
+usual Nth-survivor hypothesis. GitHub Actions run `41279672392`
+(commit `080b44b`) reported `BUILD_EXIT=0`, no `sorryAx`,
+and only the three standard axioms of Lean.
+
+The gain comes from the tighter integer budget
+`(112*(r+50)^2)^r*(e(N)+1)≤N` and the fact that
+`112*(r+50)^2≤L^2` when `r=floor(L/(2log L))`
+and `L≥2048`.
+
+## Further non-formal research
+
+`OPTIMALITY_CONSTRUCTION.md` establishes a mathematical lower
+bound `H_E(N)≥max(0,floor(e_E(N)/5)-1)` along the recursive
+five-square construction; it does not match the upper rate.
+
+`SIEVE_EXPERIMENT.md` gives exact modular experiments through
+prime 500, and `WEIL_REFINEMENT.md` presents a mathematically
+stronger local `3/4` contraction using Weil's classical character
+sum bound. The Weil-based corollary is **not yet kernel-certified**
+and is deliberately kept out of the elementary proof import graph.

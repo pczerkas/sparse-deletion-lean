@@ -138,6 +138,48 @@ integers exceed 87. These identities have been verified with
 exact integer arithmetic, not as an asymptotic argument. Run
 `python3 verify_optimality_examples.py` to reproduce both checks.
 
+## A quantitative lower bound along the construction
+
+The same recursive construction gives more than just infinitely
+many hits. Let `e_E(N)=#(E∩[1,N])` and let `H_E(N)` be the
+number of triangular hits with original value-indices at most N.
+After stage j we have inserted exactly five new distinct deleted
+integers, all in the interval `(n_{j-1}, n_j)`; at checkpoint
+`n_j` we have permanently preserved j distinct hits.
+
+For every `N≥0`, we have the elementary counting inequality:
+
+```text
+H_E(N) ≥ max(0, floor(e_E(N)/5)-1).
+```
+
+To see this, set `j=floor(e_E(N)/5)`. If the j-th block
+of five deletions has already appeared but its checkpoint has
+not yet been reached, all j-1 previous checkpoints occur at
+indices at most N. If the next block has started, the j-th
+checkpoint has already occurred, so there are at least j
+hits. Thus in either case `H_E(N)≥j-1`.
+
+In particular at the checkpoint `n_j`:
+
+```text
+e_E(n_j) = 5*j,
+H_E(n_j) ≥ j = e_E(n_j)/5.
+```
+
+The same inequality type applies to retained-enumeration
+hits, after translating `n_j` into its surviving index.
+This shows that the hit-count function can be *at least
+linear in the number of deleted elements* along infinitely
+many checkpoints, while `e_E(N)` itself can be bounded
+by ANY prescribed unbounded nondecreasing function.
+
+**Limitations:** this lower bound is much smaller than our
+general upper estimate in terms of N and e(N). It does not
+prove the `exp(-c log Q/loglog Q)` upper rate is sharp.
+This counting argument is presently a mathematical argument,
+not an additional Lean certificate.
+
 ## What this proves / does NOT prove
 
 - Given Wright and Siegel, the construction proves the
