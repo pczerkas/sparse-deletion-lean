@@ -15,17 +15,19 @@ character bounds enter.
 
 namespace SparseDeletion.AINTLIBBridge
 
+attribute [local instance] Classical.propDecidable
+
 theorem affine_solution_count_eq_fiber_sum
     {K : Type*} [Fintype K] [DecidableEq K]
     (P : K → K → Prop) :
     (((Finset.univ : Finset (K × K)).filter
-      (fun xy => P xy.1 xy.2)).card : ℤ) =
+      (fun (xy : K × K) => P xy.1 xy.2)).card : ℤ) =
       ∑ x : K, (((Finset.univ : Finset K).filter
         (fun y => P x y)).card : ℤ) := by
   classical
   calc
     (((Finset.univ : Finset (K × K)).filter
-      (fun xy => P xy.1 xy.2)).card : ℤ) =
+      (fun (xy : K × K) => P xy.1 xy.2)).card : ℤ) =
         ∑ xy : K × K, if P xy.1 xy.2 then (1 : ℤ) else 0 := by
       simpa using (Finset.sum_boole
         (fun xy : K × K => P xy.1 xy.2)

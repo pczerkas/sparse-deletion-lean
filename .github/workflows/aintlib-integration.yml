@@ -139,6 +139,27 @@ jobs:
             exit 1
           fi
 
+      - name: Install our point-count modules into isolated AINTLIB runner workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p aintlib/projects/HasseWeil/HasseWeil/SparseDeletion
+          cp integration/AINTLIBPointCount.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/PointCount.lean
+          cp integration/AINTLIBFubini.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/Fubini.lean
+          cp integration/AINTLIBCharacterFiber.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/CharacterFiber.lean
+          cp integration/AINTLIBPointCharacterSum.lean aintlib/projects/HasseWeil/HasseWeil/SparseDeletion/PointCharacterSum.lean
+
+      - name: Verify complete point-count character-sum identity
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake build HasseWeil.SparseDeletion.PointCharacterSum 2>&1 | tee ../aintlib-character-sum.log
+          if grep -Fq 'sorryAx' ../aintlib-character-sum.log; then
+            echo "Untrusted sorryAx in point character-sum certificate" >&2
+            exit 1
+          fi
+
       - name: Upload diagnostic log
         if: always()
         uses: actions/upload-artifact@v4
@@ -150,5 +171,6 @@ jobs:
             aintlib-pointcount.log
             aintlib-fiber.log
             aintlib-fubini.log
+            aintlib-character-sum.log
           if-no-files-found: ignore
           retention-days: 14
