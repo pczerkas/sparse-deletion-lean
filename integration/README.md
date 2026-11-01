@@ -62,3 +62,24 @@ lean-4.35 result.
 
 External source:
 https://github.com/CBirkbeck/AINTLIB/tree/8dafefa0f1f45af275e66007cfc6c28cbcd97089
+
+## First GitHub Actions result
+
+GitHub Actions run `41295856674` **successfully built the pinned
+AINTLIB Hasse capstone** but failed a *message-format assertion* in
+our downstream smoke test. The Lean theorem statements and the
+point-count-to-character-sum implication compiled; the asserted
+message for our wrapper used a public name but the declaration was
+elaborated as private. Commit `65b2b1a` added `@[expose] public section`, but run
+`41297232029` revealed that the exported section requires
+an explicit public Mathlib import: otherwise `Field` is not visible.
+Both builds of the upstream Hasse capstone succeeded, but
+neither downstream run passed. The subsequent test now uses
+`public import Mathlib` and `public import HasseWeil.HasseBound`
+before exporting the wrapper.
+
+The next integration round includes `AINTLIBCubicModel.lean`:
+a concrete `WeierstrassCurve` model and an algebraic identity
+for the triangular-prefix cubic. It is tested in
+AINTLIB's own GitHub-hosted workspace; no local `lake`
+or Mathlib processing is performed on Kompik.

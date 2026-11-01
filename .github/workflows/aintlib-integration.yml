@@ -62,12 +62,26 @@ jobs:
           set -euo pipefail
           lake exe cache get
 
+      - name: Restore compiled AINTLIB Hasse cache
+        id: aintlib-build-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: aintlib/.lake/build
+          key: aintlib-hasse-8dafefa0-lean436rc2-v1
+
       - name: Build external AINTLIB Hasse capstone
         shell: bash
         working-directory: aintlib
         run: |
           set -euo pipefail
           lake build HasseWeil.HasseBound
+
+      - name: Save compiled AINTLIB Hasse cache
+        if: steps.aintlib-build-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: aintlib/.lake/build
+          key: aintlib-hasse-8dafefa0-lean436rc2-v1
 
       - name: Verify our downstream bridge and exact axioms
         shell: bash
@@ -81,11 +95,24 @@ jobs:
           fi
           echo "AINTLIB Hasse and our downstream point-count bridge checked."
 
+      - name: Verify cubic coordinate transformation
+        shell: bash
+        working-directory: aintlib
+        run: |
+          set -euo pipefail
+          lake env lean ../integration/AINTLIBCubicModel.lean 2>&1 | tee ../aintlib-cubic-model.log
+          if grep -Fq 'sorryAx' ../aintlib-cubic-model.log; then
+            echo "Untrusted sorryAx in cubic-model certificate output" >&2
+            exit 1
+          fi
+
       - name: Upload diagnostic log
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: aintlib-hasse-smoke
-          path: aintlib-hasse-smoke.log
+          path: |
+            aintlib-hasse-smoke.log
+            aintlib-cubic-model.log
           if-no-files-found: ignore
           retention-days: 14

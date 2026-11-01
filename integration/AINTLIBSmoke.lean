@@ -1,6 +1,7 @@
 module
 
-import HasseWeil.HasseBound
+public import Mathlib
+public import HasseWeil.HasseBound
 
 @[expose] public section
 
